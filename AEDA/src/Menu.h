@@ -12,5 +12,6 @@
 
 void CompanyMenu (Company *c);
 
+
 void ViewFilesMenu (Company *c);
 
