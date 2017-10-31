@@ -6,12 +6,15 @@
  */
 
 #include <iostream>
-
+#include "Company.h"
+#include "Menu.h"
 using namespace std;
 
 
 int main()
 {
-	cout << "Hello";
+	Company c;
+	CompanyMenu (&c);
+
 	return 0;
 }
