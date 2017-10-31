@@ -14,6 +14,7 @@ using namespace std;
 int main()
 {
 	Company c;
+
 	CompanyMenu (&c);
 
 	return 0;
