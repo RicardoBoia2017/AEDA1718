@@ -23,6 +23,7 @@ void CompanyMenu(Company *c)
 	cout << "2 View files"         << endl;
 	cout << "Insert the desired option: ";
 	cin >> option;
+
 	switch (option)
 	{
 		case 1:
