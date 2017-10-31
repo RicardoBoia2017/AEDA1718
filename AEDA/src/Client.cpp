@@ -7,17 +7,37 @@
 
 #include "Client.h"
 
-Client::Client() {
-	// TODO Auto-generated constructor stub
+static unsigned int clientID = 1;
 
+Client::Client(std::string n, int NIF): name(n)
+{
+	this->NIF = NIF;
+	id = clientID;
+	clientID ++;
+	points = 0;
 }
 
 Client::~Client() {
-	// TODO Auto-generated destructor stub
+
+}
+
+std::string Client::getName() const
+{
+	return name;
+}
+
+int Client::getNIF() const
+{
+	return NIF;
 }
 
 int Client::getPoints() const
 {
 	return points;
+}
+
+int Client::getID() const
+{
+	return id;
 }
 

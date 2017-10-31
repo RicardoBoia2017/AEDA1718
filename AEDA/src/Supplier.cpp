@@ -7,9 +7,13 @@
 
 #include "Supplier.h"
 
-Supplier::Supplier() {
-	// TODO Auto-generated constructor stub
+unsigned int static supplierID = 1;
 
+Supplier::Supplier(std::string n, int NIF, std::string ad): name(n), address(ad)
+{
+	this->NIF = NIF;
+	id = supplierID;
+	supplierID++;
 }
 
 Supplier::~Supplier() {
@@ -28,6 +32,11 @@ std::string Supplier::getAddress() const
 
 int Supplier::getNIF() const
 {
+	return NIF;
+}
 
+int Supplier::getId() const
+{
+	return id;
 }
 

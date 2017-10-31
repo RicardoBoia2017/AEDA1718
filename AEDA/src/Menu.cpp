@@ -17,7 +17,10 @@ void CompanyMenu(Company *c)
 	cout << "|     Porto Rivers    |" << endl;
 	cout << "***********************" << endl << endl;
 
-	cout << "1 View File" << endl;
+
+	cout << "1 Make reservation"   << endl;
+	cout << "2 Cancel reservation" << endl;
+	cout << "2 View files"         << endl;
 	cout << "Insert the desired option: ";
 	cin >> option;
 	switch (option)
@@ -34,7 +37,7 @@ void CompanyMenu(Company *c)
 	}
 }
 
-void ViewFilesMenu(Company *c)
+void ViewFilesMenu (Company *c)
 {
 	int option;
 	cout << "***********************" << endl;
