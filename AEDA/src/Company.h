@@ -8,10 +8,24 @@
 #ifndef SRC_COMPANY_H_
 #define SRC_COMPANY_H_
 
+#include <vector>
+
+#include "Client.h";
+#include "Supplier.h";
+#include "Offer.h";
+
 class Company {
+private:
+	std::vector <Client *> clients;
+	std::vector <Supplier *> suppliers;
+	std::vector <Offer *> offers;
 public:
-	Company();
+	Company(std::vector<Client *> clients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers);
 	virtual ~Company();
+	std::vector <Client *> getClients () const;
+	std::vector <Supplier *> getSuppliers () const;
+	std::vector <Offer *> getOffers () const;
+
 };
 
 #endif /* SRC_COMPANY_H_ */

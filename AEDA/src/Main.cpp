@@ -6,14 +6,27 @@
  */
 
 #include <iostream>
+#include <vector>
+
 #include "Company.h"
 #include "Menu.h"
+#include "Client.h"
+#include "Supplier.h"
+#include "Offer.h"
+
 using namespace std;
 
+#define clientsFile "clients.txt"
+#define suppliersFile "suppliers.txt"
+#define offersFile "offers.txt"
 
 int main()
 {
-	Company c;
+	std::vector <Client *> clients;
+	std::vector <Supplier *> suppliers;
+	std::vector <Offer *> offers;
+
+	Company c(clients,suppliers,offers);
 
 	CompanyMenu (&c);
 

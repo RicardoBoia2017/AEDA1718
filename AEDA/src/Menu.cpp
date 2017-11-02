@@ -28,14 +28,33 @@ void CompanyMenu(Company *c)
 	{
 		case 1:
 		{
+			MakeReservation (c);
+			break;
+		}
+		case 2:
+		{
+			CancelReservation (c);
+			break;
+		}
+		case 3:
+		{
 			ViewFilesMenu (c);
 			break;
 		}
 
 		default:
-			cout << "Invalid option" << endl;
-			CompanyMenu(c);
+			throw InvalidOption(c);
 	}
+}
+
+void MakeReservation (Company *c)
+{
+
+}
+
+void CancelReservation (Company *c)
+{
+
 }
 
 void ViewFilesMenu (Company *c)

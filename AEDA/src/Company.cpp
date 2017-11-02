@@ -7,12 +7,27 @@
 
 #include "Company.h"
 
-Company::Company() {
-	// TODO Auto-generated constructor stub
+Company::Company(std::vector<Client *> clients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers)
+{
 
 }
 
-Company::~Company() {
-	// TODO Auto-generated destructor stub
+Company::~Company()
+{
+
 }
 
+std::vector <Client *> Company::getClients () const
+{
+	return clients;
+}
+
+std::vector <Supplier *> Company::getSuppliers () const
+{
+	return suppliers;
+}
+
+std::vector <Offer *> Company::getOffers () const
+{
+	return offers;
+}
