@@ -18,7 +18,7 @@ private:
 	std::string name;
 	int NIF;
 	std::string address;
-	std::vector<Offer *> offers;
+	//std::vector <Offer *> offers;
 	int id;
 public:
 	Supplier(std::string n, int NIF, std::string address);
@@ -27,6 +27,7 @@ public:
 	int getNIF() const;
 	std::string getAddress() const;
 	int getId() const;
+	//std::vector <Offer*> getOffers() const;
 };
 
 #endif /* SRC_SUPPLIER_H_ */

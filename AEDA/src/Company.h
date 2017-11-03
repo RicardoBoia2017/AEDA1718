@@ -10,9 +10,9 @@
 
 #include <vector>
 
-#include "Client.h";
-#include "Supplier.h";
-#include "Offer.h";
+#include "Client.h"
+#include "Supplier.h"
+#include "Offer.h"
 
 class Company {
 private:

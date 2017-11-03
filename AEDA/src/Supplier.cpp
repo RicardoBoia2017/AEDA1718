@@ -40,3 +40,8 @@ int Supplier::getId() const
 	return id;
 }
 
+//std::vector <Offer*> Supplier::getOffers() const
+//{
+//	return offers;
+//}
+

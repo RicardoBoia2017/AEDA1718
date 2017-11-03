@@ -1,0 +1,3 @@
+1, Cruzeiros Douro, 83, 117, 12, Veleiro, Régua
+2, Cruzeiros Douro, 90, 130, 12, Veleiro, Pinhão
+3, Cruzeiros do Douro, 95, 119, 120,  Barco Rabelo, Régua 
