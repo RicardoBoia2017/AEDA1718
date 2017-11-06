@@ -70,3 +70,5 @@ void ViewFilesMenu (Company *c)
 	cin >> option;
 
 }
+
+

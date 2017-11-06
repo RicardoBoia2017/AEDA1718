@@ -9,7 +9,9 @@
 
 Company::Company(std::vector<Client *> clients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers)
 {
-
+	this->clients = clients;
+	this->suppliers = suppliers;
+	this->offers = offers;
 }
 
 Company::~Company()
@@ -30,4 +32,16 @@ std::vector <Supplier *> Company::getSuppliers () const
 std::vector <Offer *> Company::getOffers () const
 {
 	return offers;
+}
+
+void Company::printClients()
+{
+	for (unsigned int i = 0; i < clients.size(); i++)
+	{
+		std::cout << clients[i]->getID() << " " <<
+				     clients[i]->getName() << " " <<
+					 clients[i]->getNIF() << " " <<
+					 clients[i]->getPoints( )<< std::endl;
+	}
+
 }

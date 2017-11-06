@@ -9,6 +9,7 @@
 #define SRC_COMPANY_H_
 
 #include <vector>
+#include <iostream>
 
 #include "Client.h"
 #include "Supplier.h"
@@ -25,7 +26,7 @@ public:
 	std::vector <Client *> getClients () const;
 	std::vector <Supplier *> getSuppliers () const;
 	std::vector <Offer *> getOffers () const;
-
+	void printClients();
 };
 
 #endif /* SRC_COMPANY_H_ */

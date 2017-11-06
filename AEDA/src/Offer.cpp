@@ -9,8 +9,8 @@
 
 static unsigned int offerID = 1;
 
-Offer::Offer(int val, int dist, int capacity, std::string bT, std::string dest):
-		value(val), distance(dist), boatType (bT), destination(dest) //sup(s)
+Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest):
+		price(pri), distance(dist), boatType (bT), destination(dest) //sup(s)
 {
 	this->capacity = capacity;
 	id = offerID;
@@ -21,9 +21,9 @@ Offer::~Offer() {
 
 }
 
-int Offer::getValue() const
+int Offer::getPrice() const
 {
-	return value;
+	return price;
 }
 
 int Offer::getId() const

@@ -15,17 +15,17 @@
 class Offer {
 private:
 	int id;
-	int value;
+	int price;
 	int distance;
 	int capacity;
 	std::string boatType;
 	std::string destination;
 	//Supplier sup;
 public:
-	Offer (int val, int dist,int capacity, std::string bT, std::string dest);
+	Offer (int pri, int dist,int capacity, std::string bT, std::string dest);
 	virtual ~Offer();
 	int getId() const;
-	int getValue() const;
+	int getPrice() const;
 	int getDistance() const;
 	int getCapacity() const;
 	std::string getBoatType () const;
