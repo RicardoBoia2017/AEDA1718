@@ -14,12 +14,14 @@ using namespace std;
 std::vector<std::string> FileReader::readLines(std::string file) {
 	std::vector<std::string> lines;
 
-	std::ifstream inFile(file.c_str());
-	if (inFile.is_open()) {
+	ifstream inFile(file);
+	if (inFile.is_open())
+	{
 		std::string line;
 
 		while (getline(inFile, line))
 			lines.push_back(line);
+
 		inFile.close();
 	}
 	return lines;
@@ -44,8 +46,6 @@ std::vector<Client *> FileReader::readClients(std::string file)
 
 		Client *c = new Client(name, std::stoi(NIF.c_str()));
 		clients.push_back(c);
-		Client *c1 = new Client ("32",i);
-		clients.push_back(c1);
 		std::cout << "4";
 	}
 	std::cout << "5";

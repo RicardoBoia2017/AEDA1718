@@ -17,13 +17,13 @@
 
 using namespace std;
 
-#define clientsFile "clients.txt"
+#define clientsFile "CLIENTS.txt"
 #define suppliersFile "suppliers.txt"
 #define offersFile "offers.txt"
 
 int main()
 {
-	std::vector <Client *> clients = FileReader::readClients("clients.txt");
+	std::vector <Client *> clients = FileReader::readClients(clientsFile);
 	std::vector <Supplier *> suppliers;
 	std::vector <Offer *> offers;
 
