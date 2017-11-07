@@ -27,7 +27,7 @@ int main()
 	std::vector <Supplier *> suppliers;
 	std::vector <Offer *> offers;
 
-	Client* c1 = new Client("joao",0);
+	RegisteredClient* c1 = new RegisteredClient("joao",0);
 	clients.push_back(c1);
 
 	Company c(clients,suppliers,offers);
@@ -38,8 +38,7 @@ int main()
 		{
 			std::cout << clients[i]->getID() << " " <<
 					     clients[i]->getName() << " " <<
-						 clients[i]->getNIF() << " " <<
-						 clients[i]->getPoints( )<< std::endl;
+						 clients[i]->getNIF() << " " << std::endl;
 		}
 
 	//CompanyMenu (&c);

@@ -40,8 +40,7 @@ void Company::printClients()
 	{
 		std::cout << clients[i]->getID() << " " <<
 				     clients[i]->getName() << " " <<
-					 clients[i]->getNIF() << " " <<
-					 clients[i]->getPoints( )<< std::endl;
+					 clients[i]->getNIF() << " " << std::endl;
 	}
 
 }

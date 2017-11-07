@@ -14,7 +14,6 @@ Client::Client(std::string n, int NIF): name(n)
 	this->NIF = NIF;
 	id = clientID;
 	clientID ++;
-	points = 0;
 }
 
 Client::~Client() {
@@ -31,13 +30,37 @@ int Client::getNIF() const
 	return NIF;
 }
 
-int Client::getPoints() const
-{
-	return points;
-}
 
 int Client::getID() const
 {
 	return id;
 }
 
+//Registered Client
+
+RegisteredClient::RegisteredClient(std::string n, int NIF): Client(n,NIF)
+{
+	points=0;
+}
+
+RegisteredClient::~RegisteredClient() {
+
+}
+
+
+int RegisteredClient::getPoints() const
+{
+	return points;
+}
+
+//Ocasional Client
+
+OcasionalClient::OcasionalClient(std::string n, int NIF): Client(n,NIF)
+{
+
+}
+
+OcasionalClient::~OcasionalClient()
+{
+
+}
