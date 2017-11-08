@@ -8,18 +8,19 @@
 #ifndef SRC_SUPPLIER_H_
 #define SRC_SUPPLIER_H_
 
+#include "Offer.h"
 #include <string>
 #include <vector>
 
-#include "Offer.h"
+
 
 class Supplier {
 private:
 	std::string name;
 	int NIF;
 	std::string address;
-	//std::vector <Offer *> offers;
 	int id;
+	//std::vector<Offer*> offers;
 public:
 	Supplier(std::string n, int NIF, std::string address);
 	virtual ~Supplier();

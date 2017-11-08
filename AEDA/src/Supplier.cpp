@@ -14,6 +14,7 @@ Supplier::Supplier(std::string n, int NIF, std::string ad): name(n), address(ad)
 	this->NIF = NIF;
 	id = supplierID;
 	supplierID++;
+
 }
 
 Supplier::~Supplier() {

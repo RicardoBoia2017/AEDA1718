@@ -10,9 +10,6 @@
 
 #include "Company.h"
 #include "Menu.h"
-#include "Client.h"
-#include "Supplier.h"
-#include "Offer.h"
 #include "FileReader.h"
 
 using namespace std;
@@ -24,11 +21,10 @@ using namespace std;
 int main()
 {
 	std::vector <Client *> clients = FileReader::readClients(clientsFile);
-	std::vector <Supplier *> suppliers;
-	std::vector <Offer *> offers;
+	std::vector <Supplier *> suppliers = FileReader::readSuppliers(suppliersFile);
+	std::vector <Offer *> offers ;//FileReader::readOffers(offersFile);
 
 	Company c(clients,suppliers,offers);
-
 
 	CompanyMenu (&c);
 

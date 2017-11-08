@@ -9,6 +9,7 @@
 #define SRC_OFFER_H_
 
 #include <string>
+#include <vector>
 
 #include "Supplier.h"
 
@@ -20,9 +21,8 @@ private:
 	int capacity;
 	std::string boatType;
 	std::string destination;
-	//Supplier sup;
 public:
-	Offer (int pri, int dist,int capacity, std::string bT, std::string dest);
+	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName);
 	virtual ~Offer();
 	int getId() const;
 	int getPrice() const;
@@ -30,7 +30,6 @@ public:
 	int getCapacity() const;
 	std::string getBoatType () const;
 	std::string getDestination() const;
-	//Supplier getSupplier() const;
 };
 
 #endif /* SRC_OFFER_H_ */

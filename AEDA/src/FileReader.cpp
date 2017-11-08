@@ -15,7 +15,7 @@ using namespace std;
 
 std::vector<std::string> FileReader::readLines(std::string file) {
 	std::vector<std::string> lines;
-	cout << file;
+
 	ifstream inFile(file);
 	if (inFile.is_open())
 	{
@@ -42,9 +42,9 @@ std::vector<Client *> FileReader::readClients(std::string file)
 		std::string name, NIF;
 
 		line = line.substr(line.find(',') + 2);
-		name = line.substr(0,line.find(','));
+		name = line.substr(0, line.find(','));
 		line = line.substr(line.find(',') + 2);
-		NIF = line.substr(0,line.find(';'));
+		NIF = line.substr(0, line.find(';'));
 
 		Client *c = new Client(name, std::stoi(NIF.c_str()));
 		clients.push_back(c);
@@ -54,4 +54,43 @@ std::vector<Client *> FileReader::readClients(std::string file)
 	return clients;
 }
 
+std::vector<Supplier *> FileReader::readSuppliers(std::string file)
+{
+	std::vector<Supplier *> suppliers;
+	std::vector<std::string> lines = FileReader::readLines(file);
 
+	for (unsigned int i = 0; i < lines.size(); i++)
+	{
+		std::string line = lines[i];
+		std::string name, NIF, address;
+
+		line = line.substr(line.find(',') + 2);
+		name = line.substr(0, line.find(','));
+		line = line.substr(line.find(',') + 2);
+		NIF = line.substr(0, line.find(','));
+		line = line.substr(line.find(',') + 2);
+		address = line.substr(0 ,line.find(';'));
+
+		Supplier *s = new Supplier (name, std::stoi(NIF.c_str()), address);
+		suppliers.push_back (s);
+
+	}
+
+	return suppliers;
+}
+
+
+//std::vector<Offer *> FileReader::readOffers (std::string file)
+//{
+//	std::vector<Offer *> offers;
+//	std::vector<std::string> lines = FileReader::readLines(file);
+//
+//	for (unsigned int i = 0; i < lines.size(); i++)
+//	{
+//		std::string line = lines[i];
+//		std::string name, NIF, address;
+//
+//		line = line.substr(line.find(',') + 2);
+//	}
+//
+//}

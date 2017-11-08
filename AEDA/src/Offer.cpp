@@ -9,7 +9,7 @@
 
 static unsigned int offerID = 1;
 
-Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest):
+Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest, std::string sName):
 		price(pri), distance(dist), boatType (bT), destination(dest) //sup(s)
 {
 	this->capacity = capacity;
