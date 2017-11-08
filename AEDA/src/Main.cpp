@@ -17,7 +17,7 @@
 
 using namespace std;
 
-#define clientsFile "CLIENTS.txt"
+#define clientsFile "C:\\Users\\ricar\\git\\AEDA17-18\\AEDA\\Debug\\clients.txt"
 #define suppliersFile "suppliers.txt"
 #define offersFile "offers.txt"
 

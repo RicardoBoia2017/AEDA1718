@@ -9,14 +9,17 @@
 
 #include <iostream>
 
+
 using namespace std;
+
 
 std::vector<std::string> FileReader::readLines(std::string file) {
 	std::vector<std::string> lines;
-
+	cout << "fdfd";
 	ifstream inFile(file);
 	if (inFile.is_open())
 	{
+		cout << "ff" ;
 		std::string line;
 
 		while (getline(inFile, line))
@@ -30,12 +33,12 @@ std::vector<std::string> FileReader::readLines(std::string file) {
 std::vector<Client *> FileReader::readClients(std::string file)
 {
 	std::vector<Client *> clients;
-	std::cout << "1";
+	cout << "lll";
 	std::vector<std::string> lines = FileReader::readLines(file);
-	std::cout << lines.size() << endl;
 	for (unsigned int i = 0; i < lines.size(); i++)
 	{
-		std::string line = lines.at(i);
+		cout << "e";
+		std::string line = lines[i];
 		std::cout << "3";
 		std::string name, NIF=0;
 

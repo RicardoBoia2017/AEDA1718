@@ -20,7 +20,7 @@ void CompanyMenu(Company *c)
 
 	cout << "1 Make reservation"   << endl;
 	cout << "2 Cancel reservation" << endl;
-	cout << "2 View files"         << endl;
+	cout << "3 View files"         << endl;
 	cout << "Insert the desired option: ";
 	cin >> option;
 
