@@ -12,6 +12,7 @@
 #include <vector>
 #include <sstream>
 #include "Supplier.h"
+#include "Client.h"
 
 class Offer {
 private:
@@ -23,6 +24,8 @@ private:
 	std::string boatType;
 	std::string destination;
 	std::string supplier;
+	Client * c;
+	Supplier * sup;
 public:
 	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName);
 	virtual ~Offer();
@@ -33,9 +36,9 @@ public:
 	int getVacancies() const;
 	std::string getBoatType () const;
 	std::string getDestination() const;
-	std::string getSupplier() const;
 	std::string getInformation() const;
-
+	Client * getClient() const;
+	Supplier * getSupplier() const;
 };
 
 #endif /* SRC_OFFER_H_ */

@@ -57,11 +57,6 @@ std::string Offer::getDestination() const
 	return destination;
 }
 
-std::string Offer::getSupplier() const
-{
-	return supplier;
-}
-
 std::string Offer::getInformation() const
 {
 	std::stringstream ss;
@@ -71,7 +66,14 @@ std::string Offer::getInformation() const
 	return ss.str();
 }
 
-//Supplier getSupplier() const
-//{
-//	return sup;
-//}
+
+
+Supplier * Offer::getSupplier() const
+{
+	return sup;
+}
+
+Client * Offer::getClient() const
+{
+
+}

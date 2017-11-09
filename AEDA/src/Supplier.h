@@ -8,7 +8,7 @@
 #ifndef SRC_SUPPLIER_H_
 #define SRC_SUPPLIER_H_
 
-#include "Offer.h"
+
 #include <string>
 #include <vector>
 #include <sstream>
