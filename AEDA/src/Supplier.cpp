@@ -14,7 +14,6 @@ Supplier::Supplier(std::string n, int NIF, std::string ad): name(n), address(ad)
 	this->NIF = NIF;
 	id = supplierID;
 	supplierID++;
-
 }
 
 Supplier::~Supplier() {
@@ -39,6 +38,15 @@ int Supplier::getNIF() const
 int Supplier::getId() const
 {
 	return id;
+}
+
+std::string Supplier::getInformation () const
+{
+	std::stringstream ss;
+
+	ss << getId() << " " << getName() << " " << getNIF() << std::endl << "Address: " << getAddress();
+
+	return ss.str();
 }
 
 //std::vector <Offer*> Supplier::getOffers() const

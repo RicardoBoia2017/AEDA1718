@@ -9,6 +9,7 @@
 #define SRC_CLIENT_H_
 
 #include <string>
+#include <sstream>
 
 class Client {
 private:
@@ -21,6 +22,7 @@ public:
 	std::string getName() const;
 	int getNIF() const;
 	int getID() const;
+	virtual std::string getInformation() const = 0;
 };
 
 class RegisteredClient: public Client
@@ -31,6 +33,7 @@ public:
 	RegisteredClient(std::string n, int NIF);
 	~RegisteredClient();
 	int getPoints() const;
+	std::string getInformation() const;
 };
 
 class OcasionalClient: public Client
@@ -38,5 +41,7 @@ class OcasionalClient: public Client
 public:
 	OcasionalClient(std::string n, int NIF);
 	~OcasionalClient();
+	std::ostream & operator<< (std::ostream &o);
+	std::string getInformation() const;
 };
 #endif /* SRC_CLIENT_H_ */

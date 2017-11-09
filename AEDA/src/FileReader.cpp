@@ -46,7 +46,7 @@ std::vector<Client *> FileReader::readClients(std::string file)
 		line = line.substr(line.find(',') + 2);
 		NIF = line.substr(0, line.find(';'));
 
-		Client *c = new Client(name, std::stoi(NIF.c_str()));
+		RegisteredClient *c = new RegisteredClient(name, std::stoi(NIF.c_str()));
 		clients.push_back(c);
 	}
 

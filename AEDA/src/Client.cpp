@@ -53,6 +53,15 @@ int RegisteredClient::getPoints() const
 	return points;
 }
 
+std::string RegisteredClient::getInformation() const
+{
+	std::stringstream ss;
+
+	ss << getID() << " " << getName() << " " << getNIF() << " " << getPoints();
+
+	return ss.str() ;
+}
+
 //Ocasional Client
 
 OcasionalClient::OcasionalClient(std::string n, int NIF): Client(n,NIF)
@@ -63,4 +72,13 @@ OcasionalClient::OcasionalClient(std::string n, int NIF): Client(n,NIF)
 OcasionalClient::~OcasionalClient()
 {
 
+}
+
+std::string OcasionalClient::getInformation() const
+{
+	std::stringstream ss;
+
+	ss << getID() << " " << getName() << " " << getNIF();
+
+	return ss.str() ;
 }

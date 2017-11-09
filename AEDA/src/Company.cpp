@@ -34,13 +34,19 @@ std::vector <Offer *> Company::getOffers () const
 	return offers;
 }
 
-void Company::printClients()
+void Company::printClients() const
 {
 	for (unsigned int i = 0; i < clients.size(); i++)
 	{
-		std::cout << clients[i]->getID() << " " <<
-				     clients[i]->getName() << " " <<
-					 clients[i]->getNIF() << " " << std::endl;
+		std::cout << clients[i]->getInformation() << std::endl;
 	}
 
+}
+
+void Company::printSuppliers() const
+{
+	for (unsigned int i = 0; i < suppliers.size(); i++)
+	{
+		std::cout << suppliers[i]->getInformation() << std::endl << std::endl;
+	}
 }

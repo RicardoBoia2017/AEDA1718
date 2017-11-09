@@ -11,6 +11,7 @@
 #include "Offer.h"
 #include <string>
 #include <vector>
+#include <sstream>
 
 
 
@@ -28,6 +29,7 @@ public:
 	int getNIF() const;
 	std::string getAddress() const;
 	int getId() const;
+	std::string getInformation() const;
 	//std::vector <Offer*> getOffers() const;
 };
 
