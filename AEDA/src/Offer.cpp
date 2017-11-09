@@ -10,7 +10,7 @@
 static unsigned int offerID = 1;
 
 Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest, std::string sName):
-		price(pri), distance(dist), boatType (bT), destination(dest) //sup(s)
+		price(pri), distance(dist), boatType (bT), destination(dest), supplier(sName)
 {
 	this->capacity = capacity;
 	id = offerID;
@@ -49,6 +49,20 @@ std::string Offer::getBoatType() const
 std::string Offer::getDestination() const
 {
 	return destination;
+}
+
+std::string Offer::getSupplier() const
+{
+	return supplier;
+}
+
+std::string Offer::getInformation() const
+{
+	std::stringstream ss;
+
+	ss << getId() << " " << getDestination() << " " << getDistance() << "km " <<  getBoatType() << " " << getPrice() << " €";
+
+	return ss.str();
 }
 
 //Supplier getSupplier() const

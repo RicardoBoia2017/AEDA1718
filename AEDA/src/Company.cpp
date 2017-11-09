@@ -50,3 +50,11 @@ void Company::printSuppliers() const
 		std::cout << suppliers[i]->getInformation() << std::endl << std::endl;
 	}
 }
+
+void Company::printOffers() const
+{
+	for (unsigned int i = 0; i < offers.size(); i++)
+	{
+		std::cout << offers[i]->getInformation() << std::endl << std::endl;
+	}
+}

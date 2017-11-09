@@ -66,21 +66,31 @@ void MakeReservation (Company *c)
 	cout << " 1 Yes" << endl;
 	cout << " 2 No" << endl;
 	cout << "3 Back" << endl;
+	cout << "Insert the desired option: ";
 	cin >> option;
 
 	switch (option)
 	{
 		case 1:
 		{
-			int id;
-			cout << "Insert your id: ";
-			cin >> id;
+			unsigned int idClient, idOffer;
 
-			if ( id > 0 && id < c->getClients().size() )
-				cout << c->getClients()[id-1]->getInformation();
-			else
+			cout << "Insert your id: ";
+			cin >> idClient;
+
+			if ((idClient < c->getClients().size() ))
 			{
-				cout << "Invalid id" << endl;
+				cout << "Invalid client id" << endl;
+				MakeReservation(c);
+			}
+
+			cout << c->getClients()[idClient-1]->getInformation();
+			c->printOffers();
+
+			std::cout << "Insert the id of the corresponding offer: ";
+			if (idOffer > c->getOffers().size())
+			{
+				cout << "Invalid client offer" << endl;
 				MakeReservation(c);
 			}
 			break;
@@ -88,6 +98,7 @@ void MakeReservation (Company *c)
 
 		case 2:
 		{
+
 
 		}
 
@@ -142,7 +153,11 @@ void ViewFilesMenu (Company *c)
 
 		case 3:
 		{
-
+			cout <<endl;
+			c->printOffers();
+			cout << endl;
+			ViewFilesMenu (c);
+			break;
 		}
 
 		case 4:

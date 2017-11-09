@@ -22,7 +22,7 @@ int main()
 {
 	std::vector <Client *> clients = FileReader::readClients(clientsFile);
 	std::vector <Supplier *> suppliers = FileReader::readSuppliers(suppliersFile);
-	std::vector <Offer *> offers ;//FileReader::readOffers(offersFile);
+	std::vector <Offer *> offers = FileReader::readOffers(offersFile);
 
 	Company c(clients,suppliers,offers);
 

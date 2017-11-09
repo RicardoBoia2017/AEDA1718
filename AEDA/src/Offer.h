@@ -10,7 +10,7 @@
 
 #include <string>
 #include <vector>
-
+#include <sstream>
 #include "Supplier.h"
 
 class Offer {
@@ -21,6 +21,7 @@ private:
 	int capacity;
 	std::string boatType;
 	std::string destination;
+	std::string supplier;
 public:
 	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName);
 	virtual ~Offer();
@@ -30,6 +31,9 @@ public:
 	int getCapacity() const;
 	std::string getBoatType () const;
 	std::string getDestination() const;
+	std::string getSupplier() const;
+	std::string getInformation() const;
+
 };
 
 #endif /* SRC_OFFER_H_ */

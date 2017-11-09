@@ -28,6 +28,7 @@ public:
 	std::vector <Offer *> getOffers () const;
 	void printClients() const;
 	void printSuppliers() const;
+	void printOffers() const;
 };
 
 #endif /* SRC_COMPANY_H_ */
