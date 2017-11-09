@@ -19,6 +19,7 @@ private:
 	int price;
 	int distance;
 	int capacity;
+	int vacancies;
 	std::string boatType;
 	std::string destination;
 	std::string supplier;
@@ -29,6 +30,7 @@ public:
 	int getPrice() const;
 	int getDistance() const;
 	int getCapacity() const;
+	int getVacancies() const;
 	std::string getBoatType () const;
 	std::string getDestination() const;
 	std::string getSupplier() const;

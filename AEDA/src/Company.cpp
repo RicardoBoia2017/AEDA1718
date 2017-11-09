@@ -47,7 +47,7 @@ void Company::printSuppliers() const
 {
 	for (unsigned int i = 0; i < suppliers.size(); i++)
 	{
-		std::cout << suppliers[i]->getInformation() << std::endl << std::endl;
+		std::cout << suppliers[i]->getInformation() << std::endl;
 	}
 }
 
@@ -55,6 +55,6 @@ void Company::printOffers() const
 {
 	for (unsigned int i = 0; i < offers.size(); i++)
 	{
-		std::cout << offers[i]->getInformation() << std::endl << std::endl;
+		std::cout << offers[i]->getInformation() << std::endl;
 	}
 }

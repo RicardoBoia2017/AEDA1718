@@ -73,26 +73,37 @@ void MakeReservation (Company *c)
 	{
 		case 1:
 		{
-			unsigned int idClient, idOffer;
+			unsigned int idClient, idOffer, nTick;
 
 			cout << "Insert your id: ";
 			cin >> idClient;
 
-			if ((idClient < c->getClients().size() ))
+			if ((idClient > c->getClients().size() ))
 			{
 				cout << "Invalid client id" << endl;
 				MakeReservation(c);
 			}
 
-			cout << c->getClients()[idClient-1]->getInformation();
+			cout << c->getClients()[idClient-1]->getInformation() << endl << endl;
 			c->printOffers();
 
-			std::cout << "Insert the id of the corresponding offer: ";
+			cout << endl << "Insert the id of the corresponding offer: ";
+			cin >> idOffer;
+
 			if (idOffer > c->getOffers().size())
 			{
-				cout << "Invalid client offer" << endl;
+				cout << "Invalid offer id" << endl;
 				MakeReservation(c);
 			}
+
+			cout << "How many tickets do you desire: ";
+			cin >> nTick;
+			if(nTick > c->getOffers()[idOffer-1]->getVacancies())
+			{
+				cout << "Sorry, but there aren't enough seats available" << endl;
+				MakeReservation(c);
+			}
+
 			break;
 		}
 
@@ -110,6 +121,7 @@ void MakeReservation (Company *c)
 		default:
 			throw InvalidOption(c);
 	}
+	CompanyMenu(c);
 }
 
 void CancelReservation (Company *c)

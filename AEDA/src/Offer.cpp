@@ -13,6 +13,7 @@ Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest, 
 		price(pri), distance(dist), boatType (bT), destination(dest), supplier(sName)
 {
 	this->capacity = capacity;
+	vacancies = capacity;
 	id = offerID;
 	offerID++;
 }
@@ -41,6 +42,11 @@ int Offer::getCapacity() const
 	return capacity;
 }
 
+int Offer::getVacancies() const
+{
+	return vacancies;
+}
+
 std::string Offer::getBoatType() const
 {
 	return boatType;
@@ -60,7 +66,7 @@ std::string Offer::getInformation() const
 {
 	std::stringstream ss;
 
-	ss << getId() << " " << getDestination() << " " << getDistance() << "km " <<  getBoatType() << " " << getPrice() << " €";
+	ss << getId() << " " << getDestination() << " " << getDistance() << "km " <<  getBoatType() << " " << getPrice() << " € " << "//seats available: " << getVacancies();
 
 	return ss.str();
 }
