@@ -26,6 +26,7 @@ public:
 	std::vector <Client *> getClients () const;
 	std::vector <Supplier *> getSuppliers () const;
 	std::vector <Offer *> getOffers () const;
+	void setSuppliers();
 	void printClients() const;
 	void printSuppliers() const;
 	void printOffers() const;

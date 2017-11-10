@@ -34,6 +34,22 @@ std::vector <Offer *> Company::getOffers () const
 	return offers;
 }
 
+void Company::setSuppliers()
+{
+	for( unsigned int i = 0; i < offers.size(); i++)
+	{
+		for (unsigned int j = 0; j < suppliers.size(); j++)
+		{
+			if(offers[i]->getSupName() == suppliers[j]->getName() )
+			{
+				offers[i]->setSupplier(suppliers[j]);
+				break;
+			}
+		}
+	}
+
+}
+
 void Company::printClients() const
 {
 	for (unsigned int i = 0; i < clients.size(); i++)

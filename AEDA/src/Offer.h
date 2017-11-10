@@ -23,12 +23,14 @@ private:
 	int vacancies;
 	std::string boatType;
 	std::string destination;
-	std::string supplier;
-	Client * c;
+	std::string supName;
+	std::vector<Client *> clients;
+	std::vector<int> nTickets;
 	Supplier * sup;
 public:
 	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName);
 	virtual ~Offer();
+	void PrepareReservation(Client * c, int nTick);
 	int getId() const;
 	int getPrice() const;
 	int getDistance() const;
@@ -37,8 +39,10 @@ public:
 	std::string getBoatType () const;
 	std::string getDestination() const;
 	std::string getInformation() const;
-	Client * getClient() const;
+	std::string getSupName() const;
+	std::vector<Client *> getClients() const;
 	Supplier * getSupplier() const;
+	void setSupplier(Supplier *  s);
 };
 
 #endif /* SRC_OFFER_H_ */

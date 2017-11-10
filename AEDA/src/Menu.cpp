@@ -85,6 +85,7 @@ void MakeReservation (Company *c)
 			}
 
 			cout << c->getClients()[idClient-1]->getInformation() << endl << endl;
+
 			c->printOffers();
 
 			cout << endl << "Insert the id of the corresponding offer: ";
@@ -98,6 +99,7 @@ void MakeReservation (Company *c)
 
 			cout << "How many tickets do you desire: ";
 			cin >> nTick;
+
 			if(nTick > c->getOffers()[idOffer-1]->getVacancies())
 			{
 				cout << "Sorry, but there aren't enough seats available" << endl;

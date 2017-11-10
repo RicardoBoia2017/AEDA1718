@@ -10,7 +10,7 @@
 static unsigned int offerID = 1;
 
 Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest, std::string sName):
-		price(pri), distance(dist), boatType (bT), destination(dest), supplier(sName)
+		price(pri), distance(dist), boatType (bT), destination(dest), supName(sName)
 {
 	this->capacity = capacity;
 	vacancies = capacity;
@@ -19,6 +19,11 @@ Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest, 
 }
 
 Offer::~Offer() {
+
+}
+
+void Offer::PrepareReservation(Client * c, int nTick)
+{
 
 }
 
@@ -60,20 +65,28 @@ std::string Offer::getDestination() const
 std::string Offer::getInformation() const
 {
 	std::stringstream ss;
-
-	ss << getId() << " " << getDestination() << " " << getDistance() << "km " <<  getBoatType() << " " << getPrice() << " € " << "//seats available: " << getVacancies();
+	//std::string supName = sup->getName();
+	ss << getId() << " " << getSupName() << ", " << getDestination() << ", " << getDistance() << "km " <<  getBoatType() << ", " << getPrice() << " € " << "//  seats available: " << getVacancies();
 
 	return ss.str();
 }
 
-
+std::string Offer::getSupName() const
+{
+	return supName;
+}
 
 Supplier * Offer::getSupplier() const
 {
 	return sup;
 }
 
-Client * Offer::getClient() const
+void Offer::setSupplier(Supplier * s)
+{
+	sup=s;
+}
+
+std::vector <Client*> Offer::getClients() const
 {
 
 }
