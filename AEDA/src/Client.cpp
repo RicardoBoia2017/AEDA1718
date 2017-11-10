@@ -57,7 +57,7 @@ std::string RegisteredClient::getInformation() const
 {
 	std::stringstream ss;
 
-	ss << getID() << " " << getName() << " " << getNIF() << " " << getPoints();
+	ss << getID() << " " << getName() << ", " << getNIF() << ", Points:  " << getPoints();
 
 	return ss.str() ;
 }
