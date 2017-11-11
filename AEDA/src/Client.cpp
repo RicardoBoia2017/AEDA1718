@@ -38,9 +38,9 @@ int Client::getID() const
 
 //Registered Client
 
-RegisteredClient::RegisteredClient(std::string n, int NIF): Client(n,NIF)
+RegisteredClient::RegisteredClient(std::string n, int NIF, int points): Client(n,NIF)
 {
-	points=0;
+	this->points=points;
 }
 
 RegisteredClient::~RegisteredClient() {
@@ -67,6 +67,15 @@ std::string RegisteredClient::getInformation() const
 	return ss.str() ;
 }
 
+//RegisteredClient & RegisteredClient::operator = (const RegisteredClient & rc)
+//{
+//	name = rc.getName();
+//	NIF = rc.getNIF();
+//	id = rc.getID();
+//	setPoints (rc.getPoints());
+//}
+
+
 //Ocasional Client
 
 OcasionalClient::OcasionalClient(std::string n, int NIF): Client(n,NIF)
@@ -87,3 +96,10 @@ std::string OcasionalClient::getInformation() const
 
 	return ss.str() ;
 }
+
+//OcasionalClient & OcasionalClient::operator = (const OcasionalClient & oc)
+//{
+//	name = oc.getName();
+//	NIF = oc.getNIF();
+//	id = oc.getID();
+//}

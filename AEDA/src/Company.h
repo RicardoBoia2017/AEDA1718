@@ -17,17 +17,21 @@
 
 class Company {
 private:
-	std::vector <Client *> clients;
+	std::vector<Client* > c;
+	std::vector <RegisteredClient *> rClients;
+	std::vector <OcasionalClient *> oClients;
 	std::vector <Supplier *> suppliers;
 	std::vector <Offer *> offers;
 public:
-	Company(std::vector<Client *> clients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers);
+	Company(std::vector<RegisteredClient *> rClients, std::vector<OcasionalClient *> oClients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers);
 	virtual ~Company();
-	std::vector <Client *> getClients () const;
+	std::vector <RegisteredClient *> getRegisteredClients () const;
+	std::vector <OcasionalClient *> getOcasionalClients () const;
 	std::vector <Supplier *> getSuppliers () const;
 	std::vector <Offer *> getOffers () const;
-	void setSuppliers();
-	void printClients() const;
+	void setOfferSuppliers();
+	void printRegisteredClients() const;
+	void printOcasionalClients() const;
 	void printSuppliers() const;
 	void printOffers() const;
 };

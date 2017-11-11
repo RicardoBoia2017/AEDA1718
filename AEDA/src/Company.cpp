@@ -7,9 +7,10 @@
 
 #include "Company.h"
 
-Company::Company(std::vector<Client *> clients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers)
+Company::Company(std::vector<RegisteredClient *> rClients, std::vector<OcasionalClient *> oClients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers)
 {
-	this->clients = clients;
+	this->rClients = rClients;
+	this->oClients = oClients;
 	this->suppliers = suppliers;
 	this->offers = offers;
 }
@@ -19,9 +20,14 @@ Company::~Company()
 
 }
 
-std::vector <Client *> Company::getClients () const
+std::vector <RegisteredClient *> Company::getRegisteredClients () const
 {
-	return clients;
+	return rClients;
+}
+
+std::vector <OcasionalClient *> Company::getOcasionalClients() const
+{
+	return oClients;
 }
 
 std::vector <Supplier *> Company::getSuppliers () const
@@ -34,7 +40,7 @@ std::vector <Offer *> Company::getOffers () const
 	return offers;
 }
 
-void Company::setSuppliers()
+void Company::setOfferSuppliers()
 {
 	for( unsigned int i = 0; i < offers.size(); i++)
 	{
@@ -50,13 +56,21 @@ void Company::setSuppliers()
 
 }
 
-void Company::printClients() const
+void Company::printRegisteredClients() const
 {
-	for (unsigned int i = 0; i < clients.size(); i++)
+	for (unsigned int i = 0; i < rClients.size(); i++)
 	{
-		std::cout << clients[i]->getInformation() << std::endl;
+		std::cout << rClients[i]->getInformation() << std::endl;
 	}
 
+}
+
+void Company::printOcasionalClients() const
+{
+	for (unsigned int i = 0; i < oClients.size(); i++)
+	{
+		std::cout << oClients[i]->getInformation() << std::endl;
+	}
 }
 
 void Company::printSuppliers() const

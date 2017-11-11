@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <map>
+
 #include "Supplier.h"
 #include "Client.h"
 
@@ -25,8 +27,8 @@ private:
 	std::string boatType;
 	std::string destination;
 	std::string supName;
-	std::vector<Client *> clients;
-	std::vector<int> nTickets;
+	std::map <RegisteredClient *, int> reg_clients;
+	std::map <OcasionalClient *, int> oca_clients;
 	Supplier * sup;
 public:
 	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName, unsigned int points);
@@ -43,7 +45,8 @@ public:
 	std::string getDestination() const;
 	std::string getInformation() const;
 	std::string getSupName() const;
-	std::vector<Client *> getClients() const;
+	std::map <RegisteredClient *, int> getRegClients() const;
+	std::map <OcasionalClient *, int> getOcaClients() const;
 	Supplier * getSupplier() const;
 	void setSupplier(Supplier *  s);
 };

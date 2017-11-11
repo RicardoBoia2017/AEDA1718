@@ -73,19 +73,20 @@ void MakeReservation (Company *c)
 	{
 		case 1:
 		{
-			unsigned int idClient, idOffer, nTick;
+			int idClient, idOffer;
+			int nTick;
 
 			cout << "Insert your id: ";
 			cin >> idClient;
 
-			if ((idClient > c->getClients().size() ))
+			if ((idClient > c->getRegisteredClients().size() ))
 			{
 				cout << "Invalid client id" << endl;
 				MakeReservation(c);
 			}
-			RegisteredClient *rc = c->getClients[idClient-1];
-			cout << c->getClients()[idClient-1]->getInformation() << endl << endl;
 
+			cout << c->getRegisteredClients()[idClient-1]->getInformation() << endl << endl;
+			//RegisteredClient * rc = c->getRegisteredClients[idClient-1];
 			c->printOffers();
 
 			cout << endl << "Insert the id of the corresponding offer: ";
@@ -111,13 +112,19 @@ void MakeReservation (Company *c)
 			cout << "Want to confirm your reservation?: " << endl;
 			cout << "1 Yes" << endl;
 			cout << "2 No" << endl;
+			cout << "Insert the desired option: ";
 
 			cin >> option2;
 			if(option2 == 1)
-				offer->addRegisteredClient(rc, nTick);
-
+			{
+				offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
+				MakeReservation(c);
+			}
 			else if (option2 == 0)
 				MakeReservation(c);
+
+			else
+				throw InvalidOption(c);
 			break;
 		}
 
@@ -161,8 +168,8 @@ void ViewFilesMenu (Company *c)
 	{
 		case 1:
 		{
-			cout << endl;
-			c->printClients();
+			cout << "Registered Clients:" <<  endl;
+			c->printRegisteredClients();
 			cout << endl;
 			ViewFilesMenu (c);
 			break;

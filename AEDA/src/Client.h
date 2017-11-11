@@ -23,6 +23,7 @@ public:
 	int getNIF() const;
 	int getID() const;
 	virtual std::string getInformation() const = 0;
+	//virtual Client & operator = (const Client & c) = 0;
 };
 
 class RegisteredClient: public Client
@@ -30,11 +31,12 @@ class RegisteredClient: public Client
 private:
 	int points;
 public:
-	RegisteredClient(std::string n, int NIF);
+	RegisteredClient(std::string n, int NIF, int points);
 	~RegisteredClient();
 	int getPoints() const;
 	void setPoints(unsigned int p);
 	std::string getInformation() const;
+	//RegisteredClient & operator = (const RegisteredClient & rc) ;
 };
 
 class OcasionalClient: public Client
@@ -42,7 +44,7 @@ class OcasionalClient: public Client
 public:
 	OcasionalClient(std::string n, int NIF);
 	~OcasionalClient();
-	std::ostream & operator<< (std::ostream &o);
 	std::string getInformation() const;
+	//OcasionalClient & operator = (const OcasionalClient & oc);
 };
 #endif /* SRC_CLIENT_H_ */

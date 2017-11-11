@@ -14,17 +14,19 @@
 
 using namespace std;
 
-#define clientsFile "clients.txt"
+#define rClientsFile "RegisteredClients.txt"
+#define oClientsFile "OcasionalClients.txt"
 #define suppliersFile "suppliers.txt"
 #define offersFile "offers.txt"
 
 int main()
 {
-	std::vector <Client *> clients = FileReader::readClients(clientsFile);
+	std::vector <RegisteredClient *> rClients = FileReader::readRegisteredClients(rClientsFile);
+	std::vector <OcasionalClient *> oClients = FileReader::readOcasionalClients(oClientsFile);
 	std::vector <Supplier *> suppliers = FileReader::readSuppliers(suppliersFile);
 	std::vector <Offer *> offers = FileReader::readOffers(offersFile);
 
-	Company c(clients,suppliers,offers);
+	Company c(rClients,oClients, suppliers, offers);
 
 	CompanyMenu (&c);
 

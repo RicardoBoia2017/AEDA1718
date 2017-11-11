@@ -31,9 +31,34 @@ std::vector<std::string> FileReader::readLines(std::string file) {
 	return lines;
 }
 
-std::vector<Client *> FileReader::readClients(std::string file)
+std::vector<RegisteredClient *> FileReader::readRegisteredClients(std::string file)
 {
-	std::vector<Client *> clients;
+	std::vector<RegisteredClient *> rClients;
+	std::vector<std::string> lines = FileReader::readLines(file);
+
+	for (unsigned int i = 0; i < lines.size(); i++)
+	{
+		std::string line = lines[i];
+		std::string name, NIF, points;
+
+		line = line.substr(line.find(',') + 2);
+		name = line.substr(0, line.find(','));
+		line = line.substr(line.find(',') + 2);
+		NIF = line.substr(0, line.find(','));
+		line = line.substr(line.find(',') + 2);
+		points = line.substr(0, line.find(';'));
+
+		RegisteredClient *rc = new RegisteredClient(name, std::stoi(NIF.c_str()), std::stoi(points.c_str()));
+		rClients.push_back(rc);
+	}
+
+
+	return rClients;
+}
+
+std::vector<OcasionalClient*> FileReader::readOcasionalClients(std::string file)
+{
+	std::vector<OcasionalClient *> oClients;
 	std::vector<std::string> lines = FileReader::readLines(file);
 
 	for (unsigned int i = 0; i < lines.size(); i++)
@@ -46,12 +71,12 @@ std::vector<Client *> FileReader::readClients(std::string file)
 		line = line.substr(line.find(',') + 2);
 		NIF = line.substr(0, line.find(';'));
 
-		RegisteredClient *c = new RegisteredClient(name, std::stoi(NIF.c_str()));
-		clients.push_back(c);
+		OcasionalClient *oc = new OcasionalClient(name, std::stoi(NIF.c_str()) );
+		oClients.push_back(oc);
 	}
 
 
-	return clients;
+	return oClients;
 }
 
 std::vector<Supplier *> FileReader::readSuppliers(std::string file)

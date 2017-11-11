@@ -23,12 +23,13 @@ Offer::~Offer() {
 
 }
 
-void Offer::AddRegisteredClient(RegisteredClient * rc, int nTick)
+void Offer::addRegisteredClient(RegisteredClient * rc, int nTick)
 {
-   clients.push_back(rc);
-   rc->getPoints()
-   nTickets.push_back(nTick);
+   reg_clients.insert(std::pair <RegisteredClient* , int> (rc, nTick));
    vacancies -= nTick;
+
+   unsigned int pointsWon = rc->getPoints() + nTick * getPoints();
+   rc->setPoints(pointsWon);
 }
 
 unsigned int Offer::getPrice() const
@@ -74,8 +75,8 @@ std::string Offer::getDestination() const
 std::string Offer::getInformation() const
 {
 	std::stringstream ss;
-	ss << getId() << " " << getSupName() << ", " << getDestination() << ", " << getDistance() << "km " <<  getBoatType() << ", " << getPrice() << " € "
-			<< "//  seats available: " << getVacancies() << std::endl << "Points / ticket : " << getPoints() << " (only available for registered clients)";
+	ss << getId() << " " << getSupName() << ", " << getDestination() << ", " << getDistance() << "km, " <<  getBoatType() << ", " << getPrice() << " € "
+			<< "//  seats available: " << getVacancies() << std::endl << "Points / ticket : " << getPoints() << " (only available for registered clients)" << std::endl;
 
 	return ss.str();
 }
@@ -95,7 +96,12 @@ void Offer::setSupplier(Supplier * s)
 	sup=s;
 }
 
-std::vector <Client*> Offer::getClients() const
+std::map <RegisteredClient*, int> Offer::getRegClients() const
 {
+	return reg_clients;
+}
 
+std::map <OcasionalClient *, int> Offer::getOcaClients() const
+{
+	return oca_clients;
 }
