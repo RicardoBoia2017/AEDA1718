@@ -53,6 +53,11 @@ int RegisteredClient::getPoints() const
 	return points;
 }
 
+void RegisteredClient::setPoints(unsigned int p)
+{
+	points = p;
+}
+
 std::string RegisteredClient::getInformation() const
 {
 	std::stringstream ss;

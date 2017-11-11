@@ -9,9 +9,10 @@
 
 static unsigned int offerID = 1;
 
-Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest, std::string sName):
+Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest, std::string sName, unsigned int points):
 		price(pri), distance(dist), boatType (bT), destination(dest), supName(sName)
 {
+	this->points=points;
 	this->capacity = capacity;
 	vacancies = capacity;
 	id = offerID;
@@ -22,34 +23,42 @@ Offer::~Offer() {
 
 }
 
-void Offer::PrepareReservation(Client * c, int nTick)
+void Offer::AddRegisteredClient(RegisteredClient * rc, int nTick)
 {
-
+   clients.push_back(rc);
+   rc->getPoints()
+   nTickets.push_back(nTick);
+   vacancies -= nTick;
 }
 
-int Offer::getPrice() const
+unsigned int Offer::getPrice() const
 {
 	return price;
 }
 
-int Offer::getId() const
+unsigned int Offer::getId() const
 {
 	return id;
 }
 
-int Offer::getDistance() const
+unsigned int Offer::getDistance() const
 {
 	return distance;
 }
 
-int Offer::getCapacity() const
+unsigned int Offer::getCapacity() const
 {
 	return capacity;
 }
 
-int Offer::getVacancies() const
+unsigned int Offer::getVacancies() const
 {
 	return vacancies;
+}
+
+unsigned int Offer::getPoints() const
+{
+	return points;
 }
 
 std::string Offer::getBoatType() const
@@ -65,8 +74,8 @@ std::string Offer::getDestination() const
 std::string Offer::getInformation() const
 {
 	std::stringstream ss;
-	//std::string supName = sup->getName();
-	ss << getId() << " " << getSupName() << ", " << getDestination() << ", " << getDistance() << "km " <<  getBoatType() << ", " << getPrice() << " € " << "//  seats available: " << getVacancies();
+	ss << getId() << " " << getSupName() << ", " << getDestination() << ", " << getDistance() << "km " <<  getBoatType() << ", " << getPrice() << " € "
+			<< "//  seats available: " << getVacancies() << std::endl << "Points / ticket : " << getPoints() << " (only available for registered clients)";
 
 	return ss.str();
 }

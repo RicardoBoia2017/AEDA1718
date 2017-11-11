@@ -33,6 +33,7 @@ public:
 	RegisteredClient(std::string n, int NIF);
 	~RegisteredClient();
 	int getPoints() const;
+	void setPoints(unsigned int p);
 	std::string getInformation() const;
 };
 

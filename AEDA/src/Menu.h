@@ -27,3 +27,13 @@ public:
 		CompanyMenu(c);
 	}
 };
+
+class NoSeatsAvailable
+{
+public:
+	NoSeatsAvailable (Company *c)
+	{
+		std::cout << std::endl << "Sorry! There are no more seats available for this trip." << std::endl;
+		MakeReservation(c);
+	}
+};

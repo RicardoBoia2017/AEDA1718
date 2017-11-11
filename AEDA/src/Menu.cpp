@@ -57,7 +57,7 @@ void CompanyMenu(Company *c)
 
 void MakeReservation (Company *c)
 {
-	int option;
+	unsigned int option;
 	cout << "***********************" << endl;
 	cout << "|   Make Reservation   |" << endl;
 	cout << "***********************" << endl << endl;
@@ -83,7 +83,7 @@ void MakeReservation (Company *c)
 				cout << "Invalid client id" << endl;
 				MakeReservation(c);
 			}
-
+			RegisteredClient *rc = c->getClients[idClient-1];
 			cout << c->getClients()[idClient-1]->getInformation() << endl << endl;
 
 			c->printOffers();
@@ -96,16 +96,28 @@ void MakeReservation (Company *c)
 				cout << "Invalid offer id" << endl;
 				MakeReservation(c);
 			}
+			Offer * offer = c->getOffers()[idOffer-1];
+
 
 			cout << "How many tickets do you desire: ";
 			cin >> nTick;
 
-			if(nTick > c->getOffers()[idOffer-1]->getVacancies())
-			{
-				cout << "Sorry, but there aren't enough seats available" << endl;
-				MakeReservation(c);
-			}
+			if(nTick > offer->getVacancies())
+				throw NoSeatsAvailable(c);
 
+			unsigned int option2;
+
+			cout << "Total: " << offer->getPrice() * nTick << "€" << endl;
+			cout << "Want to confirm your reservation?: " << endl;
+			cout << "1 Yes" << endl;
+			cout << "2 No" << endl;
+
+			cin >> option2;
+			if(option2 == 1)
+				offer->addRegisteredClient(rc, nTick);
+
+			else if (option2 == 0)
+				MakeReservation(c);
 			break;
 		}
 

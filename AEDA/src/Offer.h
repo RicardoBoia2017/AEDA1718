@@ -16,11 +16,12 @@
 
 class Offer {
 private:
-	int id;
-	int price;
-	int distance;
-	int capacity;
-	int vacancies;
+	unsigned int id;
+	unsigned int price;
+	unsigned int distance;
+	unsigned int capacity;
+	unsigned int vacancies;
+	unsigned int points;
 	std::string boatType;
 	std::string destination;
 	std::string supName;
@@ -28,14 +29,16 @@ private:
 	std::vector<int> nTickets;
 	Supplier * sup;
 public:
-	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName);
+	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName, unsigned int points);
 	virtual ~Offer();
-	void PrepareReservation(Client * c, int nTick);
-	int getId() const;
-	int getPrice() const;
-	int getDistance() const;
-	int getCapacity() const;
-	int getVacancies() const;
+	void addRegisteredClient(RegisteredClient * rc, int nTick);
+	void addOcasionalClient(OcasionalClient * oc, int nTick);
+	unsigned int getId() const;
+	unsigned int getPrice() const;
+	unsigned int getDistance() const;
+	unsigned int getCapacity() const;
+	unsigned int getVacancies() const;
+	unsigned int getPoints() const;
 	std::string getBoatType () const;
 	std::string getDestination() const;
 	std::string getInformation() const;
