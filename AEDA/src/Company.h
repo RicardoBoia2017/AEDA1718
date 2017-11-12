@@ -17,21 +17,23 @@
 
 class Company {
 private:
-	std::vector<Client* > c;
 	std::vector <RegisteredClient *> rClients;
-	std::vector <OcasionalClient *> oClients;
+	std::vector <OccasionalClient *> oClients;
 	std::vector <Supplier *> suppliers;
 	std::vector <Offer *> offers;
 public:
-	Company(std::vector<RegisteredClient *> rClients, std::vector<OcasionalClient *> oClients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers);
+	Company(std::vector<RegisteredClient *> rClients, std::vector<OccasionalClient *> oClients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers);
 	virtual ~Company();
+	int RegisterClient(std::string name, int NIF);
+	void addOccasionalClient (std::string name, int NIF);
 	std::vector <RegisteredClient *> getRegisteredClients () const;
-	std::vector <OcasionalClient *> getOcasionalClients () const;
+	std::vector <OccasionalClient *> getOccasionalClients () const;
 	std::vector <Supplier *> getSuppliers () const;
 	std::vector <Offer *> getOffers () const;
 	void setOfferSuppliers();
 	void printRegisteredClients() const;
-	void printOcasionalClients() const;
+	void printRegisteredClientByPoints() const;
+	void printOccasionalClients() const;
 	void printSuppliers() const;
 	void printOffers() const;
 };

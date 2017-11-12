@@ -15,13 +15,12 @@ class Client {
 private:
 	std::string name;
 	int NIF;
-	int id;
 public:
 	Client(std::string n, int NIF);
 	virtual ~Client();
 	std::string getName() const;
 	int getNIF() const;
-	int getID() const;
+	virtual int getId() const = 0;
 	virtual std::string getInformation() const = 0;
 	//virtual Client & operator = (const Client & c) = 0;
 };
@@ -30,21 +29,26 @@ class RegisteredClient: public Client
 {
 private:
 	int points;
+	int reg_id;
 public:
 	RegisteredClient(std::string n, int NIF, int points);
 	~RegisteredClient();
+	int getId() const;
 	int getPoints() const;
 	void setPoints(unsigned int p);
 	std::string getInformation() const;
 	//RegisteredClient & operator = (const RegisteredClient & rc) ;
 };
 
-class OcasionalClient: public Client
+class OccasionalClient: public Client
 {
+private:
+	int oc_id;
 public:
-	OcasionalClient(std::string n, int NIF);
-	~OcasionalClient();
+	OccasionalClient(std::string n, int NIF);
+	~OccasionalClient();
+	int getId() const;
 	std::string getInformation() const;
-	//OcasionalClient & operator = (const OcasionalClient & oc);
+	//occasionalClient & operator = (const occasionalClient & oc);
 };
 #endif /* SRC_CLIENT_H_ */

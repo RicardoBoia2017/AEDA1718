@@ -24,7 +24,7 @@ private:
 	static std::vector<std::string> readLines(std::string file);
 public:
 	static std::vector<RegisteredClient *> readRegisteredClients(std::string file);
-	static std::vector<OcasionalClient *> readOcasionalClients(std::string file);
+	static std::vector<OccasionalClient *> readOccasionalClients(std::string file);
 	static std::vector<Supplier *> readSuppliers(std::string file);
 	static std::vector<Offer *> readOffers(std::string file);
 };

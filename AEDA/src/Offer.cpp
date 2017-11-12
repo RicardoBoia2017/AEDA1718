@@ -25,11 +25,39 @@ Offer::~Offer() {
 
 void Offer::addRegisteredClient(RegisteredClient * rc, int nTick)
 {
-   reg_clients.insert(std::pair <RegisteredClient* , int> (rc, nTick));
+	bool Found = false;
+	for(std::map<RegisteredClient *, int>::iterator it = reg_clients.begin(); it != reg_clients.end(); it++)
+	{
+		if(it->first->getId() == rc->getId())
+		{
+			it->second += nTick;
+			Found = true;
+		}
+	}
+
+	if(Found == false)
+			reg_clients.insert(std::pair <RegisteredClient* , int> (rc, nTick));
+
    vacancies -= nTick;
 
    unsigned int pointsWon = rc->getPoints() + nTick * getPoints();
    rc->setPoints(pointsWon);
+}
+
+void Offer::addOccasionalClient(OccasionalClient* oc, int nTick)
+{
+	bool Found = false;
+	for(std::map<OccasionalClient *, int>::iterator it = oc_clients.begin(); it != oc_clients.end(); it++)
+	{
+		if(it->first->getId() == oc->getId())
+		{
+			it->second += nTick;
+			Found = true;
+		}
+	}
+
+	vacancies -= nTick;
+
 }
 
 unsigned int Offer::getPrice() const
@@ -101,7 +129,7 @@ std::map <RegisteredClient*, int> Offer::getRegClients() const
 	return reg_clients;
 }
 
-std::map <OcasionalClient *, int> Offer::getOcaClients() const
+std::map <OccasionalClient *, int> Offer::getOcClients() const
 {
-	return oca_clients;
+	return oc_clients;
 }

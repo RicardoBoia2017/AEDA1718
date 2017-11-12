@@ -7,7 +7,7 @@
 
 #include "Company.h"
 
-Company::Company(std::vector<RegisteredClient *> rClients, std::vector<OcasionalClient *> oClients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers)
+Company::Company(std::vector<RegisteredClient *> rClients, std::vector<OccasionalClient *> oClients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers)
 {
 	this->rClients = rClients;
 	this->oClients = oClients;
@@ -20,12 +20,26 @@ Company::~Company()
 
 }
 
+int Company::RegisterClient(std::string name, int NIF)
+{
+	RegisteredClient * rc = new RegisteredClient(name,NIF,0);
+	rClients.push_back(rc);
+
+	return rc->getId();
+}
+
+void Company::addOccasionalClient (std::string name, int NIF)
+{
+	OccasionalClient *oc = new OccasionalClient(name,NIF);
+	oClients.push_back(oc);
+}
+
 std::vector <RegisteredClient *> Company::getRegisteredClients () const
 {
 	return rClients;
 }
 
-std::vector <OcasionalClient *> Company::getOcasionalClients() const
+std::vector <OccasionalClient *> Company::getOccasionalClients() const
 {
 	return oClients;
 }
@@ -65,7 +79,30 @@ void Company::printRegisteredClients() const
 
 }
 
-void Company::printOcasionalClients() const
+void Company::printRegisteredClientByPoints() const
+{
+	std::vector <RegisteredClient* > v_tmp = rClients;
+
+	int j;
+	for (int gap = v_tmp.size()/2; gap > 0; gap /= 2)
+	{
+		for (unsigned int i = gap; i < v_tmp.size(); i++)
+		{
+			RegisteredClient* tmp = v_tmp[i];
+			for (j = i; j >= gap && tmp->getPoints() > v_tmp[j-gap]->getPoints(); j -= gap)
+				v_tmp[j] = v_tmp[j-gap];
+			v_tmp[j] = tmp;
+		}
+	}
+
+	for(unsigned int i = 0; i < v_tmp.size(); i++)
+	{
+		std::cout << v_tmp[i]->getInformation() << std::endl;
+	}
+
+}
+
+void Company::printOccasionalClients() const
 {
 	for (unsigned int i = 0; i < oClients.size(); i++)
 	{

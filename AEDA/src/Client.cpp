@@ -12,8 +12,6 @@ static unsigned int clientID = 1;
 Client::Client(std::string n, int NIF): name(n)
 {
 	this->NIF = NIF;
-	id = clientID;
-	clientID ++;
 }
 
 Client::~Client() {
@@ -31,22 +29,27 @@ int Client::getNIF() const
 }
 
 
-int Client::getID() const
-{
-	return id;
-}
 
 //Registered Client
+
+
+static int reg_clientID = 1;
 
 RegisteredClient::RegisteredClient(std::string n, int NIF, int points): Client(n,NIF)
 {
 	this->points=points;
+	reg_id = reg_clientID;
+	reg_clientID ++;
 }
 
 RegisteredClient::~RegisteredClient() {
 
 }
 
+int RegisteredClient::getId() const
+{
+	return reg_id;
+}
 
 int RegisteredClient::getPoints() const
 {
@@ -62,7 +65,7 @@ std::string RegisteredClient::getInformation() const
 {
 	std::stringstream ss;
 
-	ss << getID() << " " << getName() << ", " << getNIF() << ", Points:  " << getPoints();
+	ss << getId() << " " << getName() << ", " << getNIF() << ", Points: " << getPoints();
 
 	return ss.str() ;
 }
@@ -76,28 +79,36 @@ std::string RegisteredClient::getInformation() const
 //}
 
 
-//Ocasional Client
+//Occasional Client
 
-OcasionalClient::OcasionalClient(std::string n, int NIF): Client(n,NIF)
+static int oc_clientID = 1;
+
+OccasionalClient::OccasionalClient(std::string n, int NIF): Client(n,NIF)
+{
+	oc_id = oc_clientID;
+	oc_clientID++;
+}
+
+OccasionalClient::~OccasionalClient()
 {
 
 }
 
-OcasionalClient::~OcasionalClient()
+int OccasionalClient::getId() const
 {
-
+	return oc_id;
 }
 
-std::string OcasionalClient::getInformation() const
+std::string OccasionalClient::getInformation() const
 {
 	std::stringstream ss;
 
-	ss << getID() << " " << getName() << " " << getNIF();
+	ss << getId() << " " << getName() << ", " << getNIF();
 
 	return ss.str() ;
 }
 
-//OcasionalClient & OcasionalClient::operator = (const OcasionalClient & oc)
+//occasionalClient & occasionalClient::operator = (const occasionalClient & oc)
 //{
 //	name = oc.getName();
 //	NIF = oc.getNIF();

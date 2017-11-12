@@ -56,9 +56,9 @@ std::vector<RegisteredClient *> FileReader::readRegisteredClients(std::string fi
 	return rClients;
 }
 
-std::vector<OcasionalClient*> FileReader::readOcasionalClients(std::string file)
+std::vector<OccasionalClient*> FileReader::readOccasionalClients(std::string file)
 {
-	std::vector<OcasionalClient *> oClients;
+	std::vector<OccasionalClient *> oClients;
 	std::vector<std::string> lines = FileReader::readLines(file);
 
 	for (unsigned int i = 0; i < lines.size(); i++)
@@ -71,7 +71,7 @@ std::vector<OcasionalClient*> FileReader::readOcasionalClients(std::string file)
 		line = line.substr(line.find(',') + 2);
 		NIF = line.substr(0, line.find(';'));
 
-		OcasionalClient *oc = new OcasionalClient(name, std::stoi(NIF.c_str()) );
+		OccasionalClient *oc = new OccasionalClient(name, std::stoi(NIF.c_str()) );
 		oClients.push_back(oc);
 	}
 

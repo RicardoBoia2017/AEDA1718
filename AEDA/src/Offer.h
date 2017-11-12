@@ -28,13 +28,13 @@ private:
 	std::string destination;
 	std::string supName;
 	std::map <RegisteredClient *, int> reg_clients;
-	std::map <OcasionalClient *, int> oca_clients;
+	std::map <OccasionalClient *, int> oc_clients;
 	Supplier * sup;
 public:
 	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName, unsigned int points);
 	virtual ~Offer();
 	void addRegisteredClient(RegisteredClient * rc, int nTick);
-	void addOcasionalClient(OcasionalClient * oc, int nTick);
+	void addOccasionalClient(OccasionalClient * oc, int nTick);
 	unsigned int getId() const;
 	unsigned int getPrice() const;
 	unsigned int getDistance() const;
@@ -46,7 +46,7 @@ public:
 	std::string getInformation() const;
 	std::string getSupName() const;
 	std::map <RegisteredClient *, int> getRegClients() const;
-	std::map <OcasionalClient *, int> getOcaClients() const;
+	std::map <OccasionalClient *, int> getOcClients() const;
 	Supplier * getSupplier() const;
 	void setSupplier(Supplier *  s);
 };

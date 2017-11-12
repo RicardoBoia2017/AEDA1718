@@ -15,14 +15,14 @@
 using namespace std;
 
 #define rClientsFile "RegisteredClients.txt"
-#define oClientsFile "OcasionalClients.txt"
+#define oClientsFile "OccasionalClients.txt"
 #define suppliersFile "suppliers.txt"
 #define offersFile "offers.txt"
 
 int main()
 {
 	std::vector <RegisteredClient *> rClients = FileReader::readRegisteredClients(rClientsFile);
-	std::vector <OcasionalClient *> oClients = FileReader::readOcasionalClients(oClientsFile);
+	std::vector <OccasionalClient *> oClients = FileReader::readOccasionalClients(oClientsFile);
 	std::vector <Supplier *> suppliers = FileReader::readSuppliers(suppliersFile);
 	std::vector <Offer *> offers = FileReader::readOffers(offersFile);
 
