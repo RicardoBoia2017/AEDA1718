@@ -35,7 +35,7 @@ class NoSeatsAvailable
 public:
 	NoSeatsAvailable (Company *c)
 	{
-		std::cout << std::endl << "Sorry! There are no more seats available for this trip." << std::endl;
+		std::cout << std::endl << "Sorry! There aren't enough seats available." << std::endl;
 		MakeReservation(c);
 	}
 };
