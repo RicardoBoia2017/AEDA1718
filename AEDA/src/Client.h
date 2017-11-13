@@ -22,7 +22,6 @@ public:
 	int getNIF() const;
 	virtual int getId() const = 0;
 	virtual std::string getInformation() const = 0;
-	//virtual Client & operator = (const Client & c) = 0;
 };
 
 class RegisteredClient: public Client
@@ -37,7 +36,7 @@ public:
 	int getPoints() const;
 	void setPoints(unsigned int p);
 	std::string getInformation() const;
-	//RegisteredClient & operator = (const RegisteredClient & rc) ;
+	friend std::ostream &operator<< (std::ostream &os, RegisteredClient &c1);
 };
 
 class OccasionalClient: public Client
@@ -50,6 +49,6 @@ public:
 	int getId() const;
 	void setId(int id);
 	std::string getInformation() const;
-	//occasionalClient & operator = (const occasionalClient & oc);
+	friend std::ostream &operator<< (std::ostream &os, OccasionalClient &c1);
 };
 #endif /* SRC_CLIENT_H_ */

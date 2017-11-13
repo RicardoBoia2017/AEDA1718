@@ -30,5 +30,10 @@ int main()
 
 	CompanyMenu (&c);
 
+//	c.exportRegisteredClients (rClientsFile);
+//	c.exportOccasionaldClients (oClientsFile);
+//	c.exportSuppliers (suppliersFile);
+//	c.exportOffers (offersFile);
+
 	return 0;
 }

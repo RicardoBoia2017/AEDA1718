@@ -10,7 +10,8 @@
 
 #include <vector>
 #include <iostream>
-#include <map>
+#include <fstream>
+
 
 #include "Client.h"
 #include "Supplier.h"
@@ -26,6 +27,10 @@ private:
 public:
 	Company(std::vector<RegisteredClient *> rClients, std::vector<OccasionalClient *> oClients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers);
 	virtual ~Company();
+	void exportRegisteredClients(std::string file);
+	void exportOccasionaldClients(std::string file);
+	void exportSuppliers (std::string file);
+	void exportOffers (std::string file);
 	int RegisterClient(std::string name, int NIF);
 	void addOccasionalClient (std::string name, int NIF);
 	void removeOccasionalClient(int id);
@@ -33,6 +38,8 @@ public:
 	std::vector <OccasionalClient *> getOccasionalClients () const;
 	std::vector <Supplier *> getSuppliers () const;
 	std::vector <Offer *> getOffers () const;
+	int getBank() const;
+	void setBank (int b);
 	void setOfferSuppliers();
 	void printRegisteredClients() const;
 	void printRegisteredClientByPoints() const;
@@ -41,6 +48,7 @@ public:
 	void printSuppliers() const;
 	void printOffers() const;
 	void printOfferBySuppliers(std::string name) const;
+
 };
 
 #endif /* SRC_COMPANY_H_ */

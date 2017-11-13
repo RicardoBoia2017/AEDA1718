@@ -7,8 +7,6 @@
 
 #include "Client.h"
 
-static unsigned int clientID = 1;
-
 Client::Client(std::string n, int NIF): name(n)
 {
 	this->NIF = NIF;
@@ -70,13 +68,12 @@ std::string RegisteredClient::getInformation() const
 	return ss.str() ;
 }
 
-//RegisteredClient & RegisteredClient::operator = (const RegisteredClient & rc)
-//{
-//	name = rc.getName();
-//	NIF = rc.getNIF();
-//	id = rc.getID();
-//	setPoints (rc.getPoints());
-//}
+std::ostream &operator<< (std::ostream &os, RegisteredClient &rc1)
+{
+	os << rc1.getId() << ", " << rc1.getName() << ", " << rc1.getNIF() << ", " << rc1.getPoints() << ";" ;
+	return os;
+}
+
 
 
 //Occasional Client
@@ -113,9 +110,8 @@ std::string OccasionalClient::getInformation() const
 	return ss.str() ;
 }
 
-//occasionalClient & occasionalClient::operator = (const occasionalClient & oc)
-//{
-//	name = oc.getName();
-//	NIF = oc.getNIF();
-//	id = oc.getID();
-//}
+std::ostream &operator<< (std::ostream &os, OccasionalClient &oc1)
+{
+	os << oc1.getId() << ", " << oc1.getName() << ", " << oc1.getNIF() << ";" ;
+	return os;
+}

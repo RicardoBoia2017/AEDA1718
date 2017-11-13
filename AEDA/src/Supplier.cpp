@@ -49,8 +49,9 @@ std::string Supplier::getInformation () const
 	return ss.str();
 }
 
-//std::vector <Offer*> Supplier::getOffers() const
-//{
-//	return offers;
-//}
+std::ostream &operator<< (std::ostream &os, Supplier &s1)
+{
+	os << s1.getId() << ", " << s1.getName() <<  ", " << s1.getNIF() << ", " << s1.getAddress() << ";";
+	return os;
+}
 

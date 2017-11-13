@@ -21,6 +21,54 @@ Company::~Company()
 
 }
 
+void Company::exportRegisteredClients(std::string file)
+{
+	std::ofstream out;
+	out.open(file.c_str());
+
+	for(unsigned int i=0; i<rClients.size(); i++){
+		out << *rClients.at(i) << std::endl;
+	}
+
+	out.close();
+}
+
+void Company::exportOccasionaldClients(std::string file)
+{
+	std::ofstream out;
+	out.open(file.c_str());
+
+	for(unsigned int i=0; i<oClients.size(); i++){
+		out << *oClients.at(i) << std::endl;
+	}
+
+	out.close();
+}
+
+void Company::exportSuppliers(std::string file)
+{
+	std::ofstream out;
+	out.open(file.c_str());
+
+	for(unsigned int i=0; i<suppliers.size(); i++){
+		out << *suppliers.at(i) << std::endl;
+	}
+
+	out.close();
+}
+
+void Company::exportOffers(std::string file)
+{
+	std::ofstream out;
+	out.open(file.c_str());
+
+	for(unsigned int i=0; i<offers.size(); i++){
+		out << *offers.at(i) << std::endl;
+	}
+
+	out.close();
+}
+
 int Company::RegisterClient(std::string name, int NIF)
 {
 	RegisteredClient * rc = new RegisteredClient(name,NIF,0);
@@ -70,6 +118,15 @@ std::vector <Supplier *> Company::getSuppliers () const
 std::vector <Offer *> Company::getOffers () const
 {
 	return offers;
+}
+
+int Company::getBank() const
+{
+	return bank;
+}
+void Company::setBank(int b)
+{
+	bank += b;
 }
 
 void Company::setOfferSuppliers()

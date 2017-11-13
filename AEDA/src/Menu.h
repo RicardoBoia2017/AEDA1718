@@ -7,6 +7,7 @@
 
 #pragma once
 #include <iostream>
+#include <limits>
 
 #include "Company.h"
 

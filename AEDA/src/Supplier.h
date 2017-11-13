@@ -29,6 +29,7 @@ public:
 	std::string getAddress() const;
 	int getId() const;
 	std::string getInformation() const;
+	friend std::ostream &operator<< (std::ostream &os, Supplier &s1);
 };
 
 #endif /* SRC_SUPPLIER_H_ */

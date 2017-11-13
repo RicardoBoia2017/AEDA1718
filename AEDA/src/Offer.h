@@ -24,6 +24,7 @@ private:
 	unsigned int capacity;
 	unsigned int vacancies;
 	unsigned int points;
+	double percentage;
 	std::string boatType;
 	std::string destination;
 	std::string supName;
@@ -31,7 +32,7 @@ private:
 	std::map <OccasionalClient *, int> oc_clients;
 	Supplier * sup;
 public:
-	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName, unsigned int points);
+	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName, unsigned int points, double percentage);
 	virtual ~Offer();
 	void addRegisteredClient(RegisteredClient * rc, int nTick);
 	void addOccasionalClient(OccasionalClient * oc, int nTick);
@@ -41,6 +42,7 @@ public:
 	unsigned int getCapacity() const;
 	unsigned int getVacancies() const;
 	unsigned int getPoints() const;
+	double getPercentage() const;
 	std::string getBoatType () const;
 	std::string getDestination() const;
 	std::string getInformation() const;
@@ -49,6 +51,7 @@ public:
 	std::map <OccasionalClient *, int> getOcClients() const;
 	Supplier * getSupplier() const;
 	void setSupplier(Supplier *  s);
+	friend std::ostream &operator<< (std::ostream &os, Offer &o1);
 };
 
 #endif /* SRC_OFFER_H_ */

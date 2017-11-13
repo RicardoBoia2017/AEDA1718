@@ -12,7 +12,8 @@ using namespace std;
 
 void CompanyMenu(Company *c)
 {
-	int option;
+	unsigned int optionCM = 0;
+
 	cout << "***********************" << endl;
 	cout << "|     Porto Rivers    |" << endl;
 	cout << "***********************" << endl << endl;
@@ -24,9 +25,10 @@ void CompanyMenu(Company *c)
 	cout << "4 Check bank"		   << endl;
 	cout << "5 Exit"               << endl;
 	cout << "Insert the desired option: ";
-	cin >> option;
+	cin >> optionCM;
+	cout << optionCM;
 
-	switch (option)
+	switch (optionCM)
 	{
 		case 1:
 		{
@@ -48,12 +50,13 @@ void CompanyMenu(Company *c)
 
 		case 4:
 		{
-			Check_Bank(c);
+			cout << "Total: " << c->getBank() << "€" << endl;
+			CompanyMenu(c);
+			break;
 		}
 
 		case 5:
 		{
-			return;
 			break;
 		}
 
@@ -64,7 +67,7 @@ void CompanyMenu(Company *c)
 
 void MakeReservation (Company *c)
 {
-	unsigned int option;
+	unsigned int optionMR = 0;
 	cout << "***********************" << endl;
 	cout << "|   Make Reservation   |" << endl;
 	cout << "***********************" << endl << endl;
@@ -75,9 +78,9 @@ void MakeReservation (Company *c)
 	cout << " 3 First time user" << endl;
 	cout << " 4 Back" << endl;
 	cout << "Insert the desired option: ";
-	cin >> option;
+	cin >> optionMR;
 
-	switch (option)
+	switch (optionMR)
 	{
 		case 1:
 		{
@@ -87,22 +90,28 @@ void MakeReservation (Company *c)
 
 		case 2:
 		{
-			unsigned int option2;
+			unsigned int optionMR2 = 0;
 			cout << endl << "Would you like to register? " << endl;
 			cout << " 1 Yes" << endl;
 			cout << " 2 No" << endl;
 			cout << "Insert the desired option: ";
-			cin >> option2;
+			cin >> optionMR2;
 
-			if( option2 == 2)
+			if( optionMR2 == 2)
 				MakeReservation_Occasional(c);
-			else if (option2 == 1)
+			else if (optionMR2 == 1)
 			{
 				int idOc;
 				cout << endl;
 				c->printOccasionalClients();
 				cout << endl << "Enter your id: ";
 				cin >> idOc;
+
+				if (idOc < 0 || idOc > c->getOccasionalClients().size())
+				{
+					cout << "Invalid id" << endl;
+					MakeReservation(c);
+				}
 				if ( idOc > c->getRegisteredClients().size() || idOc <= 0)
 				{
 					cout << "Invalid client id" << endl;
@@ -125,14 +134,14 @@ void MakeReservation (Company *c)
 
 		case 3:
 		{
-			unsigned int option2;
+			unsigned int optionMR3 = 0;
 			cout << endl << "Would you like to register? " << endl;
 			cout << " 1 Yes" << endl;
 			cout << " 2 No" << endl;
 			cout << "Insert the desired option: ";
-			cin >> option2;
+			cin >> optionMR3;
 
-			if(option2 < 0 || option > 2)
+			if(optionMR3 < 0 || optionMR3 > 2)
 			{
 				cout << "Invalid option" << endl;
 				MakeReservation(c);
@@ -144,12 +153,12 @@ void MakeReservation (Company *c)
 			cout << "Please, enter your NIF: ";
 			cin >> NIF;
 
-			if( option2 == 2)
+			if( optionMR3 == 2)
 			{
 				c->addOccasionalClient(name,NIF);
 				MakeReservation_Occasional(c);
 			}
-			else if (option2 == 1)
+			else if (optionMR3 == 1)
 			{
 				int id = c->RegisterClient(name, NIF);
 				cout << "Your new id is: " << id << endl << endl;
@@ -203,21 +212,22 @@ void MakeReservation_Registered (Company *c)
 	if(nTick > offer->getVacancies())
 		throw NoSeatsAvailable(c);
 
-	unsigned int option2;
+	unsigned int optionMR_R;
 
 	cout << "Total: " << offer->getPrice() * nTick << "€,  Points Won: " << offer->getPoints()*nTick <<  endl;
 	cout << "Want to confirm your reservation?: " << endl << endl;
 	cout << "1 Yes" << endl;
 	cout << "2 No" << endl;
 	cout << "Insert the desired option: ";
-	cin >> option2;
+	cin >> optionMR_R;
 
-	if(option2 == 1)
+	if(optionMR_R == 1)
 	{
 		offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
+		c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
 		MakeReservation(c);
 	}
-	else if (option2 == 0)
+	else if (optionMR_R == 0)
 		MakeReservation(c);
 
 	else
@@ -245,7 +255,7 @@ void MakeReservation_Occasional (Company *c)
 	cout << endl << "Insert the id of the corresponding offer: ";
 	cin >> idOffer;
 
-	if (idOffer > c->getOffers().size())
+	if (idOffer > c->getOffers().size() || idOffer < 0)
 	{
 		cout << "Invalid offer id" << endl;
 		MakeReservation(c);
@@ -258,23 +268,25 @@ void MakeReservation_Occasional (Company *c)
 	if(nTick > offer->getVacancies())
 		throw NoSeatsAvailable(c);
 
-	unsigned int option2;
+	unsigned int optionMR_O;
+
 	cout << "Total: " << offer->getPrice() * nTick << "€" << endl;
 	cout << "Want to confirm your reservation?: " << endl;
 	cout << "1 Yes" << endl;
 	cout << "2 No" << endl;
 	cout << "Insert the desired option: ";
-	cin >> option2;
+	cin >> optionMR_O;
 
-	if(option2 == 1)
+	if(optionMR_O == 1)
 		{
 			offer->addOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
+			c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
 			MakeReservation(c);
 		}
-		else if (option2 == 0)
+	else if (optionMR_O == 0)
 			MakeReservation(c);
 
-		else
+	else
 			throw InvalidOption(c);
 }
 
@@ -285,7 +297,7 @@ void CancelReservation (Company *c)
 
 void ViewFilesMenu (Company *c)
 {
-	int option;
+	unsigned int optionVFM = 0;
 	cout << "************************" << endl;
 	cout << "|      View Files      |" << endl;
 	cout << "************************" << endl << endl;
@@ -295,13 +307,13 @@ void ViewFilesMenu (Company *c)
 	cout << "3 Offers" << endl;
 	cout << "4 Back" << endl;
 	cout << "Insert the desired option: ";
-	cin >> option;
+	cin >> optionVFM;
 
-	switch(option)
+	switch(optionVFM)
 	{
 		case 1:
 		{
-			int option2;
+			int optionVFM1;
 			 cout << "************************" << endl;
 			 cout << "|        Clients       |" << endl;
 			 cout << "************************" << endl << endl;
@@ -310,9 +322,9 @@ void ViewFilesMenu (Company *c)
 			cout << "2 View clients by points" << endl;
 			cout << "3 Back" << endl;
 			cout << "Insert the desired option: " << endl;
-			cin >> option2;
+			cin >> optionVFM1;
 
-			switch (option2)
+			switch (optionVFM1)
 			{
 				case 1:
 				{
@@ -355,7 +367,7 @@ void ViewFilesMenu (Company *c)
 
 		case 3:
 		{
-			int option2;
+			int optionVFM3;
 			cout << "************************" << endl;
 			cout << "|        Offers        |" << endl;
 			cout << "************************" << endl << endl;
@@ -364,9 +376,9 @@ void ViewFilesMenu (Company *c)
 			cout << "2 View offers by suppliers" << endl;
 			cout << "3 Back" << endl;
 			cout << "Insert the desired option: " << endl;
-			cin >> option2;
+			cin >> optionVFM3;
 
-			switch (option2)
+			switch (optionVFM3)
 			{
 				case 1:
 				{

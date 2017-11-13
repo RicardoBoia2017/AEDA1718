@@ -9,11 +9,12 @@
 
 static unsigned int offerID = 1;
 
-Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest, std::string sName, unsigned int points):
+Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest, std::string sName, unsigned int points, double percentage):
 		price(pri), distance(dist), boatType (bT), destination(dest), supName(sName)
 {
 	this->points=points;
 	this->capacity = capacity;
+	this->percentage = percentage/100;
 	vacancies = capacity;
 	id = offerID;
 	offerID++;
@@ -93,6 +94,11 @@ unsigned int Offer::getPoints() const
 	return points;
 }
 
+double Offer::getPercentage() const
+{
+	return percentage;
+}
+
 std::string Offer::getBoatType() const
 {
 	return boatType;
@@ -136,3 +142,13 @@ std::map <OccasionalClient *, int> Offer::getOcClients() const
 {
 	return oc_clients;
 }
+
+std::ostream &operator<< (std::ostream &os, Offer &o1)
+{
+	double perc = o1.getPercentage() * 100;
+
+	os << o1.getId() << ", " << o1.getSupName() << ", " << o1.getPrice() << ", " << o1.getDistance() << ", " << o1.getVacancies() << ", " <<
+			o1.getBoatType() << ", " << o1.getDestination() << ", " << o1.getPoints() << ", " << perc << ";";
+	return os;
+}
+

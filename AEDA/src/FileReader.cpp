@@ -113,7 +113,7 @@ std::vector<Offer *> FileReader::readOffers (std::string file)
 	for (unsigned int i = 0; i < lines.size(); i++)
 	{
 		std::string line = lines[i];
-		std::string supName, price, dist, cap, bType, dest, points;
+		std::string supName, price, dist, cap, bType, dest, points, percentage;
 
 		line = line.substr(line.find(',') + 2);
 		supName = line.substr(0, line.find(','));
@@ -128,11 +128,11 @@ std::vector<Offer *> FileReader::readOffers (std::string file)
 		line = line.substr(line.find(',') + 2);
 		dest = line.substr(0, line.find(','));
 		line = line.substr(line.find(',') + 2);
-		points = line.substr(0, line.find(';'));
+		points = line.substr(0, line.find(','));
+		line = line.substr(line.find(',') + 2);
+		percentage = line.substr(0, line.find(';'));
 
-
-
-		Offer *o = new Offer (std::stoi(price.c_str()), std::stoi(dist.c_str()),std::stoi(cap.c_str()), bType, dest, supName, std::stoi(points.c_str()));
+		Offer *o = new Offer (std::stoi(price.c_str()), std::stoi(dist.c_str()),std::stoi(cap.c_str()), bType, dest, supName, std::stoi(points.c_str()), std::stod(percentage.c_str()) );
 		offers.push_back(o);
 	}
 
