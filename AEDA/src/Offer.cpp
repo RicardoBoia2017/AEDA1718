@@ -56,6 +56,9 @@ void Offer::addOccasionalClient(OccasionalClient* oc, int nTick)
 		}
 	}
 
+	if(Found == false)
+			oc_clients.insert(std::pair <OccasionalClient* , int> (oc, nTick));
+
 	vacancies -= nTick;
 
 }

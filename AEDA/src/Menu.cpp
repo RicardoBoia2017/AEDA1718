@@ -21,7 +21,8 @@ void CompanyMenu(Company *c)
 	cout << "1 Make reservation"   << endl;
 	cout << "2 Cancel reservation" << endl;
 	cout << "3 View files"         << endl;
-	cout << "4 Exit"               << endl;
+	cout << "4 Check bank"		   << endl;
+	cout << "5 Exit"               << endl;
 	cout << "Insert the desired option: ";
 	cin >> option;
 
@@ -46,6 +47,11 @@ void CompanyMenu(Company *c)
 		}
 
 		case 4:
+		{
+			Check_Bank(c);
+		}
+
+		case 5:
 		{
 			return;
 			break;
@@ -108,6 +114,8 @@ void MakeReservation (Company *c)
 
 				int idReg = c->RegisterClient(name, NIF);
 				cout << "Your new id is: " << idReg << endl << endl;
+				c->removeOccasionalClient(idOc);
+
 				MakeReservation_Registered(c);
 			}
 			else
@@ -124,6 +132,11 @@ void MakeReservation (Company *c)
 			cout << "Insert the desired option: ";
 			cin >> option2;
 
+			if(option2 < 0 || option > 2)
+			{
+				cout << "Invalid option" << endl;
+				MakeReservation(c);
+			}
 			string name;
 			int NIF;
 			cout << "Please, enter your name: ";
@@ -323,6 +336,10 @@ void ViewFilesMenu (Company *c)
 					ViewFilesMenu (c);
 					break;
 				}
+				case 3:
+					ViewFilesMenu(c);
+				default:
+					throw InvalidOption(c);
 			}
 
 		}
@@ -338,11 +355,51 @@ void ViewFilesMenu (Company *c)
 
 		case 3:
 		{
-			cout <<endl;
-			c->printOffers();
-			cout << endl;
-			ViewFilesMenu (c);
-			break;
+			int option2;
+			cout << "************************" << endl;
+			cout << "|        Offers        |" << endl;
+			cout << "************************" << endl << endl;
+
+			cout << "1 View all offers" << endl;
+			cout << "2 View offers by suppliers" << endl;
+			cout << "3 Back" << endl;
+			cout << "Insert the desired option: " << endl;
+			cin >> option2;
+
+			switch (option2)
+			{
+				case 1:
+				{
+					int idOffer;
+					c->printOffers();
+//					cout << endl << "Enter the id of the offer to see who bought the tickets (enter 0 to exit): ";
+//					cin >> idOffer;
+//
+//					if( idOffer == 0)
+//						break;
+//					else if (idOffer < 0 || idOffer > c->getOffers().size() )
+//						throw InvalidOption(c);
+//					else
+//						c->printClientsByOffer(idOffer);
+					ViewFilesMenu (c);
+					break;
+				}
+
+				case 2:
+				{
+					int idSupplier;
+					c->printSuppliers();
+					cout << "Enter the id of the desired supplier: ";
+					cin >> idSupplier;
+
+					c->printOfferBySuppliers( c->getSuppliers()[idSupplier-1]->getName());
+					ViewFilesMenu(c);
+					break;
+				}
+				case 3:
+					ViewFilesMenu(c);
+			}
+
 		}
 
 		case 4:

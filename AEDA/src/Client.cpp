@@ -99,6 +99,11 @@ int OccasionalClient::getId() const
 	return oc_id;
 }
 
+void OccasionalClient::setId(int id)
+{
+	oc_id = id;
+}
+
 std::string OccasionalClient::getInformation() const
 {
 	std::stringstream ss;

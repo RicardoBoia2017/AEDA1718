@@ -20,6 +20,8 @@ void CancelReservation (Company *c);
 
 void ViewFilesMenu (Company *c);
 
+void Check_Bank (Company *c);
+
 class InvalidOption
 {
 public:

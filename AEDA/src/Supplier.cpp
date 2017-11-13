@@ -44,7 +44,7 @@ std::string Supplier::getInformation () const
 {
 	std::stringstream ss;
 
-	ss << getId() << " " << getName() << " " << getNIF() << std::endl << "Address: " << getAddress() << std::endl;
+	ss << getId() << " " << getName() << ", " << getNIF() << std::endl << "Address: " << getAddress() << std::endl;
 
 	return ss.str();
 }

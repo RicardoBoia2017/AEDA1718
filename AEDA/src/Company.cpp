@@ -13,6 +13,7 @@ Company::Company(std::vector<RegisteredClient *> rClients, std::vector<Occasiona
 	this->oClients = oClients;
 	this->suppliers = suppliers;
 	this->offers = offers;
+	bank = 0;
 }
 
 Company::~Company()
@@ -32,6 +33,23 @@ void Company::addOccasionalClient (std::string name, int NIF)
 {
 	OccasionalClient *oc = new OccasionalClient(name,NIF);
 	oClients.push_back(oc);
+}
+
+void Company::removeOccasionalClient(int id)
+{
+	std::vector <OccasionalClient *>::iterator it = oClients.begin();
+
+	for(it; it != oClients.end(); it++)
+	{
+		if( (*it)->getId() == id)
+			oClients.erase(it);
+	}
+
+	for(unsigned int i = id-1; i < oClients.size(); i++ )
+	{
+		int new_id = oClients[i]->getId() - 1;
+		oClients[i]->setId(new_id);
+	}
 }
 
 std::vector <RegisteredClient *> Company::getRegisteredClients () const
@@ -110,6 +128,35 @@ void Company::printOccasionalClients() const
 	}
 }
 
+//void Company::printClientsByOffer(int idOffer) const
+//{
+//	Offer * o = offers[idOffer-1];
+//
+//	if(o->getRegClients().size() != 0)
+//	{
+//		std::cout << "Registered Clients:" << std::endl << std::endl;
+//
+//		for (std::map < RegisteredClient*, int>::const_iterator it_res = o->getRegClients().cbegin(); it_res != o->getRegClients().cend(); it_res++ )
+//		{
+//			std::cout << it_res->first->getInformation() <<  ", Tickets: " << it_res->second << std::endl;
+//		}
+//
+//	}
+//
+//	if ( o->getOcClients().size() != 0)
+//	{
+//		std::cout << "Occasional Clients:" << std::endl << std::endl;
+//
+//		for (std::map < OccasionalClient*, int>::const_iterator it_oc = o->getOcClients().begin(); it_oc != o->getOcClients().end(); it_oc++)
+//		{
+//			std::cout << ", Tickets: " << it_oc->second << o->getOcClients().size()<< std::endl;
+//		}
+//	}
+//
+//
+//
+//}
+
 void Company::printSuppliers() const
 {
 	for (unsigned int i = 0; i < suppliers.size(); i++)
@@ -125,3 +172,13 @@ void Company::printOffers() const
 		std::cout << offers[i]->getInformation() << std::endl;
 	}
 }
+
+void Company::printOfferBySuppliers(std::string name) const
+{
+	for (unsigned int i = 0; i < offers.size(); i++)
+	{
+		if (offers[i]->getSupName() == name)
+			std::cout << offers[i]->getInformation() << std::endl;
+	}
+}
+

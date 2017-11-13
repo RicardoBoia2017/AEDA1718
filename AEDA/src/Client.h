@@ -48,6 +48,7 @@ public:
 	OccasionalClient(std::string n, int NIF);
 	~OccasionalClient();
 	int getId() const;
+	void setId(int id);
 	std::string getInformation() const;
 	//occasionalClient & operator = (const occasionalClient & oc);
 };
