@@ -1,7 +1,7 @@
-1, Cruzeiros Douro, 83, 117, 11, Veleiro, Régua, 5, 2;
+1, Cruzeiros Douro, 83, 117, 12, Veleiro, Régua, 5, 2;
 2, Cruzeiros Douro, 90, 130, 12, Veleiro, Pinhão, 8, 3;
 3, Cruzeiros Douro, 108, 125, 110, Barco Rabelo, Pinhão, 10, 5;
-4, Roteiros do Douro, 110, 119, 120, Barco Rabelo, Régua, 13, 5;
+4, Roteiros do Douro, 110, 119, 120, Barco Rabelo, Régua, 13, 5; 
 5, Mares de Portugal, 150, 187, 30, Iate, Barca d´Alva, 20, 8;
 6, Mares de Portugal, 137, 130, 30, Iate, Pinhão, 17, 8;
 7, Douro Azul, 100, 140, 135, Barco Rabelo, Régua, 18, 6;

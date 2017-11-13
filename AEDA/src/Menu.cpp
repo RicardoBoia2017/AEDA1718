@@ -25,8 +25,10 @@ void CompanyMenu(Company *c)
 	cout << "4 Check bank"		   << endl;
 	cout << "5 Exit"               << endl;
 	cout << "Insert the desired option: ";
+
 	cin >> optionCM;
-	cout << optionCM;
+	cin.clear();
+	cin.ignore(10000, '\n');
 
 	switch (optionCM)
 	{
@@ -78,7 +80,10 @@ void MakeReservation (Company *c)
 	cout << " 3 First time user" << endl;
 	cout << " 4 Back" << endl;
 	cout << "Insert the desired option: ";
+
 	cin >> optionMR;
+	cin.clear();
+	cin.ignore(10000, '\n');
 
 	switch (optionMR)
 	{
@@ -96,6 +101,8 @@ void MakeReservation (Company *c)
 			cout << " 2 No" << endl;
 			cout << "Insert the desired option: ";
 			cin >> optionMR2;
+			cin.clear();
+			cin.ignore(10000, '\n');
 
 			if( optionMR2 == 2)
 				MakeReservation_Occasional(c);
@@ -106,6 +113,8 @@ void MakeReservation (Company *c)
 				c->printOccasionalClients();
 				cout << endl << "Enter your id: ";
 				cin >> idOc;
+				cin.clear();
+				cin.ignore(10000, '\n');
 
 				if (idOc < 0 || idOc > c->getOccasionalClients().size())
 				{
@@ -140,6 +149,8 @@ void MakeReservation (Company *c)
 			cout << " 2 No" << endl;
 			cout << "Insert the desired option: ";
 			cin >> optionMR3;
+			cin.clear();
+			cin.ignore(10000, '\n');
 
 			if(optionMR3 < 0 || optionMR3 > 2)
 			{
@@ -150,8 +161,13 @@ void MakeReservation (Company *c)
 			int NIF;
 			cout << "Please, enter your name: ";
 			cin >> name;
+			cin.clear();
+			cin.ignore(10000, '\n');
+
 			cout << "Please, enter your NIF: ";
 			cin >> NIF;
+			cin.clear();
+			cin.ignore(10000, '\n');
 
 			if( optionMR3 == 2)
 			{
@@ -185,6 +201,8 @@ void MakeReservation_Registered (Company *c)
 
 	cout << "Insert your id: ";
 	cin >> idClient;
+	cin.clear();
+	cin.ignore(10000, '\n');
 
 	if (idClient > c->getRegisteredClients().size() || idClient <= 0)
 	{
@@ -198,6 +216,8 @@ void MakeReservation_Registered (Company *c)
 
 	cout << endl << "Insert the id of the corresponding offer: ";
 	cin >> idOffer;
+	cin.clear();
+	cin.ignore(10000, '\n');
 
 	if (idOffer > c->getOffers().size() || idOffer < 0)
 	{
@@ -208,6 +228,8 @@ void MakeReservation_Registered (Company *c)
 
 	cout << "How many tickets do you desire: ";
 	cin >> nTick;
+	cin.clear();
+	cin.ignore(10000, '\n');
 
 	if(nTick > offer->getVacancies())
 		throw NoSeatsAvailable(c);
@@ -220,6 +242,8 @@ void MakeReservation_Registered (Company *c)
 	cout << "2 No" << endl;
 	cout << "Insert the desired option: ";
 	cin >> optionMR_R;
+	cin.clear();
+	cin.ignore(10000, '\n');
 
 	if(optionMR_R == 1)
 	{
@@ -241,6 +265,8 @@ void MakeReservation_Occasional (Company *c)
 
 	cout << endl << endl << "Insert your id: ";
 	cin >> idClient;
+	cin.clear();
+	cin.ignore(10000, '\n');
 
 	if ((idClient > c->getOccasionalClients().size() ))
 	{
@@ -254,6 +280,8 @@ void MakeReservation_Occasional (Company *c)
 
 	cout << endl << "Insert the id of the corresponding offer: ";
 	cin >> idOffer;
+	cin.clear();
+	cin.ignore(10000, '\n');
 
 	if (idOffer > c->getOffers().size() || idOffer < 0)
 	{
@@ -264,6 +292,8 @@ void MakeReservation_Occasional (Company *c)
 
 	cout << "How many tickets do you desire: ";
 	cin >> nTick;
+	cin.clear();
+	cin.ignore(10000, '\n');
 
 	if(nTick > offer->getVacancies())
 		throw NoSeatsAvailable(c);
@@ -276,6 +306,8 @@ void MakeReservation_Occasional (Company *c)
 	cout << "2 No" << endl;
 	cout << "Insert the desired option: ";
 	cin >> optionMR_O;
+	cin.clear();
+	cin.ignore(10000, '\n');
 
 	if(optionMR_O == 1)
 		{
@@ -308,6 +340,8 @@ void ViewFilesMenu (Company *c)
 	cout << "4 Back" << endl;
 	cout << "Insert the desired option: ";
 	cin >> optionVFM;
+	cin.clear();
+	cin.ignore(10000, '\n');
 
 	switch(optionVFM)
 	{
@@ -323,6 +357,8 @@ void ViewFilesMenu (Company *c)
 			cout << "3 Back" << endl;
 			cout << "Insert the desired option: " << endl;
 			cin >> optionVFM1;
+			cin.clear();
+			cin.ignore(10000, '\n');
 
 			switch (optionVFM1)
 			{
@@ -377,6 +413,8 @@ void ViewFilesMenu (Company *c)
 			cout << "3 Back" << endl;
 			cout << "Insert the desired option: " << endl;
 			cin >> optionVFM3;
+			cin.clear();
+			cin.ignore(10000, '\n');
 
 			switch (optionVFM3)
 			{
@@ -403,6 +441,8 @@ void ViewFilesMenu (Company *c)
 					c->printSuppliers();
 					cout << "Enter the id of the desired supplier: ";
 					cin >> idSupplier;
+					cin.clear();
+					cin.ignore(10000, '\n');
 
 					c->printOfferBySuppliers( c->getSuppliers()[idSupplier-1]->getName());
 					ViewFilesMenu(c);
