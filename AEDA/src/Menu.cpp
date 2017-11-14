@@ -198,6 +198,7 @@ void MakeReservation (Company *c)
 void MakeReservation_Registered (Company *c)
 {
 	int idClient, idOffer, nTick;
+	string d1, d2;
 
 	cout << "Insert your id: ";
 	cin >> idClient;
@@ -212,7 +213,16 @@ void MakeReservation_Registered (Company *c)
 
 	cout << c->getRegisteredClients()[idClient-1]->getInformation() << endl << endl;
 
-	c->printOffers();
+	cout << "Enter the range of dates you're interested in: " << endl;
+	cout << "Initial date (format DD-MM-YYYY): ";
+	cin >> d1;
+	Date date1 = Date(d1);
+
+	cout << "Final date (format DD-MM-YYYY): " << endl;
+	cin >> d2;
+	Date date2 = Date (29,10,2017);
+
+	c->printOfferbyDate(d1,d2);
 
 	cout << endl << "Insert the id of the corresponding offer: ";
 	cin >> idOffer;
@@ -261,6 +271,8 @@ void MakeReservation_Registered (Company *c)
 void MakeReservation_Occasional (Company *c)
 {
 	int idClient, idOffer, nTick;
+	string d1,d2;
+
 	c->printOccasionalClients();
 
 	cout << endl << endl << "Insert your id: ";
@@ -276,8 +288,16 @@ void MakeReservation_Occasional (Company *c)
 
 	cout << c->getOccasionalClients()[idClient-1]->getInformation() << endl << endl;
 
-	c->printOffers();
+	cout << "Enter the range of dates you're interested in: " << endl;
+	cout << "Initial date (format DD-MM-YYYY): ";
+	cin >> d1;
+	Date date1 = Date(d1);
 
+	cout << "Final date (format DD-MM-YYYY): " << endl;
+	cin >> d2;
+	Date date2 = Date (29,10,2017);
+
+	c->printOfferbyDate(d1,d2);
 	cout << endl << "Insert the id of the corresponding offer: ";
 	cin >> idOffer;
 	cin.clear();

@@ -15,6 +15,7 @@
 
 #include "Supplier.h"
 #include "Client.h"
+#include "Date.h"
 
 class Offer {
 private:
@@ -31,8 +32,9 @@ private:
 	std::map <RegisteredClient *, int> reg_clients;
 	std::map <OccasionalClient *, int> oc_clients;
 	Supplier * sup;
+	Date date;
 public:
-	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName, unsigned int points, double percentage);
+	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName, unsigned int points, double percentage, Date d);
 	virtual ~Offer();
 	void addRegisteredClient(RegisteredClient * rc, int nTick);
 	void addOccasionalClient(OccasionalClient * oc, int nTick);
@@ -42,6 +44,7 @@ public:
 	unsigned int getCapacity() const;
 	unsigned int getVacancies() const;
 	unsigned int getPoints() const;
+	Date getDate() const;
 	double getPercentage() const;
 	std::string getBoatType () const;
 	std::string getDestination() const;

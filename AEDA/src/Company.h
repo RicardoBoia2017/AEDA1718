@@ -16,6 +16,7 @@
 #include "Client.h"
 #include "Supplier.h"
 #include "Offer.h"
+#include "Date.h"
 
 class Company {
 private:
@@ -47,6 +48,7 @@ public:
 	void printClientsByOffer (int idOffer) const;
 	void printSuppliers() const;
 	void printOffers() const;
+	void printOfferbyDate (Date d1, Date d2) const;
 	void printOfferBySuppliers(std::string name) const;
 
 };

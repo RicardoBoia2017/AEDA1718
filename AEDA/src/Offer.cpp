@@ -9,8 +9,8 @@
 
 static unsigned int offerID = 1;
 
-Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest, std::string sName, unsigned int points, double percentage):
-		price(pri), distance(dist), boatType (bT), destination(dest), supName(sName)
+Offer::Offer(int pri, int dist, int capacity, std::string bT, std::string dest, std::string sName, unsigned int points, double percentage, Date d):
+		price(pri), distance(dist), boatType (bT), destination(dest), supName(sName), date(d)
 {
 	this->points=points;
 	this->capacity = capacity;
@@ -94,6 +94,11 @@ unsigned int Offer::getPoints() const
 	return points;
 }
 
+Date Offer::getDate() const
+{
+	return date;
+}
+
 double Offer::getPercentage() const
 {
 	return percentage;
@@ -112,7 +117,9 @@ std::string Offer::getDestination() const
 std::string Offer::getInformation() const
 {
 	std::stringstream ss;
-	ss << getId() << " " << getSupName() << ", " << getDestination() << ", " << getDistance() << "km, " <<  getBoatType() << ", " << getPrice() << " € "
+	Date d1 = getDate();
+
+	ss << getId() << " " << d1.getDay() << "/" << d1.getMonth() << "/" << d1.getYear() << ", " <<  getSupName() << ", " << getDestination() << ", " << getDistance() << "km, " <<  getBoatType() << ", " << getPrice() << " € "
 			<< "//  seats available: " << getVacancies() << std::endl << "Points / ticket : " << getPoints() << " (only available for registered clients)" << std::endl;
 
 	return ss.str();
@@ -146,9 +153,11 @@ std::map <OccasionalClient *, int> Offer::getOcClients() const
 std::ostream &operator<< (std::ostream &os, Offer &o1)
 {
 	double perc = o1.getPercentage() * 100;
+	Date d1 = o1.getDate();
 
-	os << o1.getId() << ", " << o1.getSupName() << ", " << o1.getPrice() << ", " << o1.getDistance() << ", " << o1.getVacancies() << ", " <<
+	os << o1.getId()  << d1.getDay() << "/" << d1.getMonth() << "/" << d1.getYear() <<  ", " <<  o1.getSupName() << ", " << o1.getPrice() << ", " << o1.getDistance() << ", " << o1.getVacancies() << ", " <<
 			o1.getBoatType() << ", " << o1.getDestination() << ", " << o1.getPoints() << ", " << perc << ";";
+
 	return os;
 }
 

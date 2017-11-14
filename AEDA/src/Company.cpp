@@ -230,6 +230,16 @@ void Company::printOffers() const
 	}
 }
 
+void Company::printOfferbyDate(Date d1, Date d2) const
+{
+	for (unsigned int i = 0; i < offers.size(); i++)
+	{
+		if(d1 <= offers[i]->getDate())
+			if (offers[i]->getDate() <= d2)
+				std::cout << offers[i]->getInformation() << std::endl;
+	}
+}
+
 void Company::printOfferBySuppliers(std::string name) const
 {
 	for (unsigned int i = 0; i < offers.size(); i++)
