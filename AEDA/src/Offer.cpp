@@ -155,7 +155,7 @@ std::ostream &operator<< (std::ostream &os, Offer &o1)
 	double perc = o1.getPercentage() * 100;
 	Date d1 = o1.getDate();
 
-	os << o1.getId()  << d1.getDay() << "/" << d1.getMonth() << "/" << d1.getYear() <<  ", " <<  o1.getSupName() << ", " << o1.getPrice() << ", " << o1.getDistance() << ", " << o1.getVacancies() << ", " <<
+	os << o1.getId()  << ", " << d1.getDay() << "/" << d1.getMonth() << "/" << d1.getYear() <<  ", " <<  o1.getSupName() << ", " << o1.getPrice() << ", " << o1.getDistance() << ", " << o1.getVacancies() << ", " <<
 			o1.getBoatType() << ", " << o1.getDestination() << ", " << o1.getPoints() << ", " << perc << ";";
 
 	return os;
