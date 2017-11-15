@@ -185,34 +185,37 @@ void Company::printOccasionalClients() const
 	}
 }
 
-//void Company::printClientsByOffer(int idOffer) const
-//{
-//	Offer * o = offers[idOffer-1];
-//
-//	if(o->getRegClients().size() != 0)
-//	{
-//		std::cout << "Registered Clients:" << std::endl << std::endl;
-//
-//		for (std::map < RegisteredClient*, int>::const_iterator it_res = o->getRegClients().cbegin(); it_res != o->getRegClients().cend(); it_res++ )
-//		{
-//			std::cout << it_res->first->getInformation() <<  ", Tickets: " << it_res->second << std::endl;
-//		}
-//
-//	}
-//
-//	if ( o->getOcClients().size() != 0)
-//	{
-//		std::cout << "Occasional Clients:" << std::endl << std::endl;
-//
-//		for (std::map < OccasionalClient*, int>::const_iterator it_oc = o->getOcClients().begin(); it_oc != o->getOcClients().end(); it_oc++)
-//		{
-//			std::cout << ", Tickets: " << it_oc->second << o->getOcClients().size()<< std::endl;
-//		}
-//	}
-//
-//
-//
-//}
+void Company::printClientsByOffer(int idOffer) const
+{
+	Offer * o = offers[idOffer-1];
+
+	if(o->getRegClients().size() != 0)
+	{
+		std::cout << "Registered Clients:" << std::endl << std::endl;
+
+		std::map < RegisteredClient*, int>::const_iterator it_res = o->getRegClients().cbegin();
+
+		for( unsigned int i = 0; i < o->getRegClients().size(); i++)
+		{
+			std::cout << it_res->first->getInformation() <<  ", Tickets: " << it_res->second << std::endl;
+			it_res++;
+		}
+	}
+
+	if ( o->getOcClients().size() != 0)
+	{
+		std::cout << std::endl <<  "Occasional Clients:" << std::endl << std::endl;
+
+		std::map < OccasionalClient*, int>::const_iterator it_oc = o->getOcClients().begin();
+
+		for (unsigned int i = 0; i < o->getOcClients().size() ; i++)
+		{
+			std::cout << it_oc->first->getInformation() <<  ", Tickets: " << it_oc->second << o->getOcClients().size()<< std::endl;
+			it_oc ++;
+		}
+	}
+
+}
 
 void Company::printSuppliers() const
 {
