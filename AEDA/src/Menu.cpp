@@ -537,7 +537,7 @@ void ViewFilesMenu (Company *c)
 					break;
 				}
 
-			/*	case 2:
+				case 2:
 				{
 					cout << endl;
 					c->printRegisteredClientByPoints();
@@ -545,7 +545,7 @@ void ViewFilesMenu (Company *c)
 					ViewFilesMenu (c);
 					break;
 				}
-				*/
+				
 				case 3:
 					ViewFilesMenu(c);
 				default:
