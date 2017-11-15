@@ -14,8 +14,8 @@
 void CompanyMenu (Company *c);
 
 void MakeReservation (Company *c);
-void MakeReservation_Registered (Company *c);
-void MakeReservation_Occasional (Company *c);
+void MakeReservation_Registered (Company *c, int id);
+void MakeReservation_Occasional (Company *c, int id);
 
 void CancelReservation (Company *c);
 void CancelReservationRegClient(Company *c);
