@@ -12,6 +12,7 @@
 #include <vector>
 #include <sstream>
 #include <map>
+#include <iostream>
 
 #include "Supplier.h"
 #include "Client.h"
@@ -37,7 +38,9 @@ public:
 	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName, unsigned int points, double percentage, Date d);
 	virtual ~Offer();
 	void addRegisteredClient(RegisteredClient * rc, int nTick);
+	void elimRegisteredClient(RegisteredClient * rc, int nTick);
 	void addOccasionalClient(OccasionalClient * oc, int nTick);
+	void elimOccasionalClient(OccasionalClient * rc, int nTick);
 	unsigned int getId() const;
 	unsigned int getPrice() const;
 	unsigned int getDistance() const;
