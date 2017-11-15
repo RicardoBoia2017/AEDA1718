@@ -89,7 +89,13 @@ void MakeReservation (Company *c)
 	{
 		case 1:
 		{
-			MakeReservation_Registered(c);
+			int idClient;
+
+			cout << "Insert your id: ";
+			cin >> idClient;
+			cin.clear();
+			cin.ignore(10000, '\n');
+			MakeReservation_Registered(c, idClient);
 			break;
 		}
 
@@ -105,7 +111,17 @@ void MakeReservation (Company *c)
 			cin.ignore(10000, '\n');
 
 			if( optionMR2 == 2)
-				MakeReservation_Occasional(c);
+			{
+				int idClient;
+
+				c->printOccasionalClients();
+
+				cout << "Insert your id: ";
+				cin >> idClient;
+				cin.clear();
+				cin.ignore(10000, '\n');
+				MakeReservation_Occasional(c, idClient);
+			}
 			else if (optionMR2 == 1)
 			{
 				int idOc;
@@ -134,7 +150,7 @@ void MakeReservation (Company *c)
 				cout << "Your new id is: " << idReg << endl << endl;
 				c->removeOccasionalClient(idOc);
 
-				MakeReservation_Registered(c);
+				MakeReservation_Registered(c, idReg);
 			}
 			else
 				throw InvalidOption(c);
@@ -172,13 +188,13 @@ void MakeReservation (Company *c)
 			if( optionMR3 == 2)
 			{
 				c->addOccasionalClient(name,NIF);
-				MakeReservation_Occasional(c);
+				MakeReservation_Occasional(c, c->getOccasionalClients().size() - 1);
 			}
 			else if (optionMR3 == 1)
 			{
 				int id = c->RegisterClient(name, NIF);
 				cout << "Your new id is: " << id << endl << endl;
-				MakeReservation_Registered(c);
+				MakeReservation_Registered(c, id);
 			}
 			else
 				throw InvalidOption(c);
@@ -192,22 +208,17 @@ void MakeReservation (Company *c)
 		default:
 			throw InvalidOption(c);
 	}
-	CompanyMenu(c);
+
 }
 
-void MakeReservation_Registered (Company *c)
+void MakeReservation_Registered (Company *c, int idClient)
 {
-	int idClient, idOffer, nTick;
+	int idOffer, nTick;
 	string d1, d2;
-
-	cout << "Insert your id: ";
-	cin >> idClient;
-	cin.clear();
-	cin.ignore(10000, '\n');
 
 	if (idClient > c->getRegisteredClients().size() || idClient <= 0)
 	{
-		cout << "Invalid client id" << endl <<endl;
+		cout << "Invalid client id" << endl << endl;
 		MakeReservation(c);
 	}
 
@@ -268,17 +279,13 @@ void MakeReservation_Registered (Company *c)
 		throw InvalidOption(c);
 }
 
-void MakeReservation_Occasional (Company *c)
+void MakeReservation_Occasional (Company *c, int idClient)
 {
-	int idClient, idOffer, nTick;
+	int idOffer, nTick;
 	string d1,d2;
 
+	cout << endl;
 	c->printOccasionalClients();
-
-	cout << endl << endl << "Insert your id: ";
-	cin >> idClient;
-	cin.clear();
-	cin.ignore(10000, '\n');
 
 	if ((idClient > c->getOccasionalClients().size() ))
 	{
@@ -383,8 +390,10 @@ void CancelReservation (Company *c)
 
 void CancelReservationRegClient(Company *c)
 {
-	c->printRegisteredClients();
 	int idClient, idOffer, nTick;
+	Date d1 ("20-11-2017");
+
+	c->printRegisteredClients();
 	cout << "What's you client id?";
 	cin >> idClient;
 	cin.clear();
@@ -407,19 +416,11 @@ void CancelReservationRegClient(Company *c)
 	cin.ignore(10000, '\n');
 	cout << endl;
 	offer->elimRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
-	Date date1 = offer->getDate();
-	unsigned int diff = 0;
-	//Vamos ver a diferença das datas
-	unsigned int date1m = 0;
-	date1m = date1.getMonth();
-	unsigned int aux = date1m - 11;
-	unsigned int diffDates;
-	unsigned int date1d = date1.getDay();
-	if ( aux != 0)
-	{
-		date1d = date1d + 31;
-	}
-	diffDates =  date1d - 20;
+
+	Date d2 = offer->getDate();
+		//Vamos ver a diferença das datas
+
+	unsigned int diffDates = d1.daysBetween(d2);
 
 	if (diffDates >=7 )
 		{
@@ -437,18 +438,24 @@ void CancelReservationRegClient(Company *c)
 
 void CancelReservationOccClient(Company *c)
 {
-	c->printOccasionalClients();
+
 	int idClient, idOffer, nTick;
+	Date d1 ("20-11-2017");
+
+	c->printOccasionalClients();
+
 	cout << "What's you client id?";
 	cin >> idClient;
 	cin.clear();
 	cin.ignore(10000, '\n');
 	cout << endl;
+
 	if (idClient > c->getOccasionalClients().size() || idClient <= 0)
-		{
+	{
 			cout << "Invalid client id" << endl <<endl;
-		}
+	}
 	cout << c->getOccasionalClients()[idClient-1]->getInformation() << endl << endl;
+
 	cout << endl << "Insert the id of the corresponding offer: ";
 	cin >> idOffer;
 	cin.clear();
@@ -459,33 +466,26 @@ void CancelReservationOccClient(Company *c)
 	cin.clear();
 	cin.ignore(10000, '\n');
 	cout << endl;
+
 	offer->elimOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
-	Date date1 = offer->getDate();
-	unsigned int diff = 0;
+	Date d2 = offer->getDate();
 	//Vamos ver a diferença das datas
-	unsigned int date1m = 0;
-	date1m = date1.getMonth();
-	unsigned int aux = date1m - 11;
-	unsigned int diffDates;
-	unsigned int date1d = date1.getDay();
-	if ( aux != 0)
-	{
-		date1d = date1d + 31;
-	}
-	diffDates =  date1d - 20;
+
+	unsigned int diffDates = d1.daysBetween(d2);
 
 	if (diffDates >=7 )
-		{
-			unsigned int devol = offer->getPrice() * nTick;
-			c->setBank( (-1) * offer->getPercentage() * devol);
-			cout << "The refund amount is: " << devol << "€ " << endl;
-		}
+	{
+		unsigned int devol = offer->getPrice() * nTick;
+		c->setBank( (-1) * offer->getPercentage() * devol);
+		cout << "The refund amount is: " << devol << "€ " << endl;
+	}
+
 	else if (7 > diffDates && diffDates > 2)
-		{
-			unsigned int devol = offer->getPrice() * nTick * 0.5;
-			c->setBank( (-0.5) * offer->getPercentage() * devol);
-			cout << "The refund amount is: " << devol << "€ " << endl;
-		}
+	{
+		unsigned int devol = offer->getPrice() * nTick * 0.5;
+		c->setBank( (-0.5) * offer->getPercentage() * devol);
+		cout << "The refund amount is: " << devol << "€ " << endl;
+	}
 }
 
 void ViewFilesMenu (Company *c)
@@ -584,15 +584,15 @@ void ViewFilesMenu (Company *c)
 				{
 					int idOffer;
 					c->printOffers();
-//					cout << endl << "Enter the id of the offer to see who bought the tickets (enter 0 to exit): ";
-//					cin >> idOffer;
-//
-//					if( idOffer == 0)
-//						break;
-//					else if (idOffer < 0 || idOffer > c->getOffers().size() )
-//						throw InvalidOption(c);
-//					else
-//						c->printClientsByOffer(idOffer);
+					cout << endl << "Enter the id of the offer to see who bought the tickets (enter 0 to exit): ";
+					cin >> idOffer;
+
+					if( idOffer == 0)
+						break;
+					else if (idOffer < 0 || idOffer > c->getOffers().size() )
+						throw InvalidOption(c);
+					else
+						c->printClientsByOffer(idOffer);
 					ViewFilesMenu (c);
 					break;
 				}
