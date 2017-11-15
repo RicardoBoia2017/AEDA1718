@@ -18,6 +18,9 @@ void MakeReservation_Registered (Company *c);
 void MakeReservation_Occasional (Company *c);
 
 void CancelReservation (Company *c);
+void CancelReservationRegClient(Company *c);
+void CancelReservationOccClient(Company *c);
+void CancelReservationIdOffer(Company *c);
 
 void ViewFilesMenu (Company *c);
 

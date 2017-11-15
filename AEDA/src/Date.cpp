@@ -58,6 +58,44 @@ unsigned int Date::getYear() const
 	return this->year;
 }
 
+unsigned int Date::convertToDays ()
+{
+	int convertToDays = 0;
+	int daysInMonth[]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+	convertToDays += day;
+	for (int i = month-1; i > 0; i--)
+	{
+	    convertToDays += daysInMonth[i];
+	}
+	for (int i = year-1; i > 1582; i--)
+	{
+	    if(year % 100 == 0)
+	    {
+	        if(year % 400 == 0)
+	            convertToDays += 366;
+	        else
+	            convertToDays += 365;
+	    }
+	    else
+	    {
+	        if(year % 4 == 0)
+	            convertToDays += 366;
+	         else
+	            convertToDays += 365;
+	    }
+	}
+
+	return convertToDays;
+}
+
+unsigned int Date::daysBetween (Date d1)
+{
+	if (this->convertToDays() > d1.convertToDays())
+	        return this->convertToDays() - d1.convertToDays();
+	    else
+	        return d1.convertToDays() - this->convertToDays();
+}
+
 bool Date::operator<= (const Date& right) const
 {
 	std::vector<int> l,r;

@@ -45,7 +45,40 @@ void Offer::addRegisteredClient(RegisteredClient * rc, int nTick)
    rc->setPoints(pointsWon);
 }
 
+void Offer::elimRegisteredClient(RegisteredClient * rc, int nTick)
+{
+
+	bool Found = false;
+	for(std::map<RegisteredClient *, int>::iterator it = reg_clients.begin(); it != reg_clients.end(); it++)
+		{
+			if(it->first->getId() == rc->getId())
+			{
+				if (it->second == nTick)
+				{
+					reg_clients.erase(it);
+				}
+				else
+				{
+					it->second -= nTick;
+				}
+				vacancies += nTick;
+
+				unsigned int pointsWon = rc->getPoints() - nTick * getPoints();
+				rc->setPoints(pointsWon);
+				Found = true;
+				std::cout << "Your cancelation was successful!" << std::endl;
+			}
+		}
+	if (Found == false)
+	{
+		std::cout << "You don't have any reservation for this offer. Try again" << std::endl;
+	}
+
+
+}
+
 void Offer::addOccasionalClient(OccasionalClient* oc, int nTick)
+
 {
 	bool Found = false;
 	for(std::map<OccasionalClient *, int>::iterator it = oc_clients.begin(); it != oc_clients.end(); it++)
@@ -61,6 +94,34 @@ void Offer::addOccasionalClient(OccasionalClient* oc, int nTick)
 			oc_clients.insert(std::pair <OccasionalClient* , int> (oc, nTick));
 
 	vacancies -= nTick;
+
+}
+
+void Offer::elimOccasionalClient(OccasionalClient * oc, int nTick)
+{
+
+	bool Found = false;
+	for(std::map<OccasionalClient *, int>::iterator it = oc_clients.begin(); it != oc_clients.end(); it++)
+		{
+			if(it->first->getId() == oc->getId())
+			{
+				if (it->second == nTick)
+				{
+					oc_clients.erase(it);
+				}
+				else
+				{
+					it->second -= nTick;
+				}
+				vacancies += nTick;
+				Found = true;
+				std::cout << "Your cancelation was successful!" << std::endl;
+			}
+		}
+	if (Found == false)
+		{
+			std::cout << "You don't have any reservation for this offer. Try again" << std::endl;
+		}
 
 }
 
@@ -98,6 +159,7 @@ Date Offer::getDate() const
 {
 	return date;
 }
+
 
 double Offer::getPercentage() const
 {

@@ -192,7 +192,7 @@ void MakeReservation (Company *c)
 		default:
 			throw InvalidOption(c);
 	}
-	CompanyMenu(c);
+
 }
 
 void MakeReservation_Registered (Company *c)
@@ -211,24 +211,20 @@ void MakeReservation_Registered (Company *c)
 		MakeReservation(c);
 	}
 
-	cout << endl << c->getRegisteredClients()[idClient-1]->getInformation() << endl << endl;
+	cout << c->getRegisteredClients()[idClient-1]->getInformation() << endl << endl;
 
 	cout << "Enter the range of dates you're interested in: " << endl;
 	cout << "Initial date (format DD-MM-YYYY): ";
 	cin >> d1;
-	cin.clear();
-	cin.ignore(10000, '\n');
 	Date date1 = Date(d1);
 
-	cout << "Final date (format DD-MM-YYYY): " ;
+	cout << "Final date (format DD-MM-YYYY): " << endl;
 	cin >> d2;
-	cin.clear();
-	cin.ignore(10000, '\n');
-	Date date2 = Date (d2);
+	Date date2 = Date (29,10,2017);
 
 	c->printOfferbyDate(d1,d2);
 
-	cout << endl  <<"Insert the id of the corresponding offer: ";
+	cout << endl << "Insert the id of the corresponding offer: ";
 	cin >> idOffer;
 	cin.clear();
 	cin.ignore(10000, '\n');
@@ -251,7 +247,7 @@ void MakeReservation_Registered (Company *c)
 	unsigned int optionMR_R;
 
 	cout << "Total: " << offer->getPrice() * nTick << "€,  Points Won: " << offer->getPoints()*nTick <<  endl;
-	cout << endl << "Want to confirm your reservation?: " << endl;
+	cout << "Want to confirm your reservation?: " << endl << endl;
 	cout << "1 Yes" << endl;
 	cout << "2 No" << endl;
 	cout << "Insert the desired option: ";
@@ -263,7 +259,6 @@ void MakeReservation_Registered (Company *c)
 	{
 		offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
 		c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
-		cout << "Reservation confirmed!" << endl;
 		MakeReservation(c);
 	}
 	else if (optionMR_R == 0)
@@ -291,23 +286,19 @@ void MakeReservation_Occasional (Company *c)
 		MakeReservation(c);
 	}
 
-	cout << endl << c->getOccasionalClients()[idClient-1]->getInformation() << endl << endl;
+	cout << c->getOccasionalClients()[idClient-1]->getInformation() << endl << endl;
 
 	cout << "Enter the range of dates you're interested in: " << endl;
 	cout << "Initial date (format DD-MM-YYYY): ";
 	cin >> d1;
-	cin.clear();
-	cin.ignore(10000, '\n');
 	Date date1 = Date(d1);
 
-	cout << "Final date (format DD-MM-YYYY): ";
+	cout << "Final date (format DD-MM-YYYY): " << endl;
 	cin >> d2;
-	cin.clear();
-	cin.ignore(10000, '\n');
-	Date date2 = Date (d2);
+	Date date2 = Date (29,10,2017);
 
 	c->printOfferbyDate(d1,d2);
-	cout << endl << endl << "Insert the id of the corresponding offer: ";
+	cout << endl << "Insert the id of the corresponding offer: ";
 	cin >> idOffer;
 	cin.clear();
 	cin.ignore(10000, '\n');
@@ -330,7 +321,7 @@ void MakeReservation_Occasional (Company *c)
 	unsigned int optionMR_O;
 
 	cout << "Total: " << offer->getPrice() * nTick << "€" << endl;
-	cout <<  endl << "Want to confirm your reservation?: " << endl;
+	cout << "Want to confirm your reservation?: " << endl;
 	cout << "1 Yes" << endl;
 	cout << "2 No" << endl;
 	cout << "Insert the desired option: ";
@@ -342,7 +333,6 @@ void MakeReservation_Occasional (Company *c)
 		{
 			offer->addOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
 			c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
-			cout << "Reservation confirmed!" << endl;
 			MakeReservation(c);
 		}
 	else if (optionMR_O == 0)
@@ -354,7 +344,141 @@ void MakeReservation_Occasional (Company *c)
 
 void CancelReservation (Company *c)
 {
+	unsigned int optionC = 0;
+	cout << "************************" << endl;
+	cout << "|  Cancel Reservation  |" << endl;
+	cout << "************************" << endl << endl;
 
+	cout << "What type of client are you?" << endl;
+	cout << " 1 Registered Client" << endl;
+	cout << " 2 Occasional Client" << endl;
+	cout << " 3 Back" << endl;
+	cout << "Insert the desired option: ";
+	cin >> optionC;
+	cin.clear();
+	cin.ignore(10000, '\n');
+
+	switch(optionC)
+		{
+			case 1:
+			{
+				CancelReservationRegClient(c);
+				break;
+			}
+			case 2:
+			{
+				CancelReservationOccClient(c);
+				break;
+			}
+			case 3:
+			{
+				CompanyMenu(c);
+			}
+			default:
+				throw InvalidOption(c);
+			}
+	}
+
+
+
+void CancelReservationRegClient(Company *c)
+{
+	int idClient, idOffer, nTick;
+	Date d1 ("20-11-2017");
+
+	c->printRegisteredClients();
+	cout << "What's you client id?";
+	cin >> idClient;
+	cin.clear();
+	cin.ignore(10000, '\n');
+	cout << endl;
+	if (idClient > c->getRegisteredClients().size() || idClient <= 0)
+		{
+			cout << "Invalid client id" << endl <<endl;
+			MakeReservation(c);
+		}
+	cout << c->getRegisteredClients()[idClient-1]->getInformation() << endl << endl;
+	cout << endl << "Insert the id of the corresponding offer: ";
+	cin >> idOffer;
+	cin.clear();
+	cin.ignore(10000, '\n');
+	Offer * offer = c->getOffers()[idOffer-1];
+	cout << "How many tickets do you want to cancel?" ;
+	cin >> nTick;
+	cin.clear();
+	cin.ignore(10000, '\n');
+	cout << endl;
+	offer->elimRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
+
+	Date d2 = offer->getDate();
+		//Vamos ver a diferença das datas
+
+	unsigned int diffDates = d1.daysBetween(d2);
+
+	if (diffDates >=7 )
+		{
+			unsigned int devol = offer->getPrice() * nTick;
+			c->setBank( (-1) * offer->getPercentage() * devol);
+			cout << "The refund amount is: " << devol << "€ " << endl;
+		}
+	else if (7 > diffDates && diffDates > 2)
+		{
+			unsigned int devol = offer->getPrice() * nTick * 0.5;
+			c->setBank( (-0.5) * offer->getPercentage() * devol);
+			cout << "The refund amount is: " << devol << "€ " << endl;
+		}
+}
+
+void CancelReservationOccClient(Company *c)
+{
+
+	int idClient, idOffer, nTick;
+	Date d1 ("20-11-2017");
+
+	c->printOccasionalClients();
+
+	cout << "What's you client id?";
+	cin >> idClient;
+	cin.clear();
+	cin.ignore(10000, '\n');
+	cout << endl;
+
+	if (idClient > c->getOccasionalClients().size() || idClient <= 0)
+	{
+			cout << "Invalid client id" << endl <<endl;
+	}
+	cout << c->getOccasionalClients()[idClient-1]->getInformation() << endl << endl;
+
+	cout << endl << "Insert the id of the corresponding offer: ";
+	cin >> idOffer;
+	cin.clear();
+	cin.ignore(10000, '\n');
+	Offer * offer = c->getOffers()[idOffer-1];
+	cout << "How many tickets do you want to cancel?" ;
+	cin >> nTick;
+	cin.clear();
+	cin.ignore(10000, '\n');
+	cout << endl;
+
+	offer->elimOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
+	Date d2 = offer->getDate();
+	//Vamos ver a diferença das datas
+
+	unsigned int diffDates = d1.daysBetween(d2);
+
+	if (diffDates >=7 )
+	{
+		unsigned int devol = offer->getPrice() * nTick;
+		c->setBank( (-1) * offer->getPercentage() * devol);
+		cout << "The refund amount is: " << devol << "€ " << endl;
+	}
+
+	else if (7 > diffDates && diffDates > 2)
+	{
+		unsigned int devol = offer->getPrice() * nTick * 0.5;
+		c->setBank( (-0.5) * offer->getPercentage() * devol);
+		cout << "The refund amount is: " << devol << "€ " << endl;
+	}
 }
 
 void ViewFilesMenu (Company *c)
@@ -406,7 +530,7 @@ void ViewFilesMenu (Company *c)
 					break;
 				}
 
-				case 2:
+			/*	case 2:
 				{
 					cout << endl;
 					c->printRegisteredClientByPoints();
@@ -414,6 +538,7 @@ void ViewFilesMenu (Company *c)
 					ViewFilesMenu (c);
 					break;
 				}
+				*/
 				case 3:
 					ViewFilesMenu(c);
 				default:
