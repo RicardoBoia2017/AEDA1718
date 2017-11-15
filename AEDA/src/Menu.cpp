@@ -89,7 +89,13 @@ void MakeReservation (Company *c)
 	{
 		case 1:
 		{
-			MakeReservation_Registered(c);
+			int idClient;
+
+			cout << "Insert your id: ";
+			cin >> idClient;
+			cin.clear();
+			cin.ignore(10000, '\n');
+			MakeReservation_Registered(c, idClient);
 			break;
 		}
 
@@ -105,7 +111,17 @@ void MakeReservation (Company *c)
 			cin.ignore(10000, '\n');
 
 			if( optionMR2 == 2)
-				MakeReservation_Occasional(c);
+			{
+				int idClient;
+
+				c->printOccasionalClients();
+
+				cout << "Insert your id: ";
+				cin >> idClient;
+				cin.clear();
+				cin.ignore(10000, '\n');
+				MakeReservation_Occasional(c, idClient);
+			}
 			else if (optionMR2 == 1)
 			{
 				int idOc;
@@ -134,7 +150,7 @@ void MakeReservation (Company *c)
 				cout << "Your new id is: " << idReg << endl << endl;
 				c->removeOccasionalClient(idOc);
 
-				MakeReservation_Registered(c);
+				MakeReservation_Registered(c, idReg);
 			}
 			else
 				throw InvalidOption(c);
@@ -172,13 +188,13 @@ void MakeReservation (Company *c)
 			if( optionMR3 == 2)
 			{
 				c->addOccasionalClient(name,NIF);
-				MakeReservation_Occasional(c);
+				MakeReservation_Occasional(c, c->getOccasionalClients().size() - 1);
 			}
 			else if (optionMR3 == 1)
 			{
 				int id = c->RegisterClient(name, NIF);
 				cout << "Your new id is: " << id << endl << endl;
-				MakeReservation_Registered(c);
+				MakeReservation_Registered(c, id);
 			}
 			else
 				throw InvalidOption(c);
@@ -195,15 +211,10 @@ void MakeReservation (Company *c)
 
 }
 
-void MakeReservation_Registered (Company *c)
+void MakeReservation_Registered (Company *c, int idClient)
 {
-	int idClient, idOffer, nTick;
+	int idOffer, nTick;
 	string d1, d2;
-
-	cout << "Insert your id: ";
-	cin >> idClient;
-	cin.clear();
-	cin.ignore(10000, '\n');
 
 	if (idClient > c->getRegisteredClients().size() || idClient <= 0)
 	{
@@ -268,17 +279,13 @@ void MakeReservation_Registered (Company *c)
 		throw InvalidOption(c);
 }
 
-void MakeReservation_Occasional (Company *c)
+void MakeReservation_Occasional (Company *c, int idClient)
 {
-	int idClient, idOffer, nTick;
+	int idOffer, nTick;
 	string d1,d2;
 
+	cout << endl;
 	c->printOccasionalClients();
-
-	cout << endl << endl << "Insert your id: ";
-	cin >> idClient;
-	cin.clear();
-	cin.ignore(10000, '\n');
 
 	if ((idClient > c->getOccasionalClients().size() ))
 	{
@@ -577,15 +584,15 @@ void ViewFilesMenu (Company *c)
 				{
 					int idOffer;
 					c->printOffers();
-//					cout << endl << "Enter the id of the offer to see who bought the tickets (enter 0 to exit): ";
-//					cin >> idOffer;
-//
-//					if( idOffer == 0)
-//						break;
-//					else if (idOffer < 0 || idOffer > c->getOffers().size() )
-//						throw InvalidOption(c);
-//					else
-//						c->printClientsByOffer(idOffer);
+					cout << endl << "Enter the id of the offer to see who bought the tickets (enter 0 to exit): ";
+					cin >> idOffer;
+
+					if( idOffer == 0)
+						break;
+					else if (idOffer < 0 || idOffer > c->getOffers().size() )
+						throw InvalidOption(c);
+					else
+						c->printClientsByOffer(idOffer);
 					ViewFilesMenu (c);
 					break;
 				}
