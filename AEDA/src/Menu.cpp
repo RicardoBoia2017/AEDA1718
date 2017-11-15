@@ -218,7 +218,7 @@ void MakeReservation_Registered (Company *c, int idClient)
 
 	if (idClient > c->getRegisteredClients().size() || idClient <= 0)
 	{
-		cout << "Invalid client id" << endl <<endl;
+		cout << "Invalid client id" << endl << endl;
 		MakeReservation(c);
 	}
 
