@@ -77,6 +77,15 @@ int Company::RegisterClient(std::string name, int NIF)
 	return rc->getId();
 }
 
+int Company::AddSupplier(std::string n, int NIF, std::string address)
+{
+	Supplier * sup = new Supplier(n, NIF, address);
+	suppliers.push_back(sup);
+
+	return sup->getId();
+}
+
+
 void Company::addOccasionalClient (std::string name, int NIF)
 {
 	OccasionalClient *oc = new OccasionalClient(name,NIF);
@@ -124,6 +133,7 @@ int Company::getBank() const
 {
 	return bank;
 }
+
 void Company::setBank(int b)
 {
 	bank += b;

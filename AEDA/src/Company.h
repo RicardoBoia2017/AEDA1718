@@ -33,6 +33,7 @@ public:
 	void exportSuppliers (std::string file);
 	void exportOffers (std::string file);
 	int RegisterClient(std::string name, int NIF);
+	int AddSupplier(std::string n, int NIF, std::string address);
 	void addOccasionalClient (std::string name, int NIF);
 	void removeOccasionalClient(int id);
 	std::vector <RegisteredClient *> getRegisteredClients () const;
