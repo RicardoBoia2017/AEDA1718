@@ -63,11 +63,14 @@ void CompanyMenu(Company *c)
 
 			AddSupplier(c);
 			break;
+
 		}
 
 		case 6:
 		{
+
 			break;
+
 		}
 
 		default:
@@ -430,16 +433,22 @@ void CancelReservationRegClient(Company *c)
 
 	if (diffDates >=7 )
 		{
-			unsigned int devol = offer->getPrice() * nTick;
+			unsigned int devol = (offer->getPrice() * nTick);
 			c->setBank( (-1) * offer->getPercentage() * devol);
 			cout << "The refund amount is: " << devol << "€ " << endl;
 		}
 	else if (7 > diffDates && diffDates > 2)
 		{
-			unsigned int devol = offer->getPrice() * nTick * 0.5;
+			unsigned int devol = (offer->getPrice() * nTick * 0.5);
 			c->setBank( (-0.5) * offer->getPercentage() * devol);
 			cout << "The refund amount is: " << devol << "€ " << endl;
 		}
+	else
+		{
+			cout << "Your cancelation was done too late. You have no refound." << endl;
+		}
+
+	CompanyMenu(c);
 }
 
 void CancelReservationOccClient(Company *c)
