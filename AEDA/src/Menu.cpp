@@ -657,5 +657,103 @@ void AddSupplier(Company *c)
 
 	c->AddSupplier(name, NIF, address);
 
+	unsigned int option;
+
+	while (1)
+	{
+		cout << "Want to add offers?" << endl;
+		cout << " 1 Yes" << endl;
+		cout << " 2 No " << endl;
+		cout << "Enter the desired option: ";
+		cin >> option;
+
+		if(option != 1 && option != 2)
+			throw InvalidOption(c);
+
+		else if (option == 2)
+			break;
+
+		else
+		{
+			unsigned int cap, dist, pri, points;
+			double perc;
+			string dest, bT, date;
+			int b_option, d_option;
+
+			do
+			{
+				cout << endl << "Enter the destination: " << endl;
+				cout << " 1 Régua" << endl;
+				cout << " 2 Barca d'Alva " << endl;
+				cout << " 3 Pinhão" << endl;
+				cout << "Enter the desired option: ";
+				cin >> d_option;
+
+				if (d_option < 1 || d_option > 3)
+					cout << "Invalid option. Try again" ;
+				else
+					switch (d_option)
+					{
+						case 1:
+							dest = "Régua";
+						case 2:
+							dest = "Barca d'Alva";
+						case 3:
+							dest = "Pinhão";
+					}
+			} while (d_option < 1 || d_option > 3);
+
+			do
+			{
+
+				cout << endl << "Enter the type of boat: " << endl;
+				cout << " 1 Veleiro" << endl;
+				cout << " 2 Barco Rabelo" << endl;
+				cout << " 3 Iate" << endl;
+				cout << "Enter the desired option: ";
+				cin >> b_option;
+
+				if (b_option < 1 || b_option > 3)
+					cout << "Invalid option. Try again" << endl;
+
+				else
+					switch(b_option)
+					{
+						case 1:
+							bT = "Veleiro";
+						case 2:
+							bT = "Barco Rabelo";
+						case 3:
+							bT = "Iate";
+					}
+			} while (b_option < 1 || b_option > 3);
+
+			cout << "Enter the boat's capacity: ";
+			cin >> cap;
+
+			cout << "Enter the distance to travel: ";
+			cin >> dist;
+
+			cout << "Enter the price: ";
+			cin >> pri;
+
+			cout << "Enter the points/ticket available for registered clients: ";
+			cin >> points;
+
+			cout << "Enter the percentage of each ticket that goes to 'Porto Rivers': ";
+			cin >> perc;
+
+			cout << "Enter the date of this offer (format DD-MM-YYYY): ";
+			cin >> date;
+			Date d(date);
+
+
+			c->addOffer(pri, dist, cap, points, perc, bT, dest, name,d);
+
+		}
+	}
+
+
+	CompanyMenu (c);
 }
 

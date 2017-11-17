@@ -12,6 +12,8 @@
 #include <iostream>
 #include <fstream>
 
+using namespace std;
+
 
 #include "Client.h"
 #include "Supplier.h"
@@ -33,8 +35,9 @@ public:
 	void exportSuppliers (std::string file);
 	void exportOffers (std::string file);
 	int RegisterClient(std::string name, int NIF);
-	int AddSupplier(std::string n, int NIF, std::string address);
+	void AddSupplier(std::string n, int NIF, std::string address);
 	void addOccasionalClient (std::string name, int NIF);
+	void addOffer(unsigned int price, unsigned int dist, unsigned int cap, unsigned int points, double perc, string bT, string dest, string supName, Date d);
 	void removeOccasionalClient(int id);
 	std::vector <RegisteredClient *> getRegisteredClients () const;
 	std::vector <OccasionalClient *> getOccasionalClients () const;

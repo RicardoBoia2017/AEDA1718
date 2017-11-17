@@ -77,12 +77,26 @@ int Company::RegisterClient(std::string name, int NIF)
 	return rc->getId();
 }
 
-int Company::AddSupplier(std::string n, int NIF, std::string address)
+void Company::AddSupplier(std::string n, int NIF, std::string address)
 {
 	Supplier * sup = new Supplier(n, NIF, address);
 	suppliers.push_back(sup);
 
-	return sup->getId();
+}
+
+
+void Company::addOffer(unsigned int price, unsigned int dist, unsigned int cap, unsigned int points, double perc, string bT, string dest, string supName, Date d)
+{
+	Offer * o = new Offer(price, dist, cap, bT, dest, supName, points, perc, d);
+
+	offers.push_back(o);
+
+	for(unsigned int i = 0; i < this->suppliers.size(); i++)
+	{
+		if (suppliers[i]->getName() == supName)
+			o->setSupplier( suppliers [i]);
+		break;
+	}
 }
 
 
