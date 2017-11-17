@@ -651,7 +651,7 @@ void AddSupplier(Company *c)
 	cin.ignore(10000, '\n');
 
 	cout << "Please enter the supplier's address: ";
-	cin >> address;
+	getline(cin, address);
 	cin.clear();
 	cin.ignore(10000, '\n');
 
