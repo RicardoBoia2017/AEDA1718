@@ -1,5 +1,5 @@
-1, 25/11/2017, Cruzeiros Douro, 83, 117, 5, Veleiro, Régua, 5, 2;
-2, 22/11/2017, Cruzeiros Douro, 90, 130, 12, Veleiro, Pinhão, 8, 3;
+1, 25/11/2017, Cruzeiros Douro, 83, 117, 1, Veleiro, Régua, 5, 2;
+2, 22/11/2017, Cruzeiros Douro, 90, 130, 11, Veleiro, Pinhão, 8, 3;
 3, 27/11/2017, Cruzeiros Douro, 108, 125, 110, Barco Rabelo, Pinhão, 10, 5;
 4, 21/11/2017, Roteiros do Douro, 110, 119, 120, Barco Rabelo, Régua, 13, 5;
 5, 1/12/2017, Mares de Portugal, 150, 187, 30, Iate, Barca d´Alva, 20, 8;
