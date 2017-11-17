@@ -23,7 +23,8 @@ void CompanyMenu(Company *c)
 	cout << "2 Cancel reservation" << endl;
 	cout << "3 View files"         << endl;
 	cout << "4 Check bank"		   << endl;
-	cout << "5 Exit"               << endl;
+	cout << "5 Add a supplier"     << endl;
+	cout << "6 Exit"               << endl;
 	cout << "Insert the desired option: ";
 
 	cin >> optionCM;
@@ -58,6 +59,13 @@ void CompanyMenu(Company *c)
 		}
 
 		case 5:
+		{
+
+			AddSupplier(c);
+			break;
+		}
+
+		case 6:
 		{
 			break;
 		}
@@ -386,8 +394,6 @@ void CancelReservation (Company *c)
 			}
 	}
 
-
-
 void CancelReservationRegClient(Company *c)
 {
 	int idClient, idOffer, nTick;
@@ -628,4 +634,28 @@ void ViewFilesMenu (Company *c)
 
 }
 
+void AddSupplier(Company *c)
+{
+	string name;
+	int NIF;
+	string address;
+
+	cout << "Please enter the supplier's name: ";
+	getline(cin, name);
+	cin.clear();
+	cin.ignore(10000, '\n');
+
+	cout << "Please enter the supplier's NIF: ";
+	cin >> NIF;
+	cin.clear();
+	cin.ignore(10000, '\n');
+
+	cout << "Please enter the supplier's address: ";
+	cin >> address;
+	cin.clear();
+	cin.ignore(10000, '\n');
+
+	c->AddSupplier(name, NIF, address);
+
+}
 

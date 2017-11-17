@@ -26,6 +26,8 @@ void ViewFilesMenu (Company *c);
 
 void Check_Bank (Company *c);
 
+void AddSupplier(Company *c);
+
 class InvalidOption
 {
 public:
