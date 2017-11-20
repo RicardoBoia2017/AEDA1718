@@ -73,7 +73,7 @@ void CompanyMenu(Company *c)
 		}
 
 		default:
-			throw InvalidOption(c);
+			throw InvalidOption(c,1);
 	}
 }
 
@@ -179,7 +179,7 @@ void MakeReservation (Company *c)
 				MakeReservation_Registered(c, idReg);
 			}
 			else
-				throw InvalidOption(c);
+				throw InvalidOption(c,2);
 
 		}
 
@@ -224,7 +224,7 @@ void MakeReservation (Company *c)
 				MakeReservation_Registered(c, id);
 			}
 			else
-				throw InvalidOption(c);
+				throw InvalidOption(c,2);
 		}
 
 		case 4:
@@ -233,7 +233,7 @@ void MakeReservation (Company *c)
 			break;
 		}
 		default:
-			throw InvalidOption(c);
+			throw InvalidOption(c,2);
 	}
 
 }
@@ -256,15 +256,17 @@ void MakeReservation_Registered (Company *c, unsigned int idClient)
 
 	c->printOfferbyDate(d1,d2);
 
-	cout << endl << "Insert the id of the corresponding offer: ";
-	cin >> idOffer;
-	cin.clear();
-	cin.ignore(10000, '\n');
-
-	if (idOffer > c->getOffers().size() || idOffer < 0)
+	while(1)
 	{
-		cout << "Invalid offer id" << endl;
-		MakeReservation(c);
+		cout << endl << "Insert the id of the corresponding offer: ";
+		cin >> idOffer;
+		cin.clear();
+		cin.ignore(10000, '\n');
+
+		if (idOffer > c->getOffers().size() || idOffer <= 0)
+			cout << "Invalid offer id" << endl;
+		else
+			break;
 	}
 	Offer * offer = c->getOffers()[idOffer-1];
 
@@ -279,25 +281,29 @@ void MakeReservation_Registered (Company *c, unsigned int idClient)
 	unsigned int optionMR_R;
 
 	cout << "Total: " << offer->getPrice() * nTick << "€,  Points Won: " << offer->getPoints()*nTick <<  endl;
-	cout << "Want to confirm your reservation?: " << endl << endl;
-	cout << "1 Yes" << endl;
-	cout << "2 No" << endl;
-	cout << "Insert the desired option: ";
-	cin >> optionMR_R;
-	cin.clear();
-	cin.ignore(10000, '\n');
 
-	if(optionMR_R == 1)
+	while(1)
 	{
-		offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
-		c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
-		MakeReservation(c);
-	}
-	else if (optionMR_R == 0)
-		MakeReservation(c);
+		cout << "Want to confirm your reservation?: " << endl << endl;
+		cout << "1 Yes" << endl;
+		cout << "2 No" << endl;
+		cout << "Insert the desired option: ";
+		cin >> optionMR_R;
+		cin.clear();
+		cin.ignore(10000, '\n');
 
-	else
-		throw InvalidOption(c);
+		if(optionMR_R == 1)
+		{
+			offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
+			c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
+			MakeReservation(c);
+		}
+		else if (optionMR_R == 2)
+			MakeReservation(c);
+
+		else
+			cout << "Invalid option << endl";
+	}
 }
 
 void MakeReservation_Occasional (Company *c, unsigned int idClient)
@@ -318,16 +324,19 @@ void MakeReservation_Occasional (Company *c, unsigned int idClient)
 	Date date2 = Date (29,10,2017);
 
 	c->printOfferbyDate(d1,d2);
-	cout << endl << "Insert the id of the corresponding offer: ";
-	cin >> idOffer;
-	cin.clear();
-	cin.ignore(10000, '\n');
-
-	if (idOffer > c->getOffers().size() || idOffer < 0)
+	while(1)
 	{
-		cout << "Invalid offer id" << endl;
-		MakeReservation(c);
+		cout << endl << "Insert the id of the corresponding offer: ";
+		cin >> idOffer;
+		cin.clear();
+		cin.ignore(10000, '\n');
+
+		if (idOffer > c->getOffers().size() || idOffer <= 0)
+			cout << "Invalid offer id" << endl;
+		else
+			break;
 	}
+
 	Offer * offer = c->getOffers()[idOffer-1];
 
 	cout << "How many tickets do you desire: ";
@@ -341,25 +350,31 @@ void MakeReservation_Occasional (Company *c, unsigned int idClient)
 	unsigned int optionMR_O;
 
 	cout << "Total: " << offer->getPrice() * nTick << "€" << endl;
-	cout << "Want to confirm your reservation?: " << endl;
-	cout << "1 Yes" << endl;
-	cout << "2 No" << endl;
-	cout << "Insert the desired option: ";
-	cin >> optionMR_O;
-	cin.clear();
-	cin.ignore(10000, '\n');
 
-	if(optionMR_O == 1)
+	while(1)
+	{
+		cout << "Want to confirm your reservation?: " << endl << endl;
+		cout << "1 Yes" << endl;
+		cout << "2 No" << endl;
+		cout << "Insert the desired option: ";
+		cin >> optionMR_O;
+		cin.clear();
+		cin.ignore(10000, '\n');
+
+		if(optionMR_O == 1)
 		{
-			offer->addOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
+			offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
 			c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
 			MakeReservation(c);
 		}
-	else if (optionMR_O == 0)
+
+		else if (optionMR_O == 2)
 			MakeReservation(c);
 
-	else
-			throw InvalidOption(c);
+		else
+			cout << "Invalid option << endl";
+	}
+
 }
 
 void CancelReservation (Company *c)
@@ -395,7 +410,7 @@ void CancelReservation (Company *c)
 				CompanyMenu(c);
 			}
 			default:
-				throw InvalidOption(c);
+				throw InvalidOption(c,3);
 			}
 	}
 
@@ -429,7 +444,7 @@ void CancelReservationRegClient(Company *c)
 	offer->elimRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
 
 	Date d2 = offer->getDate();
-		//Vamos ver a diferença das datas
+	//Vamos ver a diferença das datas
 
 	unsigned int diffDates = d1.daysBetween(d2);
 
@@ -566,7 +581,7 @@ void ViewFilesMenu (Company *c)
 				case 3:
 					ViewFilesMenu(c);
 				default:
-					throw InvalidOption(c);
+					throw InvalidOption(c,3);
 			}
 
 		}
@@ -607,7 +622,7 @@ void ViewFilesMenu (Company *c)
 					if( idOffer == 0)
 						break;
 					else if (idOffer < 0 || idOffer > c->getOffers().size() )
-						throw InvalidOption(c);
+						throw InvalidOption(c,3);
 					else
 						c->printClientsByOffer(idOffer);
 					ViewFilesMenu (c);
@@ -639,7 +654,7 @@ void ViewFilesMenu (Company *c)
 			break;
 		}
 		default:
-			throw InvalidOption(c);
+			throw InvalidOption(c, 4);
 
 	}
 
@@ -671,16 +686,20 @@ void AddSupplier(Company *c)
 
 	while (1)
 	{
-		cout << "Want to add offers?" << endl;
-		cout << " 1 Yes" << endl;
-		cout << " 2 No " << endl;
-		cout << "Enter the desired option: ";
-		cin >> option;
+		while(1)
+		{
+			cout << "Want to add offers?" << endl;
+			cout << " 1 Yes" << endl;
+			cout << " 2 No " << endl;
+			cout << "Enter the desired option: ";
+			cin >> option;
 
-		if(option != 1 && option != 2)
-			throw InvalidOption(c);
-
-		else if (option == 2)
+			if(option != 1 && option != 2)
+				cout << "Invalid option" << endl;
+			else
+				break;
+		}
+		if (option == 2)
 			break;
 
 		else

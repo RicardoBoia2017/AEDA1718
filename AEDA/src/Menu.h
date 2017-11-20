@@ -20,21 +20,34 @@ void MakeReservation_Occasional (Company *c, unsigned int id);
 void CancelReservation (Company *c);
 void CancelReservationRegClient(Company *c);
 void CancelReservationOccClient(Company *c);
-void CancelReservationIdOffer(Company *c);
 
 void ViewFilesMenu (Company *c);
-
-void Check_Bank (Company *c);
 
 void AddSupplier(Company *c);
 
 class InvalidOption
 {
 public:
-	InvalidOption(Company *c)
+	InvalidOption(Company *c, int menu)
 	{
 		std::cout << std::endl << "Invalid option"  << std::endl;
-		CompanyMenu(c);
+
+		switch (menu)
+		{
+			case 1:
+				CompanyMenu (c);
+
+			case 2:
+				MakeReservation (c);
+
+			case 3:
+				CancelReservation (c);
+
+			case 4:
+				ViewFilesMenu (c);
+
+		}
+
 	}
 };
 
