@@ -26,7 +26,7 @@ private:
 	vector <OccasionalClient *> oClients;
 	vector <Supplier *> suppliers;
 	vector <Offer *> offers;
-	int bank;
+	unsigned int bank;
 public:
 	Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers);
 	virtual ~Company();
@@ -43,7 +43,7 @@ public:
 	vector <OccasionalClient *> getOccasionalClients () const;
 	vector <Supplier *> getSuppliers () const;
 	vector <Offer *> getOffers () const;
-	int getBank() const;
+	unsigned int getBank() const;
 	void setBank (int b);
 	void setOfferSuppliers();
 	void printRegisteredClients() const;

@@ -143,7 +143,7 @@ vector <Offer *> Company::getOffers () const
 	return offers;
 }
 
-int Company::getBank() const
+unsigned int Company::getBank() const
 {
 	return bank;
 }

@@ -7,7 +7,7 @@
 
 #include "Client.h"
 
-Client::Client(string n, int NIF): name(n)
+Client::Client(string n, unsigned int NIF): name(n)
 {
 	this->NIF = NIF;
 }
@@ -21,7 +21,7 @@ string Client::getName() const
 	return name;
 }
 
-int Client::getNIF() const
+unsigned int Client::getNIF() const
 {
 	return NIF;
 }
@@ -31,9 +31,9 @@ int Client::getNIF() const
 //Registered Client
 
 
-static int reg_clientID = 1;
+static unsigned int reg_clientID = 1;
 
-RegisteredClient::RegisteredClient(string n, int NIF, int points): Client(n,NIF)
+RegisteredClient::RegisteredClient(string n, unsigned int NIF, unsigned int points): Client(n,NIF)
 {
 	this->points=points;
 	reg_id = reg_clientID;
@@ -44,12 +44,12 @@ RegisteredClient::~RegisteredClient() {
 
 }
 
-int RegisteredClient::getId() const
+unsigned int RegisteredClient::getId() const
 {
 	return reg_id;
 }
 
-int RegisteredClient::getPoints() const
+unsigned int RegisteredClient::getPoints() const
 {
 	return points;
 }
@@ -78,9 +78,9 @@ ostream &operator<< (ostream &os, RegisteredClient &rc1)
 
 //Occasional Client
 
-static int oc_clientID = 1;
+static unsigned int oc_clientID = 1;
 
-OccasionalClient::OccasionalClient(string n, int NIF): Client(n,NIF)
+OccasionalClient::OccasionalClient(string n, unsigned int NIF): Client(n,NIF)
 {
 	oc_id = oc_clientID;
 	oc_clientID++;
@@ -91,12 +91,12 @@ OccasionalClient::~OccasionalClient()
 
 }
 
-int OccasionalClient::getId() const
+unsigned int OccasionalClient::getId() const
 {
 	return oc_id;
 }
 
-void OccasionalClient::setId(int id)
+void OccasionalClient::setId(unsigned int id)
 {
 	oc_id = id;
 }

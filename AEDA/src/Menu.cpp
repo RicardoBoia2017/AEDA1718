@@ -221,7 +221,7 @@ void MakeReservation (Company *c)
 
 }
 
-void MakeReservation_Registered (Company *c, int idClient)
+void MakeReservation_Registered (Company *c, unsigned int idClient)
 {
 	int idOffer, nTick;
 	string d1, d2;
@@ -289,7 +289,7 @@ void MakeReservation_Registered (Company *c, int idClient)
 		throw InvalidOption(c);
 }
 
-void MakeReservation_Occasional (Company *c, int idClient)
+void MakeReservation_Occasional (Company *c, unsigned int idClient)
 {
 	int idOffer, nTick;
 	string d1,d2;

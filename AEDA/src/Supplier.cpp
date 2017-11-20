@@ -9,7 +9,7 @@
 
 unsigned int static supplierID = 1;
 
-Supplier::Supplier(string n, int NIF, string ad): name(n), address(ad)
+Supplier::Supplier(string n, unsigned int NIF, string ad): name(n), address(ad)
 {
 	this->NIF = NIF;
 	id = supplierID;
@@ -30,12 +30,12 @@ string Supplier::getAddress() const
 	return address;
 }
 
-int Supplier::getNIF() const
+unsigned int Supplier::getNIF() const
 {
 	return NIF;
 }
 
-int Supplier::getId() const
+unsigned int Supplier::getId() const
 {
 	return id;
 }

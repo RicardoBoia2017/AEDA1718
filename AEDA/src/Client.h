@@ -16,26 +16,26 @@ using namespace std;
 class Client {
 private:
 	string name;
-	int NIF;
+	unsigned int NIF;
 public:
-	Client(string n, int NIF);
+	Client(string n, unsigned int NIF);
 	virtual ~Client();
 	string getName() const;
-	int getNIF() const;
-	virtual int getId() const = 0;
+	unsigned int getNIF() const;
+	virtual unsigned int getId() const = 0;
 	virtual string getInformation() const = 0;
 };
 
 class RegisteredClient: public Client
 {
 private:
-	int points;
-	int reg_id;
+	unsigned int points;
+	unsigned int reg_id;
 public:
-	RegisteredClient(string n, int NIF, int points);
+	RegisteredClient(string n, unsigned int NIF, unsigned int points);
 	~RegisteredClient();
-	int getId() const;
-	int getPoints() const;
+	unsigned int getId() const;
+	unsigned int getPoints() const;
 	void setPoints(unsigned int p);
 	string getInformation() const;
 	friend ostream &operator<< (ostream &os, RegisteredClient &c1);
@@ -44,12 +44,12 @@ public:
 class OccasionalClient: public Client
 {
 private:
-	int oc_id;
+	unsigned int oc_id;
 public:
-	OccasionalClient(string n, int NIF);
+	OccasionalClient(string n, unsigned int NIF);
 	~OccasionalClient();
-	int getId() const;
-	void setId(int id);
+	unsigned int getId() const;
+	void setId(unsigned int id);
 	string getInformation() const;
 	friend ostream &operator<< (ostream &os, OccasionalClient &c1);
 };

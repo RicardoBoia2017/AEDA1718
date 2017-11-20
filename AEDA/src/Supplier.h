@@ -18,16 +18,16 @@ using namespace std;
 class Supplier {
 private:
 	string name;
-	int NIF;
+	unsigned int NIF;
 	string address;
-	int id;
+	unsigned int id;
 public:
-	Supplier(string n, int NIF, string address);
+	Supplier(string n, unsigned int NIF, string address);
 	virtual ~Supplier();
 	string getName() const;
-	int getNIF() const;
+	unsigned int getNIF() const;
 	string getAddress() const;
-	int getId() const;
+	unsigned int getId() const;
 	string getInformation() const;
 	friend ostream &operator<< (ostream &os, Supplier &s1);
 };
