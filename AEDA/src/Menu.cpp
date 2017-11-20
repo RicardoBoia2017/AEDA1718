@@ -21,15 +21,14 @@ void CompanyMenu(Company *c)
 
 	cout << "1 Make reservation"   << endl;
 	cout << "2 Cancel reservation" << endl;
-	cout << "3 View files"         << endl;
-	cout << "4 Check bank"		   << endl;
-	cout << "5 Add a supplier"     << endl;
+	cout << "3 Add a supplier"     << endl;
+	cout << "4 View files"         << endl;
+	cout << "5 Check bank"		   << endl;
 	cout << "6 Exit"               << endl;
 	cout << "Insert the desired option: ";
 
 	cin >> optionCM;
 	cin.clear();
-	cin.ignore(10000, '\n');
 
 	switch (optionCM)
 	{
@@ -47,23 +46,23 @@ void CompanyMenu(Company *c)
 
 		case 3:
 		{
-			ViewFilesMenu (c);
+
+			AddSupplier(c);
 			break;
+
 		}
 
 		case 4:
 		{
-			cout << "Total: " << c->getBank() << "€" << endl;
-			CompanyMenu(c);
+			ViewFilesMenu (c);
 			break;
 		}
 
 		case 5:
 		{
-
-			AddSupplier(c);
+			cout << "Total: " << c->getBank() << "€" << endl;
+			CompanyMenu(c);
 			break;
-
 		}
 
 		case 6:
@@ -662,7 +661,6 @@ void AddSupplier(Company *c)
 	cout << "Please enter the supplier's address: ";
 	getline(cin, address);
 	cin.clear();
-	cin.ignore(10000, '\n');
 
 	c->AddSupplier(name, NIF, address);
 

@@ -14,6 +14,8 @@
 #include <map>
 #include <iostream>
 
+using namespace std;
+
 #include "Supplier.h"
 #include "Client.h"
 #include "Date.h"
@@ -27,15 +29,15 @@ private:
 	unsigned int vacancies;
 	unsigned int points;
 	double percentage;
-	std::string boatType;
-	std::string destination;
-	std::string supName;
-	std::map <RegisteredClient *, int> reg_clients;
-	std::map <OccasionalClient *, int> oc_clients;
+	string boatType;
+	string destination;
+	string supName;
+	map <RegisteredClient *, int> reg_clients;
+	map <OccasionalClient *, int> oc_clients;
 	Supplier * sup;
 	Date date;
 public:
-	Offer (int pri, int dist,int capacity, std::string bT, std::string dest, std::string sName, unsigned int points, double percentage, Date d);
+	Offer (int pri, int dist,int capacity, string bT, string dest, string sName, unsigned int points, double percentage, Date d);
 	virtual ~Offer();
 	void addRegisteredClient(RegisteredClient * rc, int nTick);
 	void elimRegisteredClient(RegisteredClient * rc, int nTick);
@@ -49,15 +51,15 @@ public:
 	unsigned int getPoints() const;
 	Date getDate() const;
 	double getPercentage() const;
-	std::string getBoatType () const;
-	std::string getDestination() const;
-	std::string getInformation() const;
-	std::string getSupName() const;
-	std::map <RegisteredClient *, int> getRegClients() const;
-	std::map <OccasionalClient *, int> getOcClients() const;
+	string getBoatType () const;
+	string getDestination() const;
+	string getInformation() const;
+	string getSupName() const;
+	map <RegisteredClient *, int> getRegClients() const;
+	map <OccasionalClient *, int> getOcClients() const;
 	Supplier * getSupplier() const;
 	void setSupplier(Supplier *  s);
-	friend std::ostream &operator<< (std::ostream &os, Offer &o1);
+	friend ostream &operator<< (ostream &os, Offer &o1);
 };
 
 #endif

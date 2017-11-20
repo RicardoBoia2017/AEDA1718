@@ -26,16 +26,16 @@ Date::Date(unsigned int d, unsigned int m, unsigned int y) {
 		year = y;
 }
 
-Date::Date(std::string date)
+Date::Date(string date)
 {
-	std::string d = date.substr(0, date.find('-'));
+	string d = date.substr(0, date.find('-'));
 	date = date.substr(date.find('-') + 1);
-	std::string m = date.substr(0, date.find('-'));
+	string m = date.substr(0, date.find('-'));
 	date = date.substr(date.find('-') + 1);
 
-	day = (unsigned int) std::stoi(d.c_str());
-	month = (unsigned int) std::stoi(m.c_str());;
-	year = (unsigned int) std::stoi(date.c_str());;
+	day = (unsigned int) stoi(d.c_str());
+	month = (unsigned int) stoi(m.c_str());;
+	year = (unsigned int) stoi(date.c_str());;
 
 }
 
@@ -98,7 +98,7 @@ unsigned int Date::daysBetween (Date d1)
 
 bool Date::operator<= (const Date& right) const
 {
-	std::vector<int> l,r;
+	vector<int> l,r;
 
 	l.push_back(this->year);
 	l.push_back(this->month);

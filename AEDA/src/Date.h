@@ -12,15 +12,17 @@
 #include <vector>
 #include <fstream>
 
+using namespace std;
+
 
 class ExceptionInvalidDate
 {
 private:
-	std::string component;
+	string component;
 	int value;
 
 public:
-	ExceptionInvalidDate(std::string comp, int v):
+	ExceptionInvalidDate(string comp, int v):
 		component (comp), value (v)
 	{}
 };
@@ -32,7 +34,7 @@ private:
 	unsigned int year;
 public:
 	Date (unsigned int d, unsigned int m, unsigned int y);
-	Date (std::string date);
+	Date (string date);
 	virtual ~Date();
 	unsigned int getDay() const;
 	unsigned int getMonth() const;

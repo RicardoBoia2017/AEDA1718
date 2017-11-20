@@ -11,17 +11,19 @@
 #include <string>
 #include <sstream>
 
+using namespace std;
+
 class Client {
 private:
-	std::string name;
+	string name;
 	int NIF;
 public:
-	Client(std::string n, int NIF);
+	Client(string n, int NIF);
 	virtual ~Client();
-	std::string getName() const;
+	string getName() const;
 	int getNIF() const;
 	virtual int getId() const = 0;
-	virtual std::string getInformation() const = 0;
+	virtual string getInformation() const = 0;
 };
 
 class RegisteredClient: public Client
@@ -30,13 +32,13 @@ private:
 	int points;
 	int reg_id;
 public:
-	RegisteredClient(std::string n, int NIF, int points);
+	RegisteredClient(string n, int NIF, int points);
 	~RegisteredClient();
 	int getId() const;
 	int getPoints() const;
 	void setPoints(unsigned int p);
-	std::string getInformation() const;
-	friend std::ostream &operator<< (std::ostream &os, RegisteredClient &c1);
+	string getInformation() const;
+	friend ostream &operator<< (ostream &os, RegisteredClient &c1);
 };
 
 class OccasionalClient: public Client
@@ -44,11 +46,11 @@ class OccasionalClient: public Client
 private:
 	int oc_id;
 public:
-	OccasionalClient(std::string n, int NIF);
+	OccasionalClient(string n, int NIF);
 	~OccasionalClient();
 	int getId() const;
 	void setId(int id);
-	std::string getInformation() const;
-	friend std::ostream &operator<< (std::ostream &os, OccasionalClient &c1);
+	string getInformation() const;
+	friend ostream &operator<< (ostream &os, OccasionalClient &c1);
 };
 #endif /* SRC_CLIENT_H_ */

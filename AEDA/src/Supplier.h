@@ -13,23 +13,23 @@
 #include <vector>
 #include <sstream>
 
-
+using namespace std;
 
 class Supplier {
 private:
-	std::string name;
+	string name;
 	int NIF;
-	std::string address;
+	string address;
 	int id;
 public:
-	Supplier(std::string n, int NIF, std::string address);
+	Supplier(string n, int NIF, string address);
 	virtual ~Supplier();
-	std::string getName() const;
+	string getName() const;
 	int getNIF() const;
-	std::string getAddress() const;
+	string getAddress() const;
 	int getId() const;
-	std::string getInformation() const;
-	friend std::ostream &operator<< (std::ostream &os, Supplier &s1);
+	string getInformation() const;
+	friend ostream &operator<< (ostream &os, Supplier &s1);
 };
 
 #endif /* SRC_SUPPLIER_H_ */

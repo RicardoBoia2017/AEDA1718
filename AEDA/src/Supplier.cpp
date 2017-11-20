@@ -9,7 +9,7 @@
 
 unsigned int static supplierID = 1;
 
-Supplier::Supplier(std::string n, int NIF, std::string ad): name(n), address(ad)
+Supplier::Supplier(string n, int NIF, string ad): name(n), address(ad)
 {
 	this->NIF = NIF;
 	id = supplierID;
@@ -20,12 +20,12 @@ Supplier::~Supplier() {
 	// TODO Auto-generated destructor stub
 }
 
-std::string Supplier::getName() const
+string Supplier::getName() const
 {
 	return name;
 }
 
-std::string Supplier::getAddress() const
+string Supplier::getAddress() const
 {
 	return address;
 }
@@ -40,16 +40,16 @@ int Supplier::getId() const
 	return id;
 }
 
-std::string Supplier::getInformation () const
+string Supplier::getInformation () const
 {
-	std::stringstream ss;
+	stringstream ss;
 
-	ss << getId() << " " << getName() << ", " << getNIF() << std::endl << "Address: " << getAddress() << std::endl;
+	ss << getId() << " " << getName() << ", " << getNIF() << endl << "Address: " << getAddress() << endl;
 
 	return ss.str();
 }
 
-std::ostream &operator<< (std::ostream &os, Supplier &s1)
+ostream &operator<< (ostream &os, Supplier &s1)
 {
 	os << s1.getId() << ", " << s1.getName() <<  ", " << s1.getNIF() << ", " << s1.getAddress() << ";";
 	return os;

@@ -7,7 +7,7 @@
 
 #include "Company.h"
 
-Company::Company(std::vector<RegisteredClient *> rClients, std::vector<OccasionalClient *> oClients, std::vector<Supplier *> suppliers, std::vector<Offer *> offers)
+Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers)
 {
 	this->rClients = rClients;
 	this->oClients = oClients;
@@ -21,55 +21,55 @@ Company::~Company()
 
 }
 
-void Company::exportRegisteredClients(std::string file)
+void Company::exportRegisteredClients(string file)
 {
-	std::ofstream out;
+	ofstream out;
 	out.open(file.c_str());
 
 	for(unsigned int i=0; i<rClients.size(); i++){
-		out << *rClients.at(i) << std::endl;
+		out << *rClients.at(i) << endl;
 	}
 
 	out.close();
 }
 
-void Company::exportOccasionaldClients(std::string file)
+void Company::exportOccasionaldClients(string file)
 {
-	std::ofstream out;
+	ofstream out;
 	out.open(file.c_str());
 
 	for(unsigned int i=0; i<oClients.size(); i++){
-		out << *oClients.at(i) << std::endl;
+		out << *oClients.at(i) << endl;
 	}
 
 	out.close();
 }
 
-void Company::exportSuppliers(std::string file)
+void Company::exportSuppliers(string file)
 {
-	std::ofstream out;
+	ofstream out;
 	out.open(file.c_str());
 
 	for(unsigned int i=0; i<suppliers.size(); i++){
-		out << *suppliers.at(i) << std::endl;
+		out << *suppliers.at(i) << endl;
 	}
 
 	out.close();
 }
 
-void Company::exportOffers(std::string file)
+void Company::exportOffers(string file)
 {
-	std::ofstream out;
+	ofstream out;
 	out.open(file.c_str());
 
 	for(unsigned int i=0; i<offers.size(); i++){
-		out << *offers.at(i) << std::endl;
+		out << *offers.at(i) << endl;
 	}
 
 	out.close();
 }
 
-int Company::RegisterClient(std::string name, int NIF)
+int Company::RegisterClient(string name, int NIF)
 {
 	RegisteredClient * rc = new RegisteredClient(name,NIF,0);
 	rClients.push_back(rc);
@@ -77,7 +77,7 @@ int Company::RegisterClient(std::string name, int NIF)
 	return rc->getId();
 }
 
-void Company::AddSupplier(std::string n, int NIF, std::string address)
+void Company::AddSupplier(string n, int NIF, string address)
 {
 	Supplier * sup = new Supplier(n, NIF, address);
 	suppliers.push_back(sup);
@@ -100,7 +100,7 @@ void Company::addOffer(unsigned int price, unsigned int dist, unsigned int cap, 
 }
 
 
-void Company::addOccasionalClient (std::string name, int NIF)
+void Company::addOccasionalClient (string name, int NIF)
 {
 	OccasionalClient *oc = new OccasionalClient(name,NIF);
 	oClients.push_back(oc);
@@ -108,7 +108,7 @@ void Company::addOccasionalClient (std::string name, int NIF)
 
 void Company::removeOccasionalClient(int id)
 {
-	std::vector <OccasionalClient *>::iterator it = oClients.begin();
+	vector <OccasionalClient *>::iterator it = oClients.begin();
 
 	for(it; it != oClients.end(); it++)
 	{
@@ -123,22 +123,22 @@ void Company::removeOccasionalClient(int id)
 	}
 }
 
-std::vector <RegisteredClient *> Company::getRegisteredClients () const
+vector <RegisteredClient *> Company::getRegisteredClients () const
 {
 	return rClients;
 }
 
-std::vector <OccasionalClient *> Company::getOccasionalClients() const
+vector <OccasionalClient *> Company::getOccasionalClients() const
 {
 	return oClients;
 }
 
-std::vector <Supplier *> Company::getSuppliers () const
+vector <Supplier *> Company::getSuppliers () const
 {
 	return suppliers;
 }
 
-std::vector <Offer *> Company::getOffers () const
+vector <Offer *> Company::getOffers () const
 {
 	return offers;
 }
@@ -173,14 +173,14 @@ void Company::printRegisteredClients() const
 {
 	for (unsigned int i = 0; i < rClients.size(); i++)
 	{
-		std::cout << rClients[i]->getInformation() << std::endl;
+		cout<< rClients[i]->getInformation() << endl;
 	}
 
 }
 
 void Company::printRegisteredClientByPoints() const
 {
-	std::vector <RegisteredClient* > v_tmp = rClients;
+	vector <RegisteredClient* > v_tmp = rClients;
 
 	int j;
 	for (int gap = v_tmp.size()/2; gap > 0; gap /= 2)
@@ -196,7 +196,7 @@ void Company::printRegisteredClientByPoints() const
 
 	for(unsigned int i = 0; i < v_tmp.size(); i++)
 	{
-		std::cout << v_tmp[i]->getInformation() << std::endl;
+		cout<< v_tmp[i]->getInformation() << endl;
 	}
 
 }
@@ -205,7 +205,7 @@ void Company::printOccasionalClients() const
 {
 	for (unsigned int i = 0; i < oClients.size(); i++)
 	{
-		std::cout << oClients[i]->getInformation() << std::endl;
+		cout<< oClients[i]->getInformation() << endl;
 	}
 }
 
@@ -215,26 +215,26 @@ void Company::printClientsByOffer(int idOffer) const
 
 	if(o->getRegClients().size() != 0)
 	{
-		std::cout << "Registered Clients:" << std::endl << std::endl;
+		cout<< "Registered Clients:" << endl<< endl;
 
-		std::map < RegisteredClient*, int>::const_iterator it_res = o->getRegClients().cbegin();
+		map < RegisteredClient*, int>::const_iterator it_res = o->getRegClients().cbegin();
 
 		for( unsigned int i = 0; i < o->getRegClients().size(); i++)
 		{
-			std::cout << it_res->first->getInformation() <<  ", Tickets: " << it_res->second << std::endl;
+			cout<< it_res->first->getInformation() <<  ", Tickets: " << it_res->second << endl;
 			it_res++;
 		}
 	}
 
 	if ( o->getOcClients().size() != 0)
 	{
-		std::cout << std::endl <<  "Occasional Clients:" << std::endl << std::endl;
+		cout<< endl<<  "Occasional Clients:" << endl<< endl;
 
-		std::map < OccasionalClient*, int>::const_iterator it_oc = o->getOcClients().begin();
+		map < OccasionalClient*, int>::const_iterator it_oc = o->getOcClients().begin();
 
 		for (unsigned int i = 0; i < o->getOcClients().size() ; i++)
 		{
-			std::cout << it_oc->first->getInformation() <<  ", Tickets: " << it_oc->second << o->getOcClients().size()<< std::endl;
+			cout<< it_oc->first->getInformation() <<  ", Tickets: " << it_oc->second << o->getOcClients().size()<< endl;
 			it_oc ++;
 		}
 	}
@@ -245,7 +245,7 @@ void Company::printSuppliers() const
 {
 	for (unsigned int i = 0; i < suppliers.size(); i++)
 	{
-		std::cout << suppliers[i]->getInformation() << std::endl;
+		cout<< suppliers[i]->getInformation() << endl;
 	}
 }
 
@@ -253,7 +253,7 @@ void Company::printOffers() const
 {
 	for (unsigned int i = 0; i < offers.size(); i++)
 	{
-		std::cout << offers[i]->getInformation() << std::endl;
+		cout<< offers[i]->getInformation() << endl;
 	}
 }
 
@@ -263,16 +263,16 @@ void Company::printOfferbyDate(Date d1, Date d2) const
 	{
 		if(d1 <= offers[i]->getDate())
 			if (offers[i]->getDate() <= d2)
-				std::cout << offers[i]->getInformation() << std::endl;
+				cout<< offers[i]->getInformation() << endl;
 	}
 }
 
-void Company::printOfferBySuppliers(std::string name) const
+void Company::printOfferBySuppliers(string name) const
 {
 	for (unsigned int i = 0; i < offers.size(); i++)
 	{
 		if (offers[i]->getSupName() == name)
-			std::cout << offers[i]->getInformation() << std::endl;
+			cout<< offers[i]->getInformation() << endl;
 	}
 }
 

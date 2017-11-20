@@ -21,10 +21,10 @@ using namespace std;
 
 int main()
 {
-	std::vector <RegisteredClient *> rClients = FileReader::readRegisteredClients(rClientsFile);
-	std::vector <OccasionalClient *> oClients = FileReader::readOccasionalClients(oClientsFile);
-	std::vector <Supplier *> suppliers = FileReader::readSuppliers(suppliersFile);
-	std::vector <Offer *> offers = FileReader::readOffers(offersFile);
+	vector <RegisteredClient *> rClients = FileReader::readRegisteredClients(rClientsFile);
+	vector <OccasionalClient *> oClients = FileReader::readOccasionalClients(oClientsFile);
+	vector <Supplier *> suppliers = FileReader::readSuppliers(suppliersFile);
+	vector <Offer *> offers = FileReader::readOffers(offersFile);
 
 	Company c(rClients,oClients, suppliers, offers);
 

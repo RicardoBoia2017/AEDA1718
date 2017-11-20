@@ -7,7 +7,7 @@
 
 #include "Client.h"
 
-Client::Client(std::string n, int NIF): name(n)
+Client::Client(string n, int NIF): name(n)
 {
 	this->NIF = NIF;
 }
@@ -16,7 +16,7 @@ Client::~Client() {
 
 }
 
-std::string Client::getName() const
+string Client::getName() const
 {
 	return name;
 }
@@ -33,7 +33,7 @@ int Client::getNIF() const
 
 static int reg_clientID = 1;
 
-RegisteredClient::RegisteredClient(std::string n, int NIF, int points): Client(n,NIF)
+RegisteredClient::RegisteredClient(string n, int NIF, int points): Client(n,NIF)
 {
 	this->points=points;
 	reg_id = reg_clientID;
@@ -59,16 +59,16 @@ void RegisteredClient::setPoints(unsigned int p)
 	points = p;
 }
 
-std::string RegisteredClient::getInformation() const
+string RegisteredClient::getInformation() const
 {
-	std::stringstream ss;
+	stringstream ss;
 
 	ss << getId() << " " << getName() << ", " << getNIF() << ", Points: " << getPoints();
 
 	return ss.str() ;
 }
 
-std::ostream &operator<< (std::ostream &os, RegisteredClient &rc1)
+ostream &operator<< (ostream &os, RegisteredClient &rc1)
 {
 	os << rc1.getId() << ", " << rc1.getName() << ", " << rc1.getNIF() << ", " << rc1.getPoints() << ";" ;
 	return os;
@@ -80,7 +80,7 @@ std::ostream &operator<< (std::ostream &os, RegisteredClient &rc1)
 
 static int oc_clientID = 1;
 
-OccasionalClient::OccasionalClient(std::string n, int NIF): Client(n,NIF)
+OccasionalClient::OccasionalClient(string n, int NIF): Client(n,NIF)
 {
 	oc_id = oc_clientID;
 	oc_clientID++;
@@ -101,16 +101,16 @@ void OccasionalClient::setId(int id)
 	oc_id = id;
 }
 
-std::string OccasionalClient::getInformation() const
+string OccasionalClient::getInformation() const
 {
-	std::stringstream ss;
+	stringstream ss;
 
 	ss << getId() << " " << getName() << ", " << getNIF();
 
 	return ss.str() ;
 }
 
-std::ostream &operator<< (std::ostream &os, OccasionalClient &oc1)
+ostream &operator<< (ostream &os, OccasionalClient &oc1)
 {
 	os << oc1.getId() << ", " << oc1.getName() << ", " << oc1.getNIF() << ";" ;
 	return os;

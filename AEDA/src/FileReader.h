@@ -14,6 +14,8 @@
 #include <fstream>
 #include <cstdlib>
 
+using namespace std;
+
 #include "Client.h"
 #include "Supplier.h"
 #include "Offer.h"
@@ -22,12 +24,12 @@
 class FileReader
 {
 private:
-	static std::vector<std::string> readLines(std::string file);
+	static vector<string> readLines(string file);
 public:
-	static std::vector<RegisteredClient *> readRegisteredClients(std::string file);
-	static std::vector<OccasionalClient *> readOccasionalClients(std::string file);
-	static std::vector<Supplier *> readSuppliers(std::string file);
-	static std::vector<Offer *> readOffers(std::string file);
+	static vector<RegisteredClient *> readRegisteredClients(string file);
+	static vector<OccasionalClient *> readOccasionalClients(string file);
+	static vector<Supplier *> readSuppliers(string file);
+	static vector<Offer *> readOffers(string file);
 };
 
 
