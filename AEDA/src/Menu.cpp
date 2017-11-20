@@ -99,12 +99,21 @@ void MakeReservation (Company *c)
 	{
 		case 1:
 		{
-			int idClient;
+			unsigned int idClient;
 
-			cout << "Insert your id: ";
-			cin >> idClient;
-			cin.clear();
-			cin.ignore(10000, '\n');
+			while (1)
+			{
+				cout << "Insert your id: ";
+				cin >> idClient;
+				cin.clear();
+				cin.ignore(10000, '\n');
+
+				if (idClient > c->getRegisteredClients().size() || idClient <= 0)
+					cout << "Invalid id" << endl << endl;
+				else
+					break;
+			}
+
 			MakeReservation_Registered(c, idClient);
 			break;
 		}
@@ -122,43 +131,50 @@ void MakeReservation (Company *c)
 
 			if( optionMR2 == 2)
 			{
-				int idClient;
+				unsigned int idClient;
 
 				c->printOccasionalClients();
 
-				cout << "Insert your id: ";
-				cin >> idClient;
-				cin.clear();
-				cin.ignore(10000, '\n');
+				while (1)
+				{
+					cout << "Insert your id: ";
+					cin >> idClient;
+					cin.clear();
+					cin.ignore(10000, '\n');
+
+					if (idClient > c->getOccasionalClients().size() || idClient <= 0 )
+						cout << "Invalid id" << endl << endl;
+					else break;
+				}
+
 				MakeReservation_Occasional(c, idClient);
 			}
 			else if (optionMR2 == 1)
 			{
-				int idOc;
+				unsigned int idOc;
 				cout << endl;
 				c->printOccasionalClients();
-				cout << endl << "Enter your id: ";
-				cin >> idOc;
-				cin.clear();
-				cin.ignore(10000, '\n');
 
-				if (idOc < 0 || idOc > c->getOccasionalClients().size())
-				{
-					cout << "Invalid id" << endl;
-					MakeReservation(c);
-				}
-				if ( idOc > c->getRegisteredClients().size() || idOc <= 0)
-				{
-					cout << "Invalid client id" << endl;
-					MakeReservation(c);
-				}
 
+				while (1)
+				{
+					cout << endl << "Enter your id: ";
+					cin >> idOc;
+					cin.clear();
+					cin.ignore(10000, '\n');
+
+					if (idOc <= 0 || idOc > c->getOccasionalClients().size())
+						cout << "Invalid id" << endl << endl;
+					else
+						break;
+				}
 				string name = c->getOccasionalClients()[idOc-1]->getName();
 				int NIF = c->getOccasionalClients()[idOc-1]->getNIF();
 
 				int idReg = c->RegisterClient(name, NIF);
-				cout << "Your new id is: " << idReg << endl << endl;
 				c->removeOccasionalClient(idOc);
+
+				cout << "Your new id is: " << idReg << endl << endl;
 
 				MakeReservation_Registered(c, idReg);
 			}
@@ -195,6 +211,7 @@ void MakeReservation (Company *c)
 			cin.clear();
 			cin.ignore(10000, '\n');
 
+
 			if( optionMR3 == 2)
 			{
 				c->addOccasionalClient(name,NIF);
@@ -223,14 +240,8 @@ void MakeReservation (Company *c)
 
 void MakeReservation_Registered (Company *c, unsigned int idClient)
 {
-	int idOffer, nTick;
+	unsigned int idOffer, nTick;
 	string d1, d2;
-
-	if (idClient > c->getRegisteredClients().size() || idClient <= 0)
-	{
-		cout << "Invalid client id" << endl << endl;
-		MakeReservation(c);
-	}
 
 	cout << c->getRegisteredClients()[idClient-1]->getInformation() << endl << endl;
 
@@ -295,14 +306,6 @@ void MakeReservation_Occasional (Company *c, unsigned int idClient)
 	string d1,d2;
 
 	cout << endl;
-	c->printOccasionalClients();
-
-	if ((idClient > c->getOccasionalClients().size() ))
-	{
-		cout << "Invalid client id" << endl;
-		MakeReservation(c);
-	}
-
 	cout << c->getOccasionalClients()[idClient-1]->getInformation() << endl << endl;
 
 	cout << "Enter the range of dates you're interested in: " << endl;

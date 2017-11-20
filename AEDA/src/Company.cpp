@@ -69,7 +69,7 @@ void Company::exportOffers(string file)
 	out.close();
 }
 
-int Company::RegisterClient(string name, int NIF)
+unsigned int Company::RegisterClient(string name, int NIF)
 {
 	RegisteredClient * rc = new RegisteredClient(name,NIF,0);
 	rClients.push_back(rc);
@@ -110,8 +110,9 @@ void Company::removeOccasionalClient(int id)
 {
 	vector <OccasionalClient *>::iterator it = oClients.begin();
 
-	for(it; it != oClients.end(); it++)
+	for(unsigned int i = 0; i < oClients.size();i++, it++)
 	{
+		cout << (*it)->getInformation();
 		if( (*it)->getId() == id)
 			oClients.erase(it);
 	}

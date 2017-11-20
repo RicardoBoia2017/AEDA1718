@@ -34,7 +34,7 @@ public:
 	void exportOccasionaldClients(string file);
 	void exportSuppliers (string file);
 	void exportOffers (string file);
-	int RegisterClient(string name, int NIF);
+	unsigned int RegisterClient(string name, int NIF);
 	void AddSupplier(string n, int NIF, string address);
 	void addOccasionalClient (string name, int NIF);
 	void addOffer(unsigned int price, unsigned int dist, unsigned int cap, unsigned int points, double perc, string bT, string dest, string supName, Date d);
