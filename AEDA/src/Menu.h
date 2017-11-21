@@ -24,6 +24,7 @@ void CancelReservationOccClient(Company *c);
 void ViewFilesMenu (Company *c);
 
 void AddSupplier(Company *c);
+void AddOffer(Company *c);
 
 class InvalidOption
 {
