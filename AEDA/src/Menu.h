@@ -28,6 +28,11 @@ void ViewFilesMenu (Company *c);
 void AddSupplier(Company *c);
 void AddOffer(Company *c);
 
+/**
+ * Called when the user inserts an invalid option in a menu.
+ * @param c company.
+ * @param menu that will be called.
+ */
 class InvalidOption
 {
 public:
@@ -54,6 +59,10 @@ public:
 	}
 };
 
+/**
+ * Called when the user tries more tickets than the ones available.
+ * @param c company.
+ */
 class NoSeatsAvailable
 {
 public:

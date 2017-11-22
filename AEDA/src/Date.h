@@ -15,22 +15,19 @@
 using namespace std;
 
 
-class ExceptionInvalidDate
-{
-private:
-	string component;
-	int value;
-
-public:
-	ExceptionInvalidDate(string comp, int v):
-		component (comp), value (v)
-	{}
-};
-
 class Date {
 private:
+	/**
+	 * @brief  date's day
+	 */
 	unsigned int day;
+	/**
+	 * @brief date's month
+	 */
 	unsigned int month;
+	/**
+	 * @brief date's year
+	 */
 	unsigned int year;
 public:
 	Date (unsigned int d, unsigned int m, unsigned int y);

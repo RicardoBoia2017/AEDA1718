@@ -15,21 +15,40 @@ using namespace std;
 
 class Client {
 private:
+	/**
+	 * @brief Client's name.
+	 */
 	string name;
+	/**
+	 * Client's NIF.
+	 */
 	unsigned int NIF;
 public:
 	Client(string n, unsigned int NIF);
 	virtual ~Client();
 	string getName() const;
 	unsigned int getNIF() const;
+	/**
+	 * A pure virtual member.
+	 *@return client's id.
+	 */
 	virtual unsigned int getId() const = 0;
+	/**
+	 * @return string with the client's information.
+	 */
 	virtual string getInformation() const = 0;
 };
 
 class RegisteredClient: public Client
 {
 private:
+	/**
+	 * number of points won by the client.
+	 */
 	unsigned int points;
+	/**
+	 * id in the list of registered clients.
+	 */
 	unsigned int reg_id;
 public:
 	RegisteredClient(string n, unsigned int NIF, unsigned int points);
@@ -38,7 +57,7 @@ public:
 	unsigned int getPoints() const;
 	void setPoints(unsigned int p);
 	string getInformation() const;
-	friend ostream &operator<< (ostream &os, RegisteredClient &c1);
+	friend ostream &operator<< (ostream &os, RegisteredClient &rc1);
 };
 
 class OccasionalClient: public Client
@@ -51,6 +70,6 @@ public:
 	unsigned int getId() const;
 	void setId(unsigned int id);
 	string getInformation() const;
-	friend ostream &operator<< (ostream &os, OccasionalClient &c1);
+	friend ostream &operator<< (ostream &os, OccasionalClient &oc1);
 };
 #endif /* SRC_CLIENT_H_ */

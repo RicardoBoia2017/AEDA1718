@@ -9,6 +9,18 @@
 
 static unsigned int offerID = 1;
 
+/**
+ * The constructor.
+ * @param pri price.
+ * @param dist distance.
+ * @param capacity capacity.
+ * @param bT boat type.
+ * @param dest destination.
+ * @param sName supName.
+ * @param points points.
+ * @param percentage which is gonna be divided by 100, converting it to a decimal number.
+ * @param d date.
+ */
 Offer::Offer(int pri, int dist, int capacity, string bT, string dest, string sName, unsigned int points, double percentage, Date d):
 		price(pri), distance(dist), boatType (bT), destination(dest), supName(sName), date(d)
 {
@@ -20,10 +32,18 @@ Offer::Offer(int pri, int dist, int capacity, string bT, string dest, string sNa
 	offerID++;
 }
 
+/**
+ * The destructor.
+ */
 Offer::~Offer() {
 
 }
 
+/**
+ * Adds registered client and the number of tickets he bought. In the case he is already part of the offer, then it just adds the number of tickets.
+ * @param rc registered client to be added.
+ * @param nTick number of tickets bought.
+ */
 void Offer::addRegisteredClient(RegisteredClient * rc, int nTick)
 {
 	bool Found = false;
@@ -45,6 +65,11 @@ void Offer::addRegisteredClient(RegisteredClient * rc, int nTick)
    rc->setPoints(pointsWon);
 }
 
+/**
+ * Eliminates registered client or just removes a few tickets from his reservation.
+ * @param rc registered client.
+ * @param nTick number of tickets to be removed.
+ */
 void Offer::elimRegisteredClient(RegisteredClient * rc, int nTick)
 {
 
@@ -77,6 +102,11 @@ void Offer::elimRegisteredClient(RegisteredClient * rc, int nTick)
 
 }
 
+/**
+ * Adds occasional client and the number of tickets he bought. In the case he is already part of the offer, then it just adds the number of tickets.
+ * @param oc occasional client to be added.
+ * @param nTick number of tickets bought.
+ */
 void Offer::addOccasionalClient(OccasionalClient* oc, int nTick)
 
 {
@@ -96,6 +126,12 @@ void Offer::addOccasionalClient(OccasionalClient* oc, int nTick)
 	vacancies -= nTick;
 
 }
+
+/**
+ * Eliminates occasional client or just removes a few tickets from his reservation.
+ * @param oc occasional client.
+ * @param nTick number of tickets to be removed.
+ */
 
 void Offer::elimOccasionalClient(OccasionalClient * oc, int nTick)
 {
@@ -125,57 +161,89 @@ void Offer::elimOccasionalClient(OccasionalClient * oc, int nTick)
 
 }
 
+/**
+ * @return price.
+ */
 unsigned int Offer::getPrice() const
 {
 	return price;
 }
 
+/**
+ * @return id.
+ */
 unsigned int Offer::getId() const
 {
 	return id;
 }
 
+/**
+ * @return distance.
+ */
 unsigned int Offer::getDistance() const
 {
 	return distance;
 }
 
+/**
+ * @return capacity.
+ */
 unsigned int Offer::getCapacity() const
 {
 	return capacity;
 }
 
+/**
+ * @return vacancies.
+ */
 unsigned int Offer::getVacancies() const
 {
 	return vacancies;
 }
 
+/**
+ * @return points.
+ */
 unsigned int Offer::getPoints() const
 {
 	return points;
 }
 
+/**
+ * @return date.
+ */
 Date Offer::getDate() const
 {
 	return date;
 }
-
+/**
+ * @return percentage.
+ */
 
 double Offer::getPercentage() const
 {
 	return percentage;
 }
 
+/**
+ * @return boat type.
+ */
 string Offer::getBoatType() const
 {
 	return boatType;
 }
 
+/**
+ * @return destination.
+ */
 string Offer::getDestination() const
 {
 	return destination;
 }
 
+/**
+ * @return string with the offer's information.
+ */
 string Offer::getInformation() const
 {
 	stringstream ss;
@@ -187,31 +255,51 @@ string Offer::getInformation() const
 	return ss.str();
 }
 
+/**
+ * @return supName.
+ */
 string Offer::getSupName() const
 {
 	return supName;
 }
 
+/**
+ * @return sup.
+ */
 Supplier * Offer::getSupplier() const
 {
 	return sup;
 }
 
+/**
+ * Sets supplier equal to s.
+ *  @param s new supplier.
+ */
 void Offer::setSupplier(Supplier * s)
 {
 	sup=s;
 }
 
+/**
+ * @return reg_clients.
+ */
 map <RegisteredClient*, int> Offer::getRegClients() const
 {
 	return reg_clients;
 }
 
+/**
+ * @return oc_clients.
+ */
 map <OccasionalClient *, int> Offer::getOcClients() const
 {
 	return oc_clients;
 }
 
+/** Writes to ofstream the offer's information in the format used in text files.
+ * @param os ofstream where is stored the information.
+ * @param o1 offer whose information is going to be read.
+ */
 ostream &operator<< (ostream &os, Offer &o1)
 {
 	double perc = o1.getPercentage() * 100;

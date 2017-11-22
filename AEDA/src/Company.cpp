@@ -7,6 +7,13 @@
 
 #include "Company.h"
 
+/**
+ * The constructor.
+ * @param rClients rClients.
+ * @param oClients oClients.
+ * @param suppliers suppliers.
+ * @param offers offers.
+ */
 Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers)
 {
 	this->rClients = rClients;
@@ -16,11 +23,18 @@ Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *>
 	bank = 0;
 }
 
+/**
+ * The destructor.
+ */
 Company::~Company()
 {
 
 }
 
+/**
+ * Exports registered clients to text file.
+ * @param file that stores registered clients' information.
+ */
 void Company::exportRegisteredClients(string file)
 {
 	ofstream out;
@@ -33,6 +47,10 @@ void Company::exportRegisteredClients(string file)
 	out.close();
 }
 
+/**
+ * Export	s occasional clients to text file.
+ * @param file that stores occasional clients' information.
+ */
 void Company::exportOccasionaldClients(string file)
 {
 	ofstream out;
@@ -45,6 +63,10 @@ void Company::exportOccasionaldClients(string file)
 	out.close();
 }
 
+/**
+ * Exports suppliers to text file.
+ * @param file that stores suppliers' information.
+ */
 void Company::exportSuppliers(string file)
 {
 	ofstream out;
@@ -57,6 +79,10 @@ void Company::exportSuppliers(string file)
 	out.close();
 }
 
+/**
+ * Export	s offers' to text file.
+ * @param file that stores offers' information.
+ */
 void Company::exportOffers(string file)
 {
 	ofstream out;
@@ -69,6 +95,11 @@ void Company::exportOffers(string file)
 	out.close();
 }
 
+/**
+ * Adds client to registered client's vector.
+ * @param name new client's name.
+ * @param NIF new client's NIF.
+ */
 unsigned int Company::RegisterClient(string name, int NIF)
 {
 	RegisteredClient * rc = new RegisteredClient(name,NIF,0);
@@ -77,6 +108,12 @@ unsigned int Company::RegisterClient(string name, int NIF)
 	return rc->getId();
 }
 
+/**
+ * Adds supplier to supplier's vector.
+ * @param n new supplier's name.
+ * @param NIF new supplier's NIF.
+ * @param address new supplier's address.
+ */
 void Company::AddSupplier(string n, int NIF, string address)
 {
 	Supplier * sup = new Supplier(n, NIF, address);
@@ -84,7 +121,18 @@ void Company::AddSupplier(string n, int NIF, string address)
 
 }
 
-
+/**
+ * Adds offer to offer's vector.
+ * @param price new offer's price.
+ * @param dist new offer's distance.
+ * @param cap new offer's capacity.
+ * @param points new offer's points.
+ * @param perc new offer's percentage.
+ * @param bT new offer's boat type.
+ * @param dest new offer's destination.
+ * @param supName new offer's supplier's name.
+ * @param d new offer's date.
+ */
 void Company::addOffer(unsigned int price, unsigned int dist, unsigned int cap, unsigned int points, double perc, string bT, string dest, string supName, Date d)
 {
 	Offer * o = new Offer(price, dist, cap, bT, dest, supName, points, perc, d);
@@ -99,13 +147,21 @@ void Company::addOffer(unsigned int price, unsigned int dist, unsigned int cap, 
 	}
 }
 
-
+/**
+ * Adds occasional client to occasional clients' vector.
+ * @param name new occasional client's name.
+ * @param NIF new occasional client's NIF.
+ */
 void Company::addOccasionalClient (string name, int NIF)
 {
 	OccasionalClient *oc = new OccasionalClient(name,NIF);
 	oClients.push_back(oc);
 }
 
+/**
+ * Removes occasional client from the respective vector.
+ * @param id id of the occasional client to be removed.
+ */
 void Company::removeOccasionalClient(int id)
 {
 	vector <OccasionalClient *>::iterator it = oClients.begin();
@@ -123,36 +179,58 @@ void Company::removeOccasionalClient(int id)
 	}
 }
 
+/**
+ * @return registered clients' vector.
+ */
 vector <RegisteredClient *> Company::getRegisteredClients () const
 {
 	return rClients;
 }
 
+/**
+ * @return occasional clients' vector.
+ */
 vector <OccasionalClient *> Company::getOccasionalClients() const
 {
 	return oClients;
 }
 
+/**
+ * @return suppliers' vector.
+ */
 vector <Supplier *> Company::getSuppliers () const
 {
 	return suppliers;
 }
 
+/**
+ * @return offers's vector.
+ */
 vector <Offer *> Company::getOffers () const
 {
 	return offers;
 }
 
+/**
+ * @return bank.
+ */
 unsigned int Company::getBank() const
 {
 	return bank;
 }
 
+/**
+ * Add b to bank.
+ * @param b value to be added.
+ */
 void Company::setBank(int b)
 {
 	bank += b;
 }
 
+/**
+ * Sets offer's corresponding supplier according to offer's supName.
+ */
 void Company::setOfferSuppliers()
 {
 	for( unsigned int i = 0; i < offers.size(); i++)
@@ -169,6 +247,9 @@ void Company::setOfferSuppliers()
 
 }
 
+/**
+ * Prints registered clients' information.
+ */
 void Company::printRegisteredClients() const
 {
 	for (unsigned int i = 0; i < rClients.size(); i++)
@@ -178,6 +259,9 @@ void Company::printRegisteredClients() const
 
 }
 
+/**
+ * Prints registered clients sorted by their points.
+ */
 void Company::printRegisteredClientByPoints() const
 {
 	vector <RegisteredClient* > v_tmp = rClients;
@@ -201,6 +285,9 @@ void Company::printRegisteredClientByPoints() const
 
 }
 
+/**
+ * Prints occasional clients' information.
+ */
 void Company::printOccasionalClients() const
 {
 	for (unsigned int i = 0; i < oClients.size(); i++)
@@ -209,6 +296,10 @@ void Company::printOccasionalClients() const
 	}
 }
 
+/**
+ * Prints clients that made a reservation in a certain offer.
+ * @param idOffer offer's id.
+ */
 void Company::printClientsByOffer(int idOffer) const
 {
 	Offer * o = offers[idOffer-1];
@@ -241,6 +332,9 @@ void Company::printClientsByOffer(int idOffer) const
 
 }
 
+/**
+ * Prints suppliers' information.
+ */
 void Company::printSuppliers() const
 {
 	for (unsigned int i = 0; i < suppliers.size(); i++)
@@ -249,6 +343,9 @@ void Company::printSuppliers() const
 	}
 }
 
+/**
+ * Prints offers' information
+ */
 void Company::printOffers() const
 {
 	for (unsigned int i = 0; i < offers.size(); i++)
@@ -257,6 +354,11 @@ void Company::printOffers() const
 	}
 }
 
+/**
+ * Prints offers which date is inserted in the range provided.
+ * @param d1 inital date.
+ * @param d2 final date.
+ */
 void Company::printOfferbyDate(Date d1, Date d2) const
 {
 	unsigned int counter = 0;
@@ -274,6 +376,10 @@ void Company::printOfferbyDate(Date d1, Date d2) const
 	cout << "We found " << counter << " offers" << endl;
 }
 
+/**
+ * Prints a certain supplier's offers.
+ * @param name supplier's name.
+ */
 void Company::printOfferBySuppliers(string name) const
 {
 	for (unsigned int i = 0; i < offers.size(); i++)

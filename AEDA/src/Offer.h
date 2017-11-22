@@ -22,19 +22,61 @@ using namespace std;
 
 class Offer {
 private:
+	/**
+	 * @brief offer's id.
+	 */
 	unsigned int id;
+	/**
+	 * @brief offer's price.
+	 */
 	unsigned int price;
+	/**
+	 * @brief offer's distance.
+	 */
 	unsigned int distance;
+	/**
+	 * @brief offer's boat's capacity.
+	 */
 	unsigned int capacity;
+	/**
+	 * @brief offer's vacancies.
+	 */
 	unsigned int vacancies;
+	/**
+	 * @brief offer's points per ticket bought.
+	 */
 	unsigned int points;
+	/**
+	 * @brief percentage of each reservation that goes to 'Porto Rivers'.
+	 */
 	double percentage;
+	/**
+	 * @brief offer's boat type.
+	 */
 	string boatType;
+	/**
+	 * @brief offer's destination.
+	 */
 	string destination;
+	/**
+	 * @brief offer's supplier's name.
+	 */
 	string supName;
+	/**
+	 * @brief map of registered clients and the number of ticket bought by each.
+	 */
 	map <RegisteredClient *, int> reg_clients;
+	/**
+	 * @brief map of occasional clients and the number of ticket bought by each.
+	 */
 	map <OccasionalClient *, int> oc_clients;
+	/**
+	 * @brief offer's supplier.
+	 */
 	Supplier * sup;
+	/**
+	 * @brief offer's date.
+	 */
 	Date date;
 public:
 	Offer (int pri, int dist,int capacity, string bT, string dest, string sName, unsigned int points, double percentage, Date d);

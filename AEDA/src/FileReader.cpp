@@ -12,7 +12,11 @@
 
 using namespace std;
 
+/**
+ * Gets line from file a puts it in a vector.
 
+ * @param file file to be read.
+ */
 vector<string> FileReader::readLines(string file) {
 	vector<string> lines;
 
@@ -31,6 +35,10 @@ vector<string> FileReader::readLines(string file) {
 	return lines;
 }
 
+/**
+ * Read information from registered clients.
+ * @param file registered clients' file.
+ */
 vector<RegisteredClient *> FileReader::readRegisteredClients(string file)
 {
 	vector<RegisteredClient *> rClients;
@@ -56,6 +64,10 @@ vector<RegisteredClient *> FileReader::readRegisteredClients(string file)
 	return rClients;
 }
 
+/**
+ * Read information from occasional clients.
+ * @param file occasional clients' file.
+ */
 vector<OccasionalClient*> FileReader::readOccasionalClients(string file)
 {
 	vector<OccasionalClient *> oClients;
@@ -79,6 +91,10 @@ vector<OccasionalClient*> FileReader::readOccasionalClients(string file)
 	return oClients;
 }
 
+/**
+ * Read information from suppliers.
+ * @param file suppliers' file.
+ */
 vector<Supplier *> FileReader::readSuppliers(string file)
 {
 	vector<Supplier *> suppliers;
@@ -104,7 +120,10 @@ vector<Supplier *> FileReader::readSuppliers(string file)
 	return suppliers;
 }
 
-
+/**
+ * Read information from offers.
+ * @param file registered offers' file.
+ */
 vector<Offer *> FileReader::readOffers (string file)
 {
 	vector<Offer *> offers;

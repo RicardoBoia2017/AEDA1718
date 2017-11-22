@@ -8,7 +8,12 @@
 #include "Date.h"
 
 
-
+/**
+ * Constructor from integers.
+ * @param d day.
+ * @param m month.
+ * @param y year.
+ */
 Date::Date(unsigned int d, unsigned int m, unsigned int y) {
 
 	/*
@@ -27,6 +32,11 @@ Date::Date(unsigned int d, unsigned int m, unsigned int y) {
 		year = y;
 }
 
+/**
+ * Constructor from string.
+ * @param date string in DD-MM-YYYY format.
+ *
+ */
 Date::Date(string date)
 {
 	string d = date.substr(0, date.find('-'));
@@ -39,26 +49,39 @@ Date::Date(string date)
 	year = (unsigned int) stoi(date.c_str());;
 
 }
+/**
+ * The destructor.
+ */
+Date::~Date()
+{}
 
-Date::~Date() {
-	// TODO Auto-generated destructor stub
-}
-
+/**
+ * @return day.
+ */
 unsigned int Date::getDay() const
 {
 	return this->day;
 }
 
+/**
+ * @return month.
+ */
 unsigned int Date::getMonth() const
 {
 	return this->month;
 }
 
+/**
+ * @return year.
+ */
 unsigned int Date::getYear() const
 {
 	return this->year;
 }
 
+/**
+ * Converts a date to number of days.
+ */
 unsigned int Date::convertToDays ()
 {
 	int convertToDays = 0;
@@ -88,7 +111,11 @@ unsigned int Date::convertToDays ()
 
 	return convertToDays;
 }
-
+/**
+ * @return number of days between two dates.
+ * @param d1 date to be compared.
+ *
+ */
 unsigned int Date::daysBetween (Date d1)
 {
 	if (this->convertToDays() > d1.convertToDays())
@@ -97,6 +124,10 @@ unsigned int Date::daysBetween (Date d1)
 	        return d1.convertToDays() - this->convertToDays();
 }
 
+/**
+ * Checks if date is before or equal to right.
+ * @param right date to compare.
+ */
 bool Date::operator<= (const Date& right) const
 {
 	vector<int> l,r;
@@ -122,6 +153,10 @@ bool Date::operator<= (const Date& right) const
 	return false;
 }
 
+/**
+ * Checks if two dates are the same.
+ * @param right date to compare.
+ */
 bool Date::operator==(const Date& right) const
 
 {
@@ -131,6 +166,9 @@ bool Date::operator==(const Date& right) const
 	return false;
 }
 
+/**
+ * Checks if date is valid.
+ */
 bool Date::validateDate()
 {
 	if(month < 0 || month > 12)

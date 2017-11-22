@@ -17,9 +17,21 @@ using namespace std;
 
 class Supplier {
 private:
+	/**
+	 *@brief supplier's name.
+	 */
 	string name;
+	/**
+	 * @brief supplier's NIF.
+	 */
 	unsigned int NIF;
+	/**
+	 * @brief supplier's address.
+	 */
 	string address;
+	/*
+	 * @brief supplier's id.
+	 */
 	unsigned int id;
 public:
 	Supplier(string n, unsigned int NIF, string address);

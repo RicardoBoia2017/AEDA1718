@@ -22,10 +22,25 @@ using namespace std;
 
 class Company {
 private:
+	/**
+	 * @brief Vector with all registered clients.
+	 */
 	vector <RegisteredClient *> rClients;
+	/**
+	 * @brief Vector with all occasional clients.
+	 */
 	vector <OccasionalClient *> oClients;
+	/**
+	 * @brief Vector with all suppliers.
+	 */
 	vector <Supplier *> suppliers;
+	/**
+	 * @brief Vector with all offers.
+	 */
 	vector <Offer *> offers;
+	/**
+	 * @brief Money gained by 'Porto Rivers' with the reservations.
+	 */
 	unsigned int bank;
 public:
 	Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers);
