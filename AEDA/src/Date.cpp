@@ -11,6 +11,7 @@
 
 Date::Date(unsigned int d, unsigned int m, unsigned int y) {
 
+	/*
 	if(m < 0 || m > 12)
 		throw ExceptionInvalidDate("month",m);
 	if(d < 0 || d > 31)
@@ -20,7 +21,7 @@ Date::Date(unsigned int d, unsigned int m, unsigned int y) {
 			throw ExceptionInvalidDate("day",d);
 	if(m == 2 && y%4 != 0 && d > 28)
 		throw ExceptionInvalidDate("day",d);
-
+*/
 		day = d;
 		month = m;
 		year = y;
@@ -122,6 +123,7 @@ bool Date::operator<= (const Date& right) const
 }
 
 bool Date::operator==(const Date& right) const
+
 {
 	if(this->day == right.day && this->month== right.month && this->year == right.year)
 		return true;
@@ -129,7 +131,17 @@ bool Date::operator==(const Date& right) const
 	return false;
 }
 
+bool Date::validateDate()
+{
+	if(month < 0 || month > 12)
+		return false;
+	if(day < 0 || day > 31)
+		return false;
+	if((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
+		if(month == 2 && year%4 == 0 && day > 29)
+			return false;
+	if(month == 2 && year%4 != 0 && day > 28)
+		return false;
 
-
-
-
+	return true;
+}

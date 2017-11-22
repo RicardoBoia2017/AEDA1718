@@ -3,8 +3,8 @@
 3, 27/11/2017, Cruzeiros Douro, 108, 250, 110, Barco Rabelo, Pinhão, 10, 5;
 4, 21/11/2017, Roteiros do Douro, 110, 236, 80, Barco Rabelo, Régua, 13, 5;
 5, 1/12/2017, Mares de Portugal, 150, 482, 30, Iate, Barca d´Alva, 20, 8;
-6, 29/11/2017, Mares de Portugal, 137, 261, 30, Iate, Pinhão, 17, 8;
-7, 22/11/2017, Douro Azul, 100, 378, 115, Barco Rabelo, Régua, 18, 6;
+6, 29/11/2017, Mares de Portugal, 137, 261, 28, Iate, Pinhão, 17, 8;
+7, 22/11/2017, Douro Azul, 100, 378, 105, Barco Rabelo, Régua, 18, 6;
 8, 24/11/2017, Mares de Portugal, 106, 390, 4, Veleiro, Barca d´Alva, 22, 4;
 9, 3/12/2017, Navegadores, 170, 400, 25, Iate, Barca d´Alva, 28, 9;
 10, 5/12/2017, Navegadores, 124, 251, 100, Barco Rabelo, Pinhão, 9, 5;

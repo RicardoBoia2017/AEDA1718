@@ -60,6 +60,7 @@ void CompanyMenu(Company *c)
 
 			cin >> optionCM3;
 			cin.clear();
+			cin.ignore(10000,'\n');
 
 			switch (optionCM3)
 			{
@@ -293,27 +294,27 @@ void MakeReservation_Registered (Company *c, unsigned int idClient)
 	cin.clear();
 	cin.ignore(10000, '\n');
 	Date date1 = Date(d1);
-	while (validateDate(d1) == false)
-		{
-		cout << "The date that you have entered is not valid, please enter a new final date (format DD-MM-YYYY):";
+	while (date1.validateDate() == false)
+	{
+		cout << "The date that you have entered is not valid, please enter a new initial date (format DD-MM-YYYY):";
 		cin >> d1;
 		cin.clear();
 		cin.ignore(10000, '\n');
-		Date date1 = Date (d1);
-		}
+		date1 = Date (d1);
+	}
 
 	cout << "Final date (format DD-MM-YYYY): ";
 	cin >> d2;
 	cin.clear();
 	cin.ignore(10000, '\n');
 	Date date2 = Date (d2);
-	while (validateDate(d2) == false)
+	while (date2.validateDate() == false)
 		{
 		cout << "The date that you have entered is not valid, please enter a new final date (format DD-MM-YYYY):";
 		cin >> d2;
 		cin.clear();
 		cin.ignore(10000, '\n');
-		Date date2 = Date (d2);
+		date2 = Date (d2);
 		}
 	cout << endl;
 
@@ -398,27 +399,27 @@ void MakeReservation_Occasional (Company *c, unsigned int idClient)
 	cout << "Initial date (format DD-MM-YYYY): ";
 	cin >> d1;
 	Date date1 = Date(d1);
-	while (validateDate(d1) == false)
-		{
-		cout << "The date that you have entered is not valid, please enter a new final date (format DD-MM-YYYY):";
+	while (date1.validateDate() == false)
+	{
+		cout << "The date that you have entered is not valid, please enter a new initial date (format DD-MM-YYYY):";
 		cin >> d1;
 		cin.clear();
 		cin.ignore(10000, '\n');
-		Date date1 = Date (d1);
-		}
+		date1 = Date (d1);
+	}
 
 
 	cout << "Final date (format DD-MM-YYYY): ";
 	cin >> d2;
 	Date date2 = Date (d2);
-	while (validateDate(d2) == false)
-		{
+	while (date2.validateDate() == false)
+	{
 		cout << "The date that you have entered is not valid, please enter a new final date (format DD-MM-YYYY):";
 		cin >> d2;
 		cin.clear();
 		cin.ignore(10000, '\n');
-		Date date2 = Date (d2);
-		}
+		date2 = Date (d2);
+	}
 	cout << endl;
 
 	c->printOfferbyDate(d1,d2);
@@ -499,9 +500,9 @@ void CancelReservation (Company *c)
 	cout << "************************" << endl << endl;
 
 	cout << "What type of client are you?" << endl;
-	cout << " 1 Registered Client" << endl;
-	cout << " 2 Occasional Client" << endl;
-	cout << " 3 Back" << endl;
+	cout << "1 Registered Client" << endl;
+	cout << "2 Occasional Client" << endl;
+	cout << "3 Back" << endl;
 	cout << "Insert the desired option: ";
 	cin >> optionC;
 	cin.clear();
@@ -522,6 +523,7 @@ void CancelReservation (Company *c)
 			case 3:
 			{
 				CompanyMenu(c);
+				break;
 			}
 			default:
 				throw InvalidOption(c,3);
@@ -533,8 +535,10 @@ void CancelReservationRegClient(Company *c)
 	int idClient, idOffer, nTick;
 	Date d1 ("20-11-2017");
 
+	cout << endl;
 	c->printRegisteredClients();
-	cout << "What's you client id?";
+	cout << endl;
+	cout << "Insert your client id? ";
 	cin >> idClient;
 	cin.clear();
 	cin.ignore(10000, '\n');
@@ -543,14 +547,15 @@ void CancelReservationRegClient(Company *c)
 		{
 			cout << "Invalid client id" << endl <<endl;
 			MakeReservation(c);
+
 		}
 	cout << c->getRegisteredClients()[idClient-1]->getInformation() << endl << endl;
-	cout << endl << "Insert the id of the corresponding offer: ";
+	cout << "Insert the id of the corresponding offer: ";
 	cin >> idOffer;
 	cin.clear();
 	cin.ignore(10000, '\n');
 	Offer * offer = c->getOffers()[idOffer-1];
-	cout << "How many tickets do you want to cancel?" ;
+	cout << "How many tickets do you want to cancel? " ;
 	cin >> nTick;
 	cin.clear();
 	cin.ignore(10000, '\n');
@@ -558,7 +563,6 @@ void CancelReservationRegClient(Company *c)
 	offer->elimRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
 
 	Date d2 = offer->getDate();
-	//Vamos ver a diferenÃ§a das datas
 
 	unsigned int diffDates = d1.daysBetween(d2);
 
@@ -566,19 +570,19 @@ void CancelReservationRegClient(Company *c)
 		{
 			unsigned int devol = (offer->getPrice() * nTick);
 			c->setBank( (-1) * offer->getPercentage() * devol);
-			cout << "The refund amount is: " << devol << "â‚¬ " << endl;
+			cout << "The refund amount is: " << devol << "€" << endl;
 		}
 	else if (7 > diffDates && diffDates > 2)
 		{
 			unsigned int devol = (offer->getPrice() * nTick * 0.5);
 			c->setBank( (-0.5) * offer->getPercentage() * devol);
-			cout << "The refund amount is: " << devol << "â‚¬ " << endl;
+			cout << "The refund amount is: " << devol << "€" << endl;
 		}
 	else
 		{
 			cout << "Your cancelation was done too late. You have no refound." << endl;
 		}
-
+	cout << endl;
 	CompanyMenu(c);
 }
 
@@ -588,9 +592,11 @@ void CancelReservationOccClient(Company *c)
 	int idClient, idOffer, nTick;
 	Date d1 ("20-11-2017");
 
+	cout << endl;
 	c->printOccasionalClients();
+	cout << endl;
 
-	cout << "What's you client id?";
+	cout << "What's you client id? ";
 	cin >> idClient;
 	cin.clear();
 	cin.ignore(10000, '\n');
@@ -607,7 +613,7 @@ void CancelReservationOccClient(Company *c)
 	cin.clear();
 	cin.ignore(10000, '\n');
 	Offer * offer = c->getOffers()[idOffer-1];
-	cout << "How many tickets do you want to cancel?" ;
+	cout << "How many tickets do you want to cancel? " ;
 	cin >> nTick;
 	cin.clear();
 	cin.ignore(10000, '\n');
@@ -615,7 +621,6 @@ void CancelReservationOccClient(Company *c)
 
 	offer->elimOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
 	Date d2 = offer->getDate();
-	//Vamos ver a diferenÃ§a das datas
 
 	unsigned int diffDates = d1.daysBetween(d2);
 
@@ -632,6 +637,12 @@ void CancelReservationOccClient(Company *c)
 		c->setBank( (-0.5) * offer->getPercentage() * devol);
 		cout << "The refund amount is: " << devol << "€ " << endl;
 	}
+	else
+		{
+			cout << "Your cancelation was done too late. You have no refound." << endl;
+		}
+	cout << endl;
+	CompanyMenu(c);
 }
 
 void ViewFilesMenu (Company *c)
@@ -893,14 +904,14 @@ void AddSupplier(Company *c)
 			cout << "Enter the date of this offer (format DD-MM-YYYY): ";
 			cin >> date;
 			Date d(date);
-			while (validateDate(date) == false)
-					{
+			while (d.validateDate() == false)
+				{
 					cout << "The date that you have entered is not valid, please enter a new final date (format DD-MM-YYYY):";
 					cin >> date;
 					cin.clear();
 					cin.ignore(10000, '\n');
-					Date d(date);
-					}
+					d= Date (date);
+				}
 
 
 			c->addOffer(pri, dist, cap, points, perc, bT, dest, name,d);
@@ -1004,14 +1015,14 @@ void AddOffer(Company *c)
 			cout << "Enter the date of this offer (format DD-MM-YYYY): ";
 			cin >> date;
 			Date d(date);
-			while (validateDate(date) == false)
-				{
+			while (d.validateDate() == false)
+			{
 				cout << "The date that you have entered is not valid, please enter a new final date (format DD-MM-YYYY):";
 				cin >> date;
 				cin.clear();
 				cin.ignore(10000, '\n');
-				Date d(date);
-				}
+				d = Date (date);
+			}
 
 
 			c->addOffer(pri, dist, cap, points, perc, bT, dest, name,d);
@@ -1036,29 +1047,4 @@ void AddOffer(Company *c)
 	CompanyMenu(c);
 }
 
-bool validateDate(string sdate){
-	string day_aux;
-	string month_aux;
-	string year_aux;
 
-	day_aux = sdate.substr(0, sdate.find('-'));
-	sdate = sdate.substr(sdate.find('-') + 1);
-	month_aux = sdate.substr(0, sdate.find('-'));
-	year_aux = sdate.substr(sdate.find('-') + 1);
-
-	unsigned int d = stoi(day_aux.c_str());
-	unsigned int m = stoi(month_aux.c_str());
-	unsigned int y = stoi(year_aux.c_str());
-
-	if(m < 0 || m > 12)
-		return false;
-	if(d < 0 || d > 31)
-		return false;
-	if((m == 4 || m == 6 || m == 9 || m == 11) && d > 30)
-		if(m == 2 && y%4 == 0 && d > 29)
-			return false;
-	if(m == 2 && y%4 != 0 && d > 28)
-		return false;
-
-	return true;
-}

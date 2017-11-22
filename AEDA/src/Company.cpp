@@ -215,7 +215,7 @@ void Company::printClientsByOffer(int idOffer) const
 
 	if(o->getRegClients().size() != 0)
 	{
-		cout<< "Registered Clients:" << endl<< endl;
+		cout<< "Registered Clients:" << endl;
 
 		map < RegisteredClient*, int>::const_iterator it_res = o->getRegClients().cbegin();
 
@@ -228,7 +228,7 @@ void Company::printClientsByOffer(int idOffer) const
 
 	if ( o->getOcClients().size() != 0)
 	{
-		cout<< endl<<  "Occasional Clients:" << endl<< endl;
+		cout<< endl<<  "Occasional Clients:" << endl;
 
 		map < OccasionalClient*, int>::const_iterator it_oc = o->getOcClients().begin();
 

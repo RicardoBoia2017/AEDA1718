@@ -43,6 +43,7 @@ public:
 	unsigned int daysBetween (Date d1);
 	bool operator<= (const Date& right) const;
 	bool operator==(const Date& right) const;
+	bool validateDate();
 };
 
 
