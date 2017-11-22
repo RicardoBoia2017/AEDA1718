@@ -72,11 +72,13 @@ void CompanyMenu(Company *c)
 				case 2:
 				{
 					AddOffer(c);
+					break;
 				}
 
 				case 3:
 				{
 					CompanyMenu(c);
+					break;
 				}
 			}
 			break;
@@ -115,10 +117,10 @@ void MakeReservation (Company *c)
 	cout << "***********************" << endl << endl;
 
 	cout << "What type of client are you?" << endl;
-	cout << " 1 Registered Client" << endl;
-	cout << " 2 Occasional Client" << endl;
-	cout << " 3 First time user" << endl;
-	cout << " 4 Back" << endl;
+	cout << "1 Registered Client" << endl;
+	cout << "2 Occasional Client" << endl;
+	cout << "3 First time user" << endl;
+	cout << "4 Back" << endl;
 	cout << "Insert the desired option: ";
 
 	cin >> optionMR;
@@ -155,13 +157,14 @@ void MakeReservation (Company *c)
 		case 2:
 		{
 			unsigned int optionMR2 = 0;
-			cout << endl << "Would you like to register? " << endl;
-			cout << " 1 Yes" << endl;
-			cout << " 2 No" << endl;
+			cout << "Would you like to register? " << endl;
+			cout << "1 Yes" << endl;
+			cout << "2 No" << endl;
 			cout << "Insert the desired option: ";
 			cin >> optionMR2;
 			cin.clear();
 			cin.ignore(10000, '\n');
+			cout << endl;
 
 			if( optionMR2 == 2)
 			{
@@ -171,28 +174,29 @@ void MakeReservation (Company *c)
 
 				while (1)
 				{
-					cout << "Insert your id: ";
+					cout << endl << "Insert your id: ";
 					cin >> idClient;
 					cin.clear();
 					cin.ignore(10000, '\n');
 
 					if (idClient > c->getOccasionalClients().size() || idClient <= 0 )
 						cout << "Invalid id" << endl << endl;
-					else break;
+					else
+						break;
 				}
 
 				MakeReservation_Occasional(c, idClient);
+				break;
 			}
 			else if (optionMR2 == 1)
 			{
 				unsigned int idOc;
-				cout << endl;
 				c->printOccasionalClients();
 
 
 				while (1)
 				{
-					cout << endl << "Enter your id: ";
+					cout << endl << "Insert your id: ";
 					cin >> idOc;
 					cin.clear();
 					cin.ignore(10000, '\n');
@@ -208,21 +212,22 @@ void MakeReservation (Company *c)
 				int idReg = c->RegisterClient(name, NIF);
 				c->removeOccasionalClient(idOc);
 
-				cout << "Your new id is: " << idReg << endl << endl;
+				cout << "Your new client id is: " << idReg << endl << endl;
 
 				MakeReservation_Registered(c, idReg);
 			}
 			else
 				throw InvalidOption(c,2);
+			break;
 
 		}
 
 		case 3:
 		{
 			unsigned int optionMR3 = 0;
-			cout << endl << "Would you like to register? " << endl;
-			cout << " 1 Yes" << endl;
-			cout << " 2 No" << endl;
+			cout << "Would you like to register? " << endl;
+			cout << "1 Yes" << endl;
+			cout << "2 No" << endl;
 			cout << "Insert the desired option: ";
 			cin >> optionMR3;
 			cin.clear();
@@ -244,21 +249,24 @@ void MakeReservation (Company *c)
 			cin >> NIF;
 			cin.clear();
 			cin.ignore(10000, '\n');
+			cout << endl;
 
 
 			if( optionMR3 == 2)
 			{
 				c->addOccasionalClient(name,NIF);
-				MakeReservation_Occasional(c, c->getOccasionalClients().size() - 1);
+				cout << "Your new client id is: " << c->getOccasionalClients().size() << endl;
+				MakeReservation_Occasional(c, c->getOccasionalClients().size());
 			}
 			else if (optionMR3 == 1)
 			{
 				int id = c->RegisterClient(name, NIF);
-				cout << "Your new id is: " << id << endl << endl;
+				cout << "Your new client id is: " << id << endl << endl;
 				MakeReservation_Registered(c, id);
 			}
 			else
 				throw InvalidOption(c,2);
+			break;
 		}
 
 		case 4:
@@ -274,7 +282,7 @@ void MakeReservation (Company *c)
 
 void MakeReservation_Registered (Company *c, unsigned int idClient)
 {
-	unsigned int idOffer, nTick;
+	unsigned int idOffer=0, nTick;
 	string d1, d2;
 
 	cout << c->getRegisteredClients()[idClient-1]->getInformation() << endl << endl;
@@ -320,61 +328,67 @@ void MakeReservation_Registered (Company *c, unsigned int idClient)
 
 		if (idOffer > c->getOffers().size() || idOffer < 0)
 			cout << "Invalid offer id" << endl;
-		else if (idOffer == 0)
-		{
-			exit(0);
-			break;
-		}
 		else
 			break;
 	}
-	Offer * offer = c->getOffers()[idOffer-1];
 
-	cout << "How many tickets do you desire: ";
-	cin >> nTick;
-	cin.clear();
-	cin.ignore(10000, '\n');
-
-	if(nTick > offer->getVacancies())
-		throw NoSeatsAvailable(c);
-
-	unsigned int optionMR_R;
-
-	cout << endl << "Total: " << offer->getPrice() * nTick << "Ä,  Points Won: " << offer->getPoints()*nTick <<  endl;
-
-	while(1)
+	switch (idOffer)
 	{
-		cout << "Want to confirm your reservation?: " << endl;
-		cout << "1 Yes" << endl;
-		cout << "2 No (return to make reservation menu)" << endl;
-		cout << "Insert the desired option: ";
-		cin >> optionMR_R;
+	case 0:
+	{
+		break;
+	}
+	default:
+	{
+		Offer * offer = c->getOffers()[idOffer-1];
+
+		cout << "How many tickets do you desire: ";
+		cin >> nTick;
 		cin.clear();
 		cin.ignore(10000, '\n');
 
-		if(optionMR_R == 1)
-		{
-			offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
-			c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
-			MakeReservation(c);
-		}
-		else if (optionMR_R == 2)
-		{
-			cout << endl;
-			MakeReservation(c);
-			break;
+		if(nTick > offer->getVacancies())
+			throw NoSeatsAvailable(c);
 
+		unsigned int optionMR_R;
+
+		cout << endl << "Total: " << offer->getPrice() * nTick << "Ä,  Points Won: " << offer->getPoints()*nTick << endl <<endl;
+
+		if (idOffer != 0)
+			{
+				cout << "Want to confirm your reservation?: " << endl;
+				cout << "1 Yes" << endl;
+				cout << "2 No (return to make reservation menu)" << endl;
+				cout << "Insert the desired option: ";
+				cin >> optionMR_R;
+				cin.clear();
+				cin.ignore(10000, '\n');
+
+					if(optionMR_R == 1)
+					{
+						offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
+						c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
+						MakeReservation(c);
+					}
+					else if (optionMR_R == 2)
+					{
+						cout << endl;
+						MakeReservation(c);
+						break;
+
+					}
+					else
+						cout << "Invalid option" << endl;
+				}
+			else
+				break;
 		}
-		else
-			cout << "Invalid option" << endl;
 	}
 }
 
-
-
 void MakeReservation_Occasional (Company *c, unsigned int idClient)
 {
-	int idOffer, nTick;
+	int idOffer = 0, nTick;
 	string d1,d2;
 
 	cout << endl;
@@ -384,15 +398,34 @@ void MakeReservation_Occasional (Company *c, unsigned int idClient)
 	cout << "Initial date (format DD-MM-YYYY): ";
 	cin >> d1;
 	Date date1 = Date(d1);
+	while (validateDate(d1) == false)
+		{
+		cout << "The date that you have entered is not valid, please enter a new final date (format DD-MM-YYYY):";
+		cin >> d1;
+		cin.clear();
+		cin.ignore(10000, '\n');
+		Date date1 = Date (d1);
+		}
 
-	cout << "Final date (format DD-MM-YYYY): " << endl;
+
+	cout << "Final date (format DD-MM-YYYY): ";
 	cin >> d2;
-	Date date2 = Date (29,10,2017);
+	Date date2 = Date (d2);
+	while (validateDate(d2) == false)
+		{
+		cout << "The date that you have entered is not valid, please enter a new final date (format DD-MM-YYYY):";
+		cin >> d2;
+		cin.clear();
+		cin.ignore(10000, '\n');
+		Date date2 = Date (d2);
+		}
+	cout << endl;
 
 	c->printOfferbyDate(d1,d2);
+
 	while(1)
 	{
-		cout << endl << "Insert the id of the corresponding offer: ";
+		cout << endl << "Insert the id of the corresponding offer(enter 0 to exit): ";
 		cin >> idOffer;
 		cin.clear();
 		cin.ignore(10000, '\n');
@@ -403,44 +436,59 @@ void MakeReservation_Occasional (Company *c, unsigned int idClient)
 			break;
 	}
 
-	Offer * offer = c->getOffers()[idOffer-1];
-
-	cout << "How many tickets do you desire: ";
-	cin >> nTick;
-	cin.clear();
-	cin.ignore(10000, '\n');
-
-	if(nTick > offer->getVacancies())
-		throw NoSeatsAvailable(c);
-
-	unsigned int optionMR_O;
-
-	cout << "Total: " << offer->getPrice() * nTick << "‚Ç¨" << endl;
-
-	while(1)
+	switch (idOffer)
 	{
-		cout << "Want to confirm your reservation?: " << endl << endl;
-		cout << "1 Yes" << endl;
-		cout << "2 No" << endl;
-		cout << "Insert the desired option: ";
-		cin >> optionMR_O;
-		cin.clear();
-		cin.ignore(10000, '\n');
-
-		if(optionMR_O == 1)
+		case 0:
 		{
-			offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
-			c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
-			MakeReservation(c);
+			break;
 		}
+		default:
+		{
 
-		else if (optionMR_O == 2)
-			MakeReservation(c);
+				Offer * offer = c->getOffers()[idOffer-1];
 
-		else
-			cout << "Invalid option" << endl;
-	}
+				cout << "How many tickets do you desire: ";
+				cin >> nTick;
+				cin.clear();
+				cin.ignore(10000, '\n');
 
+				if(nTick > offer->getVacancies())
+					throw NoSeatsAvailable(c);
+
+				unsigned int optionMR_O;
+
+				cout << endl << "Total: " << offer->getPrice() * nTick << "Ä" << endl << endl;
+
+				if (idOffer != 0)
+				{
+					cout << "Want to confirm your reservation?: " << endl;
+					cout << "1 Yes" << endl;
+					cout << "2 No (return to make reservation menu)" << endl;
+					cout << "Insert the desired option: ";
+					cin >> optionMR_O;
+					cin.clear();
+					cin.ignore(10000, '\n');
+
+					if(optionMR_O == 1)
+					{
+						offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
+						c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
+						MakeReservation(c);
+					}
+
+					else if (optionMR_O == 2)
+					{
+						cout << endl;
+						MakeReservation(c);
+						break;
+					}
+					else
+						cout << "Invalid option" << endl;
+				}
+				else
+					break;
+			}
+		}
 }
 
 void CancelReservation (Company *c)
@@ -650,7 +698,7 @@ void ViewFilesMenu (Company *c)
 				default:
 					throw InvalidOption(c,3);
 			}
-
+			break;
 		}
 
 		case 2:
@@ -740,7 +788,6 @@ void AddSupplier(Company *c)
 	cout << "Please enter the supplier's name: ";
 	getline(cin, name);
 	cin.clear();
-	cin.ignore(10000, '\n');
 
 	cout << "Please enter the supplier's NIF: ";
 	cin >> NIF;
@@ -760,8 +807,8 @@ void AddSupplier(Company *c)
 		while(1)
 		{
 			cout << "Want to add offers?" << endl;
-			cout << " 1 Yes" << endl;
-			cout << " 2 No " << endl;
+			cout << "1 Yes" << endl;
+			cout << "2 No " << endl;
 			cout << "Enter the desired option: ";
 			cin >> option;
 
@@ -783,9 +830,9 @@ void AddSupplier(Company *c)
 			do
 			{
 				cout << endl << "Enter the destination: " << endl;
-				cout << " 1 R√©gua" << endl;
-				cout << " 2 Barca d'Alva " << endl;
-				cout << " 3 Pinh√£o" << endl;
+				cout << "1 RÈgua" << endl;
+				cout << "2 Barca d'Alva " << endl;
+				cout << "3 Pinh„o" << endl;
 				cout << "Enter the desired option: ";
 				cin >> d_option;
 
@@ -795,11 +842,11 @@ void AddSupplier(Company *c)
 					switch (d_option)
 					{
 						case 1:
-							dest = "R√©gua";
+							dest = "RÈgua";
 						case 2:
 							dest = "Barca d'Alva";
 						case 3:
-							dest = "Pinh√£o";
+							dest = "Pinh„o";
 					}
 			} while (d_option < 1 || d_option > 3);
 
@@ -807,9 +854,9 @@ void AddSupplier(Company *c)
 			{
 
 				cout << endl << "Enter the type of boat: " << endl;
-				cout << " 1 Veleiro" << endl;
-				cout << " 2 Barco Rabelo" << endl;
-				cout << " 3 Iate" << endl;
+				cout << "1 Veleiro" << endl;
+				cout << "2 Barco Rabelo" << endl;
+				cout << "3 Iate" << endl;
 				cout << "Enter the desired option: ";
 				cin >> b_option;
 
@@ -846,129 +893,147 @@ void AddSupplier(Company *c)
 			cout << "Enter the date of this offer (format DD-MM-YYYY): ";
 			cin >> date;
 			Date d(date);
+			while (validateDate(date) == false)
+					{
+					cout << "The date that you have entered is not valid, please enter a new final date (format DD-MM-YYYY):";
+					cin >> date;
+					cin.clear();
+					cin.ignore(10000, '\n');
+					Date d(date);
+					}
 
 
 			c->addOffer(pri, dist, cap, points, perc, bT, dest, name,d);
-
 		}
 	}
-
-
-	CompanyMenu (c);
+	cout << endl;
+	CompanyMenu(c);
 }
 
 void AddOffer(Company *c)
 {
 	unsigned int option;
+	unsigned int idSupplier;
 	string name;
 
-	cout << "Please enter the supplier's name: ";
-	getline(cin, name);
+	c->printSuppliers();
+	cout <<  "Please enter the supplier's id: ";
+	cin >> idSupplier;
 	cin.clear();
 	cin.ignore(10000, '\n');
 
-	cout << "Name: " << name << endl;
+	Supplier * sup = c->getSuppliers()[idSupplier-1];
 
-		while (1)
+	name = sup->getName();
+
+	while (1)
+	{
+
+		if (option == 2)
+			break;
+
+		else
 		{
+			unsigned int cap, dist, pri, points;
+			double perc;
+			string dest, bT, date;
+			int b_option, d_option;
 
-			if (option == 2)
-				break;
-
-			else
+			do
 			{
-				unsigned int cap, dist, pri, points;
-				double perc;
-				string dest, bT, date;
-				int b_option, d_option;
+				cout << endl << "Enter the destination: " << endl;
+				cout << "1 RÈgua" << endl;
+				cout << "2 Barca d'Alva " << endl;
+				cout << "3 Pinh„o" << endl;
+				cout << "Enter the desired option: ";
+				cin >> d_option;
 
-				do
+				if (d_option < 1 || d_option > 3)
+					cout << "Invalid option. Try again" ;
+				else
+					switch (d_option)
+					{
+						case 1:
+							dest = "RÈgua";
+						case 2:
+							dest = "Barca d'Alva";
+						case 3:
+							dest = "Pinh„o";
+					}
+			} while (d_option < 1 || d_option > 3);
+
+			do
+			{
+				cout << endl << "Enter the type of boat: " << endl;
+				cout << "1 Veleiro" << endl;
+				cout << "2 Barco Rabelo" << endl;
+				cout << "3 Iate" << endl;
+				cout << "Enter the desired option: ";
+				cin >> b_option;
+
+				if (b_option < 1 || b_option > 3)
+					cout << "Invalid option. Try again" << endl;
+
+				else
+					switch(b_option)
+					{
+						case 1:
+							bT = "Veleiro";
+						case 2:
+							bT = "Barco Rabelo";
+						case 3:
+							bT = "Iate";
+					}
+			} while (b_option < 1 || b_option > 3);
+
+			cout << "Enter the boat's capacity: ";
+			cin >> cap;
+
+			cout << "Enter the distance to travel (km): ";
+			cin >> dist;
+
+			cout << "Enter the price (Ä): ";
+			cin >> pri;
+
+			cout << "Enter the points/ticket available for registered clients: ";
+			cin >> points;
+
+			cout << "Enter the percentage of each ticket that goes to 'Porto Rivers': ";
+			cin >> perc;
+
+			cout << "Enter the date of this offer (format DD-MM-YYYY): ";
+			cin >> date;
+			Date d(date);
+			while (validateDate(date) == false)
 				{
-					cout << endl << "Enter the destination: " << endl;
-					cout << " 1 RÈgua" << endl;
-					cout << " 2 Barca d'Alva " << endl;
-					cout << " 3 Pinh„o" << endl;
-					cout << "Enter the desired option: ";
-					cin >> d_option;
-
-					if (d_option < 1 || d_option > 3)
-						cout << "Invalid option. Try again" ;
-					else
-						switch (d_option)
-						{
-							case 1:
-								dest = "RÈgua";
-							case 2:
-								dest = "Barca d'Alva";
-							case 3:
-								dest = "Pinh„o";
-						}
-				} while (d_option < 1 || d_option > 3);
-
-				do
-				{
-
-					cout << endl << "Enter the type of boat: " << endl;
-					cout << " 1 Veleiro" << endl;
-					cout << " 2 Barco Rabelo" << endl;
-					cout << " 3 Iate" << endl;
-					cout << "Enter the desired option: ";
-					cin >> b_option;
-
-					if (b_option < 1 || b_option > 3)
-						cout << "Invalid option. Try again" << endl;
-
-					else
-						switch(b_option)
-						{
-							case 1:
-								bT = "Veleiro";
-							case 2:
-								bT = "Barco Rabelo";
-							case 3:
-								bT = "Iate";
-						}
-				} while (b_option < 1 || b_option > 3);
-
-				cout << "Enter the boat's capacity: ";
-				cin >> cap;
-
-				cout << "Enter the distance to travel: ";
-				cin >> dist;
-
-				cout << "Enter the price: ";
-				cin >> pri;
-
-				cout << "Enter the points/ticket available for registered clients: ";
-				cin >> points;
-
-				cout << "Enter the percentage of each ticket that goes to 'Porto Rivers': ";
-				cin >> perc;
-
-				cout << "Enter the date of this offer (format DD-MM-YYYY): ";
+				cout << "The date that you have entered is not valid, please enter a new final date (format DD-MM-YYYY):";
 				cin >> date;
+				cin.clear();
+				cin.ignore(10000, '\n');
 				Date d(date);
-
-
-				c->addOffer(pri, dist, cap, points, perc, bT, dest, name,d);
-
-			}
-
-			while(1)
-				{
-					cout << "Want to add offers?" << endl;
-					cout << " 1 Yes" << endl;
-					cout << " 2 No " << endl;
-					cout << "Enter the desired option: ";
-					cin >> option;
-
-					if(option != 1 && option != 2)
-						cout << "Invalid option" << endl;
-					else
-						break;
 				}
+
+
+			c->addOffer(pri, dist, cap, points, perc, bT, dest, name,d);
+
 		}
 
+		while(1)
+			{
+				cout << "Want to add offers?" << endl;
+				cout << "1 Yes" << endl;
+				cout << "2 No " << endl;
+				cout << "Enter the desired option: ";
+				cin >> option;
+
+				if(option != 1 && option != 2)
+					cout << "Invalid option" << endl;
+				else
+					break;
+			}
+	}
+	cout << endl;
+	CompanyMenu(c);
 }
 
 bool validateDate(string sdate){

@@ -112,7 +112,6 @@ void Company::removeOccasionalClient(int id)
 
 	for(unsigned int i = 0; i < oClients.size();i++, it++)
 	{
-		cout << (*it)->getInformation();
 		if( (*it)->getId() == id)
 			oClients.erase(it);
 	}

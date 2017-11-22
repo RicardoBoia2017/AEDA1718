@@ -10,6 +10,13 @@
 #include <limits>
 
 #include "Company.h"
+#include "FileReader.h"
+
+#define rClientsFile "RegisteredClients.txt"
+#define oClientsFile "OccasionalClients.txt"
+#define suppliersFile "suppliers.txt"
+#define offersFile "offers.txt"
+
 
 void CompanyMenu (Company *c);
 

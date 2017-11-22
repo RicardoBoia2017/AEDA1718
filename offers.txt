@@ -1,10 +1,15 @@
 1, 25/11/2017, Cruzeiros Douro, 83, 224, 12, Veleiro, RÈgua, 5, 2;
 2, 22/11/2017, Cruzeiros Douro, 90, 260, 12, Veleiro, Pinh„o, 8, 3;
 3, 27/11/2017, Cruzeiros Douro, 108, 250, 110, Barco Rabelo, Pinh„o, 10, 5;
-4, 21/11/2017, Roteiros do Douro, 110, 236, 120, Barco Rabelo, RÈgua, 13, 5;
+4, 21/11/2017, Roteiros do Douro, 110, 236, 80, Barco Rabelo, RÈgua, 13, 5;
 5, 1/12/2017, Mares de Portugal, 150, 482, 30, Iate, Barca d¥Alva, 20, 8;
 6, 29/11/2017, Mares de Portugal, 137, 261, 30, Iate, Pinh„o, 17, 8;
-7, 22/11/2017, Douro Azul, 100, 378, 135, Barco Rabelo, RÈgua, 18, 6;
-8, 24/11/2017, Mares de Portugal, 106, 390, 8, Veleiro, Barca d¥Alva, 22, 4;
+7, 22/11/2017, Douro Azul, 100, 378, 115, Barco Rabelo, RÈgua, 18, 6;
+8, 24/11/2017, Mares de Portugal, 106, 390, 4, Veleiro, Barca d¥Alva, 22, 4;
 9, 3/12/2017, Navegadores, 170, 400, 25, Iate, Barca d¥Alva, 28, 9;
 10, 5/12/2017, Navegadores, 124, 251, 100, Barco Rabelo, Pinh„o, 9, 5;
+11, 23/11/2017, Douro Azul , 2, 55, 18, Iate, Pinh√£o, 11, 19;
+12, 21/11/2017, Mares de Portugal , 14, 90, 12, Iate, Pinh„o, 21, 12;
+13, 26/11/2017, Douro Azul, 25, 12, 56, Iate, Pinh„o, 10, 14;
+14, 26/11/2017, Douro Azul, 25, 35, 56, Iate, Pinh„o, 11, 16;
+15, 34/11/2017, Navegadores, 54, 23, 56, Iate, Pinh„o, 24, 26;
