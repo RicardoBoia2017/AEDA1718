@@ -260,12 +260,19 @@ void Company::printOffers() const
 
 void Company::printOfferbyDate(Date d1, Date d2) const
 {
+	unsigned int counter = 0;
+
 	for (unsigned int i = 0; i < offers.size(); i++)
 	{
 		if(d1 <= offers[i]->getDate())
 			if (offers[i]->getDate() <= d2)
-				cout<< offers[i]->getInformation() << endl;
+				{
+					cout<< offers[i]->getInformation() << endl;
+					counter++;
+				}
 	}
+
+	cout << "We found " << counter << " offers" << endl;
 }
 
 void Company::printOfferBySuppliers(string name) const

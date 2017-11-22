@@ -26,6 +26,8 @@ void ViewFilesMenu (Company *c);
 void AddSupplier(Company *c);
 void AddOffer(Company *c);
 
+bool validateDate(string sdate);
+
 class InvalidOption
 {
 public:
