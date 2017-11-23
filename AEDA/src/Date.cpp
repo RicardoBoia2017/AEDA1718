@@ -14,23 +14,8 @@
  * @param m month.
  * @param y year.
  */
-Date::Date(unsigned int d, unsigned int m, unsigned int y) {
-
-	/*
-	if(m < 0 || m > 12)
-		throw ExceptionInvalidDate("month",m);
-	if(d < 0 || d > 31)
-		throw ExceptionInvalidDate("day",d);
-	if((m == 4 || m == 6 || m == 9 || m == 11) && d > 30)
-		if(m == 2 && y%4 == 0 && d > 29)
-			throw ExceptionInvalidDate("day",d);
-	if(m == 2 && y%4 != 0 && d > 28)
-		throw ExceptionInvalidDate("day",d);
-*/
-		day = d;
-		month = m;
-		year = y;
-}
+Date::Date(unsigned int d, unsigned int m, unsigned int y) : day(d), month(m), year(y)
+{}
 
 /**
  * Constructor from string.
@@ -176,8 +161,11 @@ bool Date::validateDate()
 	if(day < 0 || day > 31)
 		return false;
 	if((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
-		if(month == 2 && year%4 == 0 && day > 29)
-			return false;
+		return false;
+
+	if(month == 2 && year%4 == 0 && day > 29)
+		return false;
+
 	if(month == 2 && year%4 != 0 && day > 28)
 		return false;
 

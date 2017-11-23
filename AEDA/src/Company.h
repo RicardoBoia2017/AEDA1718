@@ -41,7 +41,7 @@ private:
 	/**
 	 * @brief Money gained by 'Porto Rivers' with the reservations.
 	 */
-	unsigned int bank;
+	double bank;
 public:
 	Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers);
 	virtual ~Company();
@@ -58,8 +58,8 @@ public:
 	vector <OccasionalClient *> getOccasionalClients () const;
 	vector <Supplier *> getSuppliers () const;
 	vector <Offer *> getOffers () const;
-	unsigned int getBank() const;
-	void setBank (int b);
+	double getBank() const;
+	void setBank (double b);
 	void setOfferSuppliers();
 	void printRegisteredClients() const;
 	void printRegisteredClientByPoints() const;

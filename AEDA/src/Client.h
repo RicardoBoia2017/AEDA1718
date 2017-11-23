@@ -69,6 +69,7 @@ public:
 	~OccasionalClient();
 	unsigned int getId() const;
 	void setId(unsigned int id);
+	void adjustId();
 	string getInformation() const;
 	friend ostream &operator<< (ostream &os, OccasionalClient &oc1);
 };

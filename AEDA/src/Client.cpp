@@ -155,6 +155,13 @@ void OccasionalClient::setId(unsigned int id)
 	oc_id = id;
 }
 
+/**
+ * Subtracts 1 to static member oc_clientID.
+ */
+void OccasionalClient::adjustId()
+{
+	oc_clientID--;
+}
 
 
 string OccasionalClient::getInformation() const

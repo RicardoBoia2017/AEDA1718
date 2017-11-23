@@ -169,7 +169,10 @@ void Company::removeOccasionalClient(int id)
 	for(unsigned int i = 0; i < oClients.size();i++, it++)
 	{
 		if( (*it)->getId() == id)
+		{
+			(*it)->adjustId();
 			oClients.erase(it);
+		}
 	}
 
 	for(unsigned int i = id-1; i < oClients.size(); i++ )
@@ -177,6 +180,8 @@ void Company::removeOccasionalClient(int id)
 		int new_id = oClients[i]->getId() - 1;
 		oClients[i]->setId(new_id);
 	}
+
+
 }
 
 /**
@@ -214,7 +219,7 @@ vector <Offer *> Company::getOffers () const
 /**
  * @return bank.
  */
-unsigned int Company::getBank() const
+double Company::getBank() const
 {
 	return bank;
 }
@@ -223,7 +228,7 @@ unsigned int Company::getBank() const
  * Add b to bank.
  * @param b value to be added.
  */
-void Company::setBank(int b)
+void Company::setBank(double b)
 {
 	bank += b;
 }
@@ -306,7 +311,7 @@ void Company::printClientsByOffer(int idOffer) const
 
 	if(o->getRegClients().size() != 0)
 	{
-		cout<< "Registered Clients:" << endl;
+		cout<< "Registered Clients:" << endl << endl;
 
 		map < RegisteredClient*, int>::const_iterator it_res = o->getRegClients().cbegin();
 
@@ -319,13 +324,13 @@ void Company::printClientsByOffer(int idOffer) const
 
 	if ( o->getOcClients().size() != 0)
 	{
-		cout<< endl<<  "Occasional Clients:" << endl;
+		cout<< endl<<  "Occasional Clients:" << endl << endl;
 
-		map < OccasionalClient*, int>::const_iterator it_oc = o->getOcClients().begin();
+		map < OccasionalClient*, int>::const_iterator it_oc = o->getOcClients().cbegin();
 
 		for (unsigned int i = 0; i < o->getOcClients().size() ; i++)
 		{
-			cout<< it_oc->first->getInformation() <<  ", Tickets: " << it_oc->second << o->getOcClients().size()<< endl;
+			cout<< it_oc->first->getInformation() <<  ", Tickets: " << it_oc->second << endl;
 			it_oc ++;
 		}
 	}

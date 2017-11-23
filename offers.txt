@@ -11,5 +11,5 @@
 11, 23/11/2017, Douro Azul , 2, 55, 18, Iate, Pinh√£o, 11, 19;
 12, 21/11/2017, Mares de Portugal , 14, 90, 12, Iate, Pinh„o, 21, 12;
 13, 26/11/2017, Douro Azul, 25, 12, 56, Iate, Pinh„o, 10, 14;
-14, 26/11/2017, Douro Azul, 25, 35, 56, Iate, Pinh„o, 11, 16;
+14, 26/11/2017, Douro Azul, 25, 35, 51, Iate, Pinh„o, 11, 16;
 15, 34/11/2017, Navegadores, 54, 23, 56, Iate, Pinh„o, 24, 26;

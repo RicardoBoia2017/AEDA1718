@@ -70,7 +70,7 @@ void Offer::addRegisteredClient(RegisteredClient * rc, int nTick)
  * @param rc registered client.
  * @param nTick number of tickets to be removed.
  */
-void Offer::elimRegisteredClient(RegisteredClient * rc, int nTick)
+bool Offer::elimRegisteredClient(RegisteredClient * rc, int nTick)
 {
 
 	bool Found = false;
@@ -81,6 +81,11 @@ void Offer::elimRegisteredClient(RegisteredClient * rc, int nTick)
 				if (it->second == nTick)
 				{
 					reg_clients.erase(it);
+				}
+				else if (it->second < nTick)
+				{
+					cout << "You didn't make that much reservations." << endl;
+					return Found;
 				}
 				else
 				{
@@ -99,7 +104,7 @@ void Offer::elimRegisteredClient(RegisteredClient * rc, int nTick)
 		cout << "You don't have any reservation for this offer. Try again" << endl;
 	}
 
-
+	return Found;
 }
 
 /**
@@ -133,7 +138,7 @@ void Offer::addOccasionalClient(OccasionalClient* oc, int nTick)
  * @param nTick number of tickets to be removed.
  */
 
-void Offer::elimOccasionalClient(OccasionalClient * oc, int nTick)
+bool Offer::elimOccasionalClient(OccasionalClient * oc, int nTick)
 {
 
 	bool Found = false;
@@ -144,6 +149,11 @@ void Offer::elimOccasionalClient(OccasionalClient * oc, int nTick)
 				if (it->second == nTick)
 				{
 					oc_clients.erase(it);
+				}
+				else if (it->second < nTick)
+				{
+						cout << "You didn't make that much reservations." << endl;
+						return Found;
 				}
 				else
 				{
@@ -159,6 +169,7 @@ void Offer::elimOccasionalClient(OccasionalClient * oc, int nTick)
 			cout << "You don't have any reservation for this offer. Try again" << endl;
 		}
 
+	return Found;
 }
 
 /**

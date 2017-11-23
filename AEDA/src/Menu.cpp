@@ -93,7 +93,7 @@ void CompanyMenu(Company *c)
 
 		case 5:
 		{
-			cout << "Total: " << c->getBank() << "€" << endl;
+			cout << "Bank: " << c->getBank() << "€" << endl;
 			CompanyMenu(c);
 			break;
 		}
@@ -135,9 +135,10 @@ void MakeReservation (Company *c)
 		{
 			unsigned int idClient;
 
+			c->printRegisteredClients();
+
 			while (1)
 			{
-				c->printRegisteredClients();
 
 				cout << endl << "Insert your id: ";
 				cin >> idClient;
@@ -146,7 +147,7 @@ void MakeReservation (Company *c)
 				cout << endl;
 
 				if (idClient > c->getRegisteredClients().size() || idClient <= 0)
-					cout << "Invalid id" << endl << endl;
+					cout << "Invalid id";
 				else
 					break;
 			}
@@ -181,7 +182,7 @@ void MakeReservation (Company *c)
 					cin.ignore(10000, '\n');
 
 					if (idClient > c->getOccasionalClients().size() || idClient <= 0 )
-						cout << "Invalid id" << endl << endl;
+						cout << endl << "Invalid id";
 					else
 						break;
 				}
@@ -246,12 +247,20 @@ void MakeReservation (Company *c)
 			cin.clear();
 			cin.ignore(10000, '\n');
 
-			cout << "Please enter your NIF: ";
-			cin >> NIF;
-			cin.clear();
-			cin.ignore(10000, '\n');
-			cout << endl;
+			while (1)
+			{
+				cout << "Please enter your NIF: ";
+				cin >> NIF;
+				cin.clear();
+				cin.ignore(10000, '\n');
 
+				if (NIF >= 100000000 && NIF <= 999999999)
+					break;
+				else
+					cout << "Invalid NIF" << endl << endl;
+			}
+
+			cout << endl;
 
 			if( optionMR3 == 2)
 			{
@@ -333,13 +342,11 @@ void MakeReservation_Registered (Company *c, unsigned int idClient)
 			break;
 	}
 
-	switch (idOffer)
+	if(idOffer == 0)
 	{
-	case 0:
-	{
-		break;
+		MakeReservation(c);
 	}
-	default:
+	else
 	{
 		Offer * offer = c->getOffers()[idOffer-1];
 
@@ -375,16 +382,17 @@ void MakeReservation_Registered (Company *c, unsigned int idClient)
 					{
 						cout << endl;
 						MakeReservation(c);
-						break;
-
 					}
+
 					else
-						cout << "Invalid option" << endl;
+						throw InvalidOption (c,3);
 				}
-			else
-				break;
+		else
+		{
+			MakeReservation(c);
 		}
 	}
+
 }
 
 void MakeReservation_Occasional (Company *c, unsigned int idClient)
@@ -437,59 +445,58 @@ void MakeReservation_Occasional (Company *c, unsigned int idClient)
 			break;
 	}
 
-	switch (idOffer)
+
+	if (idOffer == 0)
 	{
-		case 0:
-		{
-			break;
-		}
-		default:
-		{
+		MakeReservation(c);
+	}
 
-				Offer * offer = c->getOffers()[idOffer-1];
+	else
+	{
 
-				cout << "How many tickets do you desire: ";
-				cin >> nTick;
+			Offer * offer = c->getOffers()[idOffer-1];
+
+			cout << "How many tickets do you desire: ";
+			cin >> nTick;
+			cin.clear();
+			cin.ignore(10000, '\n');
+
+			if(nTick > offer->getVacancies())
+				throw NoSeatsAvailable(c);
+
+			unsigned int optionMR_O;
+
+			cout << endl << "Total: " << offer->getPrice() * nTick << "€" << endl << endl;
+
+			if (idOffer != 0)
+			{
+				cout << "Want to confirm your reservation?: " << endl;
+				cout << "1 Yes" << endl;
+				cout << "2 No (return to make reservation menu)" << endl;
+				cout << "Insert the desired option: ";
+				cin >> optionMR_O;
 				cin.clear();
 				cin.ignore(10000, '\n');
 
-				if(nTick > offer->getVacancies())
-					throw NoSeatsAvailable(c);
-
-				unsigned int optionMR_O;
-
-				cout << endl << "Total: " << offer->getPrice() * nTick << "€" << endl << endl;
-
-				if (idOffer != 0)
+				if(optionMR_O == 1)
 				{
-					cout << "Want to confirm your reservation?: " << endl;
-					cout << "1 Yes" << endl;
-					cout << "2 No (return to make reservation menu)" << endl;
-					cout << "Insert the desired option: ";
-					cin >> optionMR_O;
-					cin.clear();
-					cin.ignore(10000, '\n');
+					offer->addOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
+					c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
+					MakeReservation(c);
+				}
 
-					if(optionMR_O == 1)
-					{
-						offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
-						c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
-						MakeReservation(c);
-					}
-
-					else if (optionMR_O == 2)
-					{
-						cout << endl;
-						MakeReservation(c);
-						break;
-					}
-					else
-						cout << "Invalid option" << endl;
+				else if (optionMR_O == 2)
+				{
+					cout << endl;
+					MakeReservation(c);
 				}
 				else
-					break;
-			}
-		}
+					throw InvalidOption(c,2);
+				}
+			else
+				MakeReservation(c);
+	}
+
 }
 
 void CancelReservation (Company *c)
@@ -544,23 +551,31 @@ void CancelReservationRegClient(Company *c)
 	cin.ignore(10000, '\n');
 	cout << endl;
 	if (idClient > c->getRegisteredClients().size() || idClient <= 0)
-		{
+	{
 			cout << "Invalid client id" << endl <<endl;
 			MakeReservation(c);
 
-		}
+	}
 	cout << c->getRegisteredClients()[idClient-1]->getInformation() << endl << endl;
+
+	c->printOffers();
+
 	cout << "Insert the id of the corresponding offer: ";
 	cin >> idOffer;
 	cin.clear();
 	cin.ignore(10000, '\n');
 	Offer * offer = c->getOffers()[idOffer-1];
+
 	cout << "How many tickets do you want to cancel? " ;
 	cin >> nTick;
 	cin.clear();
 	cin.ignore(10000, '\n');
+
 	cout << endl;
-	offer->elimRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
+	bool result = offer->elimRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
+
+	if (!result)
+		CancelReservation(c);
 
 	Date d2 = offer->getDate();
 
@@ -580,7 +595,7 @@ void CancelReservationRegClient(Company *c)
 		}
 	else
 		{
-			cout << "Your cancelation was done too late. You have no refound." << endl;
+			cout << "Your cancelation was done too late. You have no refund." << endl;
 		}
 	cout << endl;
 	CompanyMenu(c);
@@ -608,18 +623,25 @@ void CancelReservationOccClient(Company *c)
 	}
 	cout << c->getOccasionalClients()[idClient-1]->getInformation() << endl << endl;
 
+	c->printOffers();
+
 	cout << endl << "Insert the id of the corresponding offer: ";
 	cin >> idOffer;
 	cin.clear();
 	cin.ignore(10000, '\n');
 	Offer * offer = c->getOffers()[idOffer-1];
+
 	cout << "How many tickets do you want to cancel? " ;
 	cin >> nTick;
 	cin.clear();
 	cin.ignore(10000, '\n');
 	cout << endl;
 
-	offer->elimOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
+	bool result = offer->elimOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
+
+	if (!result)
+		CancelReservation(c);
+
 	Date d2 = offer->getDate();
 
 	unsigned int diffDates = d1.daysBetween(d2);
@@ -745,8 +767,10 @@ void ViewFilesMenu (Company *c)
 					cout << endl << "Enter the id of the offer to see who bought the tickets (enter 0 to exit): ";
 					cin >> idOffer;
 
-					if( idOffer == 0)
+					if( idOffer == 0){
+						ViewFilesMenu(c);
 						break;
+					}
 					else if (idOffer < 0 || idOffer > c->getOffers().size() )
 						throw InvalidOption(c,3);
 					else
@@ -769,11 +793,16 @@ void ViewFilesMenu (Company *c)
 					break;
 				}
 				case 3:
-					{
+				{
 						ViewFilesMenu(c);
 						break;
-					}
+				}
+				default:
+				{
+					throw InvalidOption(c,4);
 					break;
+				}
+
 			}
 			break;
 		}
@@ -800,10 +829,18 @@ void AddSupplier(Company *c)
 	getline(cin, name);
 	cin.clear();
 
-	cout << "Please enter the supplier's NIF: ";
-	cin >> NIF;
-	cin.clear();
-	cin.ignore(10000, '\n');
+	while (1)
+	{
+		cout << "Please enter the supplier's NIF: ";
+		cin >> NIF;
+		cin.clear();
+		cin.ignore(10000, '\n');
+
+		if (NIF >= 100000000 && NIF <= 999999999)
+			break;
+		else
+			cout << "Invalid NIF" << endl << endl;
+	}
 
 	cout << "Please enter the supplier's address: ";
 	getline(cin, address);
@@ -848,7 +885,7 @@ void AddSupplier(Company *c)
 				cin >> d_option;
 
 				if (d_option < 1 || d_option > 3)
-					cout << "Invalid option. Try again" ;
+					cout << "Invalid option. Try again" << endl;
 				else
 					switch (d_option)
 					{
@@ -928,10 +965,18 @@ void AddOffer(Company *c)
 	string name;
 
 	c->printSuppliers();
-	cout <<  "Please enter the supplier's id: ";
-	cin >> idSupplier;
-	cin.clear();
-	cin.ignore(10000, '\n');
+
+	while(1)
+	{
+		cout <<  "Please enter the supplier's id: ";
+		cin >> idSupplier;
+		cin.clear();
+		cin.ignore(10000, '\n');
+		if (idSupplier > 0 && idSupplier <= c->getSuppliers().size())
+			break;
+		else
+			cout << "Invalid id." << endl << endl;
+	}
 
 	Supplier * sup = c->getSuppliers()[idSupplier-1];
 
@@ -960,7 +1005,7 @@ void AddOffer(Company *c)
 				cin >> d_option;
 
 				if (d_option < 1 || d_option > 3)
-					cout << "Invalid option. Try again" ;
+					cout << "Invalid option. Try again" << endl;
 				else
 					switch (d_option)
 					{
