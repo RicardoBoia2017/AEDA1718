@@ -540,7 +540,7 @@ void CancelReservation (Company *c)
 void CancelReservationRegClient(Company *c)
 {
 	int idClient, idOffer, nTick;
-	Date d1 ("20-11-2017");
+	Date d1 ("6-12-2017");
 
 	cout << endl;
 	c->printRegisteredClients();
@@ -605,7 +605,7 @@ void CancelReservationOccClient(Company *c)
 {
 
 	int idClient, idOffer, nTick;
-	Date d1 ("20-11-2017");
+	Date d1 ("6-12-2017");
 
 	cout << endl;
 	c->printOccasionalClients();
