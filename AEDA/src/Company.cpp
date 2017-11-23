@@ -315,10 +315,9 @@ void Company::printClientsByOffer(int idOffer) const
 
 		map < RegisteredClient*, int>::const_iterator it_res = o->getRegClients().cbegin();
 
-		for( unsigned int i = 0; i < o->getRegClients().size(); i++)
+		for( unsigned int i = 0; i < o->getRegClients().size(); i++, it_res++)
 		{
 			cout<< it_res->first->getInformation() <<  ", Tickets: " << it_res->second << endl;
-			it_res++;
 		}
 	}
 
@@ -328,10 +327,9 @@ void Company::printClientsByOffer(int idOffer) const
 
 		map < OccasionalClient*, int>::const_iterator it_oc = o->getOcClients().cbegin();
 
-		for (unsigned int i = 0; i < o->getOcClients().size() ; i++)
+		for (unsigned int i = 0; i < o->getOcClients().size() ; i++, it_oc ++)
 		{
 			cout<< it_oc->first->getInformation() <<  ", Tickets: " << it_oc->second << endl;
-			it_oc ++;
 		}
 	}
 

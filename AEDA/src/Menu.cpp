@@ -560,22 +560,43 @@ void CancelReservationRegClient(Company *c)
 
 	c->printOffers();
 
-	cout << "Insert the id of the corresponding offer: ";
-	cin >> idOffer;
-	cin.clear();
-	cin.ignore(10000, '\n');
-	Offer * offer = c->getOffers()[idOffer-1];
+	Offer * offer;
 
-	cout << "How many tickets do you want to cancel? " ;
-	cin >> nTick;
-	cin.clear();
-	cin.ignore(10000, '\n');
+	do
+	{
+		while (1)
+		{
+			cout << "Insert the id of the corresponding offer (enter 0 to exit): ";
+			cin >> idOffer;
+			cin.clear();
+			cin.ignore(10000, '\n');
 
-	cout << endl;
-	bool result = offer->elimRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
+			if (idOffer == 0)
+			{
+				cout << endl;
+				CancelReservation(c);
+			}
+			else if (idOffer >0 && idOffer < c->getOffers().size())
+				break;
+			else
+				cout << endl << "Invalid id" << endl;
+		}
 
-	if (!result)
-		CancelReservation(c);
+		 offer = c->getOffers()[idOffer-1];
+
+
+		cout << "How many tickets do you want to cancel? " ;
+		cin >> nTick;
+		cin.clear();
+		cin.ignore(10000, '\n');
+
+		cout << endl;
+		bool result = offer->elimRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
+
+		if(result)
+			break;
+
+	}while (1);
 
 	Date d2 = offer->getDate();
 
@@ -625,22 +646,43 @@ void CancelReservationOccClient(Company *c)
 
 	c->printOffers();
 
-	cout << endl << "Insert the id of the corresponding offer: ";
-	cin >> idOffer;
-	cin.clear();
-	cin.ignore(10000, '\n');
-	Offer * offer = c->getOffers()[idOffer-1];
+	Offer * offer;
 
-	cout << "How many tickets do you want to cancel? " ;
-	cin >> nTick;
-	cin.clear();
-	cin.ignore(10000, '\n');
-	cout << endl;
+	do
+	{
+		while (1)
+		{
+			cout << endl << "Insert the id of the corresponding offer: ";
+			cin >> idOffer;
+			cin.clear();
+			cin.ignore(10000, '\n');
 
-	bool result = offer->elimOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
+			if (idOffer == 0)
+			{
+				cout << endl;
+				CancelReservation(c);
+			}
 
-	if (!result)
-		CancelReservation(c);
+			else if (idOffer >0 && idOffer < c->getOffers().size())
+				break;
+			else
+				cout << endl << "Invalid id" << endl;
+		}
+
+		offer = c->getOffers()[idOffer-1];
+
+		cout << "How many tickets do you want to cancel? " ;
+		cin >> nTick;
+		cin.clear();
+		cin.ignore(10000, '\n');
+		cout << endl;
+
+		cout << endl;
+		bool result = offer->elimOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
+
+		if (result)
+			break;
+	} while (1);
 
 	Date d2 = offer->getDate();
 
@@ -660,9 +702,9 @@ void CancelReservationOccClient(Company *c)
 		cout << "The refund amount is: " << devol << "€ " << endl;
 	}
 	else
-		{
-			cout << "Your cancelation was done too late. You have no refound." << endl;
-		}
+	{
+		cout << "Your cancelation was done too late. You have no refound." << endl;
+	}
 	cout << endl;
 	CompanyMenu(c);
 }
@@ -688,9 +730,10 @@ void ViewFilesMenu (Company *c)
 		case 1:
 		{
 			int optionVFM1;
-			 cout << "************************" << endl;
-			 cout << "|        Clients       |" << endl;
-			 cout << "************************" << endl << endl;
+			cout << endl;
+			cout << "************************" << endl;
+			cout << "|        Clients       |" << endl;
+			cout << "************************" << endl << endl;
 
 			cout << "1 View all clients" << endl;
 			cout << "2 View clients by points" << endl;
@@ -753,7 +796,7 @@ void ViewFilesMenu (Company *c)
 			cout << "1 View all offers" << endl;
 			cout << "2 View offers by suppliers" << endl;
 			cout << "3 Back" << endl;
-			cout << "Insert the desired option: " << endl;
+			cout << "Insert the desired option: " ;
 			cin >> optionVFM3;
 			cin.clear();
 			cin.ignore(10000, '\n');
@@ -764,7 +807,7 @@ void ViewFilesMenu (Company *c)
 				{
 					int idOffer;
 					c->printOffers();
-					cout << endl << "Enter the id of the offer to see who bought the tickets (enter 0 to exit): ";
+					cout << endl << endl << "Enter the id of the offer to see who bought the tickets (enter 0 to exit): ";
 					cin >> idOffer;
 
 					if( idOffer == 0){
@@ -783,11 +826,12 @@ void ViewFilesMenu (Company *c)
 				{
 					int idSupplier;
 					c->printSuppliers();
-					cout << "Enter the id of the desired supplier: ";
+					cout << endl << endl << "Enter the id of the desired supplier: ";
 					cin >> idSupplier;
 					cin.clear();
 					cin.ignore(10000, '\n');
 
+					cout << endl;
 					c->printOfferBySuppliers( c->getSuppliers()[idSupplier-1]->getName());
 					ViewFilesMenu(c);
 					break;
