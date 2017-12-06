@@ -61,7 +61,7 @@ unsigned int Supplier::getId() const
 }
 
 /**
- *
+ * @return string with the supplier's information.
  */
 string Supplier::getInformation () const
 {

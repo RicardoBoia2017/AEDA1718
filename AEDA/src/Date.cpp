@@ -110,7 +110,7 @@ unsigned int Date::daysBetween (Date d1)
 }
 
 /**
- * Checks if date is before or equal to right.
+ * Checks if date is before or equal to right one.
  * @param right date to compare.
  */
 bool Date::operator<= (const Date& right) const
@@ -139,7 +139,7 @@ bool Date::operator<= (const Date& right) const
 }
 
 /**
- * Checks if two dates are the same.
+ * Checks if two dates are the equal.
  * @param right date to compare.
  */
 bool Date::operator==(const Date& right) const

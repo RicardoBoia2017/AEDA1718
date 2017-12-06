@@ -46,7 +46,7 @@ public:
 	Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers);
 	virtual ~Company();
 	void exportRegisteredClients(string file);
-	void exportOccasionaldClients(string file);
+	void exportOccasionalClients(string file);
 	void exportSuppliers (string file);
 	void exportOffers (string file);
 	unsigned int RegisterClient(string name, int NIF);

@@ -308,8 +308,9 @@ map <OccasionalClient *, int> Offer::getOcClients() const
 }
 
 /** Writes to ofstream the offer's information in the format used in text files.
+
  * @param os ofstream where is stored the information.
- * @param o1 offer whose information is going to be read.
+ * @param o1 offer which information is going to be read.
  */
 ostream &operator<< (ostream &os, Offer &o1)
 {

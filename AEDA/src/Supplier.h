@@ -29,7 +29,7 @@ private:
 	 * @brief supplier's address.
 	 */
 	string address;
-	/*
+	/**
 	 * @brief supplier's id.
 	 */
 	unsigned int id;

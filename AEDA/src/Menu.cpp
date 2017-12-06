@@ -9,9 +9,11 @@
 
 using namespace std;
 
+Date d ("6-12-2017");
 
 void CompanyMenu(Company *c)
 {
+	cout << "Date : " << d.getDay() << "-" << d.getMonth() << "-" << d.getYear() << endl;
 	unsigned int optionCM = 0;
 
 	cout << "***********************" << endl;
@@ -540,7 +542,6 @@ void CancelReservation (Company *c)
 void CancelReservationRegClient(Company *c)
 {
 	int idClient, idOffer, nTick;
-	Date d1 ("6-12-2017");
 
 	cout << endl;
 	c->printRegisteredClients();
@@ -600,7 +601,7 @@ void CancelReservationRegClient(Company *c)
 
 	Date d2 = offer->getDate();
 
-	unsigned int diffDates = d1.daysBetween(d2);
+	unsigned int diffDates = d.daysBetween(d2);
 
 	if (diffDates >=7 )
 		{
@@ -611,7 +612,7 @@ void CancelReservationRegClient(Company *c)
 	else if (7 > diffDates && diffDates > 2)
 		{
 			unsigned int devol = (offer->getPrice() * nTick * 0.5);
-			c->setBank( (-0.5) * offer->getPercentage() * devol);
+			c->setBank( (-1) * offer->getPercentage() * devol);
 			cout << "The refund amount is: " << devol << "€" << endl;
 		}
 	else
@@ -626,7 +627,6 @@ void CancelReservationOccClient(Company *c)
 {
 
 	int idClient, idOffer, nTick;
-	Date d1 ("6-12-2017");
 
 	cout << endl;
 	c->printOccasionalClients();
@@ -686,7 +686,7 @@ void CancelReservationOccClient(Company *c)
 
 	Date d2 = offer->getDate();
 
-	unsigned int diffDates = d1.daysBetween(d2);
+	unsigned int diffDates = d.daysBetween(d2);
 
 	if (diffDates >=7 )
 	{
@@ -698,7 +698,7 @@ void CancelReservationOccClient(Company *c)
 	else if (7 > diffDates && diffDates > 2)
 	{
 		unsigned int devol = offer->getPrice() * nTick * 0.5;
-		c->setBank( (-0.5) * offer->getPercentage() * devol);
+		c->setBank( (-1) * offer->getPercentage() * devol);
 		cout << "The refund amount is: " << devol << "€ " << endl;
 	}
 	else

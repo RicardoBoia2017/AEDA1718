@@ -48,10 +48,10 @@ void Company::exportRegisteredClients(string file)
 }
 
 /**
- * Export	s occasional clients to text file.
+ * Exports occasional clients to text file.
  * @param file that stores occasional clients' information.
  */
-void Company::exportOccasionaldClients(string file)
+void Company::exportOccasionalClients(string file)
 {
 	ofstream out;
 	out.open(file.c_str());
@@ -80,7 +80,7 @@ void Company::exportSuppliers(string file)
 }
 
 /**
- * Export	s offers' to text file.
+ * Exports offers' to text file.
  * @param file that stores offers' information.
  */
 void Company::exportOffers(string file)
@@ -209,7 +209,7 @@ vector <Supplier *> Company::getSuppliers () const
 }
 
 /**
- * @return offers's vector.
+ * @return offers' vector.
  */
 vector <Offer *> Company::getOffers () const
 {
@@ -347,7 +347,7 @@ void Company::printSuppliers() const
 }
 
 /**
- * Prints offers' information
+ * Prints offers' information.
  */
 void Company::printOffers() const
 {

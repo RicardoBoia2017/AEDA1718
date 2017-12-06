@@ -13,7 +13,7 @@
 using namespace std;
 
 /**
- * Gets line from file a puts it in a vector.
+ * Gets line from file and puts it in a vector.
 
  * @param file file to be read.
  */

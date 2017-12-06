@@ -104,7 +104,7 @@ public:
 };
 
 /**
- * Called when the user tries more tickets than the ones available.
+ * Called when the user tries to buy more tickets than the ones available.
 
  */
 class NoSeatsAvailable
