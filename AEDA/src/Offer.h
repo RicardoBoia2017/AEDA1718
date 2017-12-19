@@ -102,6 +102,8 @@ public:
 	Supplier * getSupplier() const;
 	void setSupplier(Supplier *  s);
 	friend ostream &operator<< (ostream &os, Offer &o1);
+	bool operator< ( Offer &o2);
+
 };
 
 #endif

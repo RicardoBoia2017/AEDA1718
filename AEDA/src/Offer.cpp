@@ -323,3 +323,8 @@ ostream &operator<< (ostream &os, Offer &o1)
 	return os;
 }
 
+bool Offer::operator< (Offer &o2)
+{
+
+}
+

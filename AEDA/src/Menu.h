@@ -16,58 +16,58 @@
  * Main menu.
  * @param c company.
  */
-void CompanyMenu (Company *c);
+bool CompanyMenu (Company *c);
 
 /**
  * Menu to make a reservation.
  * @param c company.
  */
-void MakeReservation (Company *c);
+bool MakeReservation (Company *c);
 /**
  * Menu to make a reservation for registered clients.
  * @param c company
  * @param client's id.
  */
-void MakeReservation_Registered (Company *c, unsigned int id);
+bool MakeReservation_Registered (Company *c, unsigned int id);
 /**
  * Menu to make a reservation for occasional clients.
  * @param c company
  * @param client's id.
  */
-void MakeReservation_Occasional (Company *c, unsigned int id);
+bool MakeReservation_Occasional (Company *c, unsigned int id);
 
 /**
  * Menu to cancel reservations.
  */
-void CancelReservation (Company *c);
+bool CancelReservation (Company *c);
 /**
  * Menu to cancel registered client's reservations.
  * @param c company.
  */
-void CancelReservationRegClient(Company *c);
+bool CancelReservationRegClient(Company *c);
 /**
  * Menu to cancel occasional client's reservations.
  * @param c company.
  */
-void CancelReservationOccClient(Company *c);
+bool CancelReservationOccClient(Company *c);
 
 /**
  * Menu where is possible to view all text files.
  * @param c company.
  */
-void ViewFilesMenu (Company *c);
+bool ViewFilesMenu (Company *c);
 
 /**
  * Menu to add a new supplier.
  * @param c company.
  */
-void AddSupplier(Company *c);
+bool AddSupplier(Company *c);
 
 /**
  * Menu to add a new offer.
  * @param c company.
  */
-void AddOffer(Company *c);
+bool AddOffer(Company *c);
 
 /**
  * Called when the user inserts an invalid option in a menu.

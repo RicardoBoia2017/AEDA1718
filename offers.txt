@@ -12,4 +12,4 @@
 12, 24/12/2017, Mares de Portugal , 14, 90, 12, Iate, Pinhão, 21, 12;
 13, 26/12/2017, Douro Azul, 25, 12, 56, Iate, Pinhão, 10, 14;
 14, 19/12/2017, Douro Azul, 25, 35, 51, Iate, Pinhão, 11, 16;
-15, 12/12/2017, Navegadores, 54, 23, 56, Iate, Pinhão, 24, 26;
+15, 12/12/2017, Navegadores, 54, 23, 50, Iate, Pinhão, 24, 26;
