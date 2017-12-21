@@ -11,6 +11,8 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <queue>
+#include <unordered_set>
 
 using namespace std;
 
@@ -20,10 +22,41 @@ using namespace std;
 #include "Offer.h"
 #include "Date.h"
 
+struct InactiveRegClients
+{
+	int operator() (const RegisteredClient &rc1) const
+	{
+
+	}
+
+	bool operator() (const RegisteredClient &rc1, const RegisteredClient &rc2) const
+	{
+
+	}
+};
+
+typedef unordered_set<RegisteredClient,InactiveRegClients , InactiveRegClients> tabHRegInactive;
+
+
+struct InactiveOccClients
+{
+	int operator() (const OccasionalClient &rc1) const
+	{
+
+	}
+
+	bool operator() (const OccasionalClient &rc1, const OccasionalClient &rc2) const
+	{
+
+	}
+};
+
+typedef unordered_set<OccasionalClient,InactiveOccClients , InactiveOccClients> tabHOccInactive;
+
 class Company {
 private:
 	/**
-	 * @brief Vector with all registered clients.
+	 * @brief Vector all registered clients.
 	 */
 	vector <RegisteredClient *> rClients;
 	/**
@@ -38,6 +71,9 @@ private:
 	 * @brief Vector with all offers.
 	 */
 	vector <Offer *> offers;
+	//priority_queue <Offer>  UnpopularOffers;
+	tabHRegInactive inacRegClient;
+	tabHOccInactive inacOccClients;
 	/**
 	 * @brief Money gained by 'Porto Rivers' with the reservations.
 	 */

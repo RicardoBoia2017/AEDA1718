@@ -74,33 +74,41 @@ bool AddOffer(Company *c);
  */
 class InvalidOption
 {
+private:
+	int option;
 public:
 	/**
 	 * The constructor
 	 * @param c company.
 	 * @param menu that will be called.
 	 */
-	InvalidOption(Company *c, int menu)
+	InvalidOption(int o)
 	{
-		std::cout << std::endl << "Invalid option"  << std::endl;
-
-		switch (menu)
-		{
-			case 1:
-				CompanyMenu (c);
-
-			case 2:
-				MakeReservation (c);
-
-			case 3:
-				CancelReservation (c);
-
-			case 4:
-				ViewFilesMenu (c);
-
-		}
-
+		this->option = o;
 	}
+	int getOption() const
+	{
+		return option;
+	}
+//		std::cout << std::endl << "Invalid option"  << std::endl;
+//
+//		switch (menu)
+//		{
+//			case 1:
+//				CompanyMenu (c);
+//
+//			case 2:
+//				MakeReservation (c);
+//
+//			case 3:
+//				CancelReservation (c);
+//
+//			case 4:
+//				ViewFilesMenu (c);
+//
+//		}
+	//InvalidOption (Company c, int menu){};
+
 };
 
 /**
@@ -109,14 +117,15 @@ public:
  */
 class NoSeatsAvailable
 {
+private:
+	int OfferId;
 public:
-	/* *
-	 * The constructor
-	 * @param c company.
-	 */
-	NoSeatsAvailable (Company *c)
+	NoSeatsAvailable (int offerid): OfferId (offerid)
 	{
 		std::cout << std::endl << "Sorry! There aren't enough seats available." << std::endl;
-		MakeReservation(c);
+	}
+	int getId() const
+	{
+		return this->OfferId;
 	}
 };
