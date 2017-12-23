@@ -42,7 +42,14 @@ unsigned int Client::getNIF() const
 	return NIF;
 }
 
+string Client::getInformation() const
+{
+	stringstream ss;
 
+	ss << " " << getName() << ", " << getNIF();
+
+	return ss.str();
+}
 
 //Registered Client
 
@@ -102,7 +109,7 @@ string RegisteredClient::getInformation() const
 {
 	stringstream ss;
 
-	ss << getId() << " " << getName() << ", " << getNIF() << ", Points: " << getPoints();
+	ss << getId() << Client::getInformation() << ", Points: " << getPoints();
 
 	return ss.str() ;
 }
@@ -168,7 +175,7 @@ string OccasionalClient::getInformation() const
 {
 	stringstream ss;
 
-	ss << getId() << " " << getName() << ", " << getNIF();
+	ss << getId() << " " << Client::getInformation();
 
 	return ss.str() ;
 }

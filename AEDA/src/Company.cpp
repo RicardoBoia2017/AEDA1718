@@ -14,18 +14,21 @@
  * @param suppliers suppliers.
  * @param offers offers.
  */
-Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers)
+Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers): reservations ( Reservation() )
 {
 	this->rClients = rClients;
 	this->oClients = oClients;
 	this->suppliers = suppliers;
 	this->offers = offers;
+
+	//reservations.makeEmpty();
 	bank = 0;
 }
 
 /**
  * The destructor.
  */
+
 Company::~Company()
 {
 
@@ -216,12 +219,57 @@ vector <Offer *> Company::getOffers () const
 	return offers;
 }
 
+BST <Reservation> Company::getReservations() const
+{
+	return this->reservations;
+}
+
 /**
  * @return bank.
  */
 double Company::getBank() const
 {
 	return bank;
+}
+
+void Company::addReservation(const Reservation &r)
+{
+	BSTItrIn <Reservation> it (reservations);
+
+	while (!it.isAtEnd())
+	{
+		if (it.retrieve() == r)
+			return;
+		it.advance();
+
+	}
+	reservations.insert(r);
+}
+
+void Company::removeReservation(const Reservation &r)
+{
+	BSTItrIn <Reservation> it (reservations);
+	vector <Reservation> v;
+
+	while (!it.isAtEnd())
+	{
+		if (r == it.retrieve())
+		{
+			it.advance();
+		}
+		else
+		{
+			v.push_back(it.retrieve());
+			it.advance();
+		}
+	}
+
+	reservations.makeEmpty();
+
+	for (unsigned int i = 0; i < v.size(); i++)
+	{
+		reservations.insert(v[i]);
+	}
 }
 
 /**
@@ -392,3 +440,25 @@ void Company::printOfferBySuppliers(string name) const
 	}
 }
 
+void Company::printReservations() const
+{
+	if (reservations.isEmpty())
+		return;
+
+	BSTItrIn <Reservation> it (reservations);
+	Client *c = it.retrieve().getClient();
+
+	cout << c->getName() << ":" << endl << endl;
+	while (!it.isAtEnd())
+	{
+		Reservation r = it.retrieve();
+		if ( !(r.getClient() == c) )
+		{
+			c = r.getClient();
+			cout << endl << c->getName() << ":" << endl << endl;
+		}
+		cout << "Offer id: #" << r.getOffer()->getId() << ", Date: " << r.getOffer()->getDate().getDay() << "/" << r.getDate().getMonth() << "/" << r.getDate().getYear() << endl;
+
+		it.advance();
+	}
+}

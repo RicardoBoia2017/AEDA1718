@@ -70,17 +70,19 @@ void Offer::addRegisteredClient(RegisteredClient * rc, int nTick)
  * @param rc registered client.
  * @param nTick number of tickets to be removed.
  */
-bool Offer::elimRegisteredClient(RegisteredClient * rc, int nTick)
+int Offer::elimRegisteredClient(RegisteredClient * rc, int nTick)
 {
 
-	bool Found = false;
+	int Found = 0;
 	for(map<RegisteredClient *, int>::iterator it = reg_clients.begin(); it != reg_clients.end(); it++)
 		{
 			if(it->first->getId() == rc->getId())
 			{
 				if (it->second == nTick)
 				{
+					cout << "Igual" << endl;
 					reg_clients.erase(it);
+					Found = 2;
 				}
 				else if (it->second < nTick)
 				{
@@ -89,17 +91,20 @@ bool Offer::elimRegisteredClient(RegisteredClient * rc, int nTick)
 				}
 				else
 				{
+					cout << "Menos" << endl;
+					Found = 1;
 					it->second -= nTick;
 				}
 				vacancies += nTick;
 
 				unsigned int pointsWon = rc->getPoints() - nTick * getPoints();
 				rc->setPoints(pointsWon);
-				Found = true;
+
 				cout << "Your cancelation was successful!" << endl;
+				return Found;
 			}
 		}
-	if (Found == false)
+	if (Found == 0)
 	{
 		cout << "You don't have any reservation for this offer. Try again" << endl;
 	}
@@ -138,16 +143,17 @@ void Offer::addOccasionalClient(OccasionalClient* oc, int nTick)
  * @param nTick number of tickets to be removed.
  */
 
-bool Offer::elimOccasionalClient(OccasionalClient * oc, int nTick)
+int Offer::elimOccasionalClient(OccasionalClient * oc, int nTick)
 {
 
-	bool Found = false;
+	int Found = 0;
 	for(map<OccasionalClient *, int>::iterator it = oc_clients.begin(); it != oc_clients.end(); it++)
 		{
 			if(it->first->getId() == oc->getId())
 			{
 				if (it->second == nTick)
 				{
+					Found = 2;
 					oc_clients.erase(it);
 				}
 				else if (it->second < nTick)
@@ -157,14 +163,16 @@ bool Offer::elimOccasionalClient(OccasionalClient * oc, int nTick)
 				}
 				else
 				{
+					Found = 1;
 					it->second -= nTick;
 				}
 				vacancies += nTick;
-				Found = true;
+
 				cout << "Your cancelation was successful!" << endl;
+				return Found;
 			}
 		}
-	if (Found == false)
+	if (Found == 0)
 		{
 			cout << "You don't have any reservation for this offer. Try again" << endl;
 		}

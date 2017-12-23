@@ -24,19 +24,20 @@ private:
 	 */
 	unsigned int NIF;
 public:
+	Client(){};
 	Client(string n, unsigned int NIF);
 	virtual ~Client();
 	string getName() const;
 	unsigned int getNIF() const;
-	/**
-	 * A pure virtual member.
-	 *@return client's id.
-	 */
-	virtual unsigned int getId() const = 0;
+//	/**
+//	 * A virtual member.
+//	 *@return client's id.
+//	 */
+//	virtual unsigned int getId() const = 0;
 	/**
 	 * @return string with the client's information.
 	 */
-	virtual string getInformation() const = 0;
+	virtual string getInformation() const ;
 };
 
 class RegisteredClient: public Client

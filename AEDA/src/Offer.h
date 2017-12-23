@@ -79,12 +79,13 @@ private:
 	 */
 	Date date;
 public:
+	Offer(){};
 	Offer (int pri, int dist,int capacity, string bT, string dest, string sName, unsigned int points, double percentage, Date d);
 	virtual ~Offer();
 	void addRegisteredClient(RegisteredClient * rc, int nTick);
-	bool elimRegisteredClient(RegisteredClient * rc, int nTick);
+	int elimRegisteredClient(RegisteredClient * rc, int nTick);
 	void addOccasionalClient(OccasionalClient * oc, int nTick);
-	bool elimOccasionalClient(OccasionalClient * rc, int nTick);
+	int elimOccasionalClient(OccasionalClient * rc, int nTick);
 	unsigned int getId() const;
 	unsigned int getPrice() const;
 	unsigned int getDistance() const;

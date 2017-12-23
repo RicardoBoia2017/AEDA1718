@@ -16,11 +16,12 @@
 
 using namespace std;
 
-
+#include "BST.h"
 #include "Client.h"
 #include "Supplier.h"
 #include "Offer.h"
-#include "Date.h"
+#include "Reservation.h"
+
 
 struct InactiveRegClients
 {
@@ -71,6 +72,7 @@ private:
 	 * @brief Vector with all offers.
 	 */
 	vector <Offer *> offers;
+	BST <Reservation> reservations;
 	//priority_queue <Offer>  UnpopularOffers;
 	tabHRegInactive inacRegClient;
 	tabHOccInactive inacOccClients;
@@ -94,6 +96,9 @@ public:
 	vector <OccasionalClient *> getOccasionalClients () const;
 	vector <Supplier *> getSuppliers () const;
 	vector <Offer *> getOffers () const;
+	BST <Reservation> getReservations() const;
+	void addReservation(const Reservation &r);
+	void removeReservation (const Reservation &r);
 	double getBank() const;
 	void setBank (double b);
 	void setOfferSuppliers();
@@ -105,6 +110,7 @@ public:
 	void printOffers() const;
 	void printOfferbyDate (Date d1, Date d2) const;
 	void printOfferBySuppliers(string name) const;
+	void printReservations () const;
 
 };
 

@@ -31,6 +31,7 @@ private:
 	 */
 	unsigned int year;
 public:
+	Date(){};
 	Date (unsigned int d, unsigned int m, unsigned int y);
 	Date (string date);
 	virtual ~Date();
