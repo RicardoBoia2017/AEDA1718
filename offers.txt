@@ -1,5 +1,5 @@
-1, 6/12/2017, Cruzeiros Douro, 83, 224, 8, Veleiro, Régua, 5, 2;
-2, 8/12/2017, Cruzeiros Douro, 90, 260, 11, Veleiro, Pinhão, 8, 3;
+1, 6/12/2017, Cruzeiros Douro, 83, 224, 7, Veleiro, Régua, 5, 2;
+2, 8/12/2017, Cruzeiros Douro, 90, 260, 9, Veleiro, Pinhão, 8, 3;
 3, 17/12/2017, Cruzeiros Douro, 108, 250, 110, Barco Rabelo, Pinhão, 10, 5;
 4, 9/12/2017, Roteiros do Douro, 110, 236, 80, Barco Rabelo, Régua, 13, 5;
 5, 23/12/2017, Mares de Portugal, 150, 482, 30, Iate, Barca d´Alva, 20, 8;

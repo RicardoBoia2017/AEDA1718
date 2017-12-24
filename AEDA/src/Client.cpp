@@ -15,6 +15,7 @@
 Client::Client(string n, unsigned int NIF): name(n)
 {
 	this->NIF = NIF;
+	this->lastReservation = Date ("12-1-2017");
 }
 
 /**
@@ -42,6 +43,11 @@ unsigned int Client::getNIF() const
 	return NIF;
 }
 
+Date Client::getLastReservation() const
+{
+	return lastReservation;
+}
+
 string Client::getInformation() const
 {
 	stringstream ss;
@@ -49,6 +55,12 @@ string Client::getInformation() const
 	ss << " " << getName() << ", " << getNIF();
 
 	return ss.str();
+}
+
+
+bool Client::operator== (const Client & c2) const
+{
+	return this->name == c2.getName();
 }
 
 //Registered Client
@@ -189,3 +201,5 @@ ostream &operator<< (ostream &os, OccasionalClient &oc1)
 	os << oc1.getId() << ", " << oc1.getName() << ", " << oc1.getNIF() << ";" ;
 	return os;
 }
+
+

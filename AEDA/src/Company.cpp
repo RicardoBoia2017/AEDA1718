@@ -20,9 +20,11 @@ Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *>
 	this->oClients = oClients;
 	this->suppliers = suppliers;
 	this->offers = offers;
+	date = Date("4-1-2018");
 
 	reservations.makeEmpty();
 
+	 //BST
 	vector <Reservation> v;
 
 	v = setClientsonReservations (reserv);
@@ -32,7 +34,26 @@ Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *>
 		reservations.insert(v[i]);
 	}
 
+	//Tabela de dispersão
+	for (unsigned int i = 0; i < rClients.size(); i++)
+	{
+		Client * c = rClients[i];
+		Date d = c->getLastReservation();
+		unsigned int days = d.daysBetween(date);
 
+		if (days >= 30)
+			this->inactiveClients.insert(c);
+	}
+
+	for (unsigned int i = 0; i < oClients.size(); i++)
+	{
+		Client * c = oClients[i];
+		Date d = c->getLastReservation();
+		unsigned int days = d.daysBetween(date);
+
+		if (days >= 30)
+			this->inactiveClients.insert(c);
+	}
 
 	bank = 0;
 }
@@ -242,6 +263,10 @@ vector <RegisteredClient *> Company::getRegisteredClients () const
 	return rClients;
 }
 
+Date Company::getDate() const
+{
+	return date;
+}
 /**
  * @return occasional clients' vector.
  */
@@ -288,11 +313,11 @@ void Company::addReservation(const Reservation &r, unsigned int nTick)
 		if (it.retrieve() == r)
 		{
 			Reservation tmp = it.retrieve();
-			removeReservation (it.retrieve(), it.retrieve().getTickets());
+			removeReservation (tmp, tmp.getTickets());
 
-			cout << tmp.getTickets()<< "   " << nTick;
 			tmp.setTickets(tmp.getTickets() + nTick);
 			reservations.insert(tmp);
+			return;
 		}
 		it.advance();
 
@@ -338,11 +363,11 @@ vector <Reservation> Company::setClientsonReservations (vector <Reservation> r)
 	return r;
 }
 
-bool Company::removeReservation(const Reservation &r, unsigned int nTick)
+int Company::removeReservation(const Reservation &r, unsigned int nTick)
 {
 	BSTItrIn <Reservation> it (reservations);
 	vector <Reservation> v;
-	bool Found = false;
+	int Found = 0;
 
 	while (!it.isAtEnd())
 	{
@@ -350,19 +375,23 @@ bool Company::removeReservation(const Reservation &r, unsigned int nTick)
 		{
 			Reservation re = it.retrieve();
 
-			if (nTick > it.retrieve().getTickets() )
+			if (nTick == it.retrieve().getTickets())
+			{
+				Found = 1;
+				cout << "hu";
+			}
+			else if (nTick > it.retrieve().getTickets() )
 			{
 				v.push_back(it.retrieve());
-				cout << "You didn't make that much reservations." << endl;
+				Found = 2;
 			}
 			else
 			{
 				Reservation nova = it.retrieve();
 				nova.setTickets( it.retrieve().getTickets() - nTick);
 				v.push_back(nova);
-				cout << "Your cancelation was successful!" << endl;
+				Found = 1;
 			}
-			Found =true;
 		}
 		else
 		{
@@ -378,14 +407,23 @@ bool Company::removeReservation(const Reservation &r, unsigned int nTick)
 		reservations.insert(v[i]);
 	}
 
-	if (!Found)
-	{
-		cout << "You don't have any reservation for this offer. Try again" << endl;
-	}
-
 	return Found;
 }
 
+void Company::removeInactiveClient(const Client &c)
+{
+//	tabHInactive::iterator it = this->inactiveClients.begin();
+//
+//	while (it != inactiveClients.end())
+//	{
+//		Client * c2 = (*it);
+//		if ( c.getName() == c2->getName() )
+//		{
+//			inactiveClients.erase(c2);
+//			break;
+//		}
+//	}
+}
 /**
  * Add b to bank.
  * @param b value to be added.
@@ -467,33 +505,21 @@ void Company::printOccasionalClients() const
  * Prints clients that made a reservation in a certain offer.
  * @param idOffer offer's id.
  */
-void Company::printClientsByOffer(int idOffer) const	//// TODO
+void Company::printClientsByOffer(unsigned int idOffer) const	//// TODO
 {
-//	Offer * o = offers[idOffer-1];
-//
-//	if(o->getRegClients().size() != 0)
-//	{
-//		cout<< "Registered Clients:" << endl << endl;
-//
-//		map < RegisteredClient*, int>::const_iterator it_res = o->getRegClients().cbegin();
-//
-//		for( unsigned int i = 0; i < o->getRegClients().size(); i++, it_res++)
-//		{
-//			cout<< it_res->first->getInformation() <<  ", Tickets: " << it_res->second << endl;
-//		}
-//	}
-//
-//	if ( o->getOcClients().size() != 0)
-//	{
-//		cout<< endl<<  "Occasional Clients:" << endl << endl;
-//
-//		map < OccasionalClient*, int>::const_iterator it_oc = o->getOcClients().cbegin();
-//
-//		for (unsigned int i = 0; i < o->getOcClients().size() ; i++, it_oc ++)
-//		{
-//			cout<< it_oc->first->getInformation() <<  ", Tickets: " << it_oc->second << endl;
-//		}
-//	}
+
+	BSTItrIn <Reservation> it (reservations);
+
+	cout << endl;
+
+	while (!it.isAtEnd())
+	{
+		if (it.retrieve().getOffer() == idOffer)
+		{
+			cout << it.retrieve().getClientName() << ", Tickets: " << it.retrieve().getTickets() << endl;
+		}
+		it.advance();
+	}
 
 }
 

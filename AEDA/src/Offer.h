@@ -11,7 +11,6 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include <map>
 #include <iostream>
 
 using namespace std;
@@ -63,14 +62,6 @@ private:
 	 */
 	string supName;
 	/**
-	 * @brief map of registered clients and the number of ticket bought by each.
-	 */
-//	map <RegisteredClient *, int> reg_clients;
-	/**
-	 * @brief map of occasional clients and the number of ticket bought by each.
-	 */
-//	map <OccasionalClient *, int> oc_clients;
-	/**
 	 * @brief offer's supplier.
 	 */
 	Supplier * sup;
@@ -82,10 +73,6 @@ public:
 	Offer(){};
 	Offer (int pri, int dist,int capacity, string bT, string dest, string sName, unsigned int points, double percentage, Date d);
 	virtual ~Offer();
-//	void addRegisteredClient(RegisteredClient * rc, int nTick);
-//	int elimRegisteredClient(RegisteredClient * rc, int nTick);
-//	void addOccasionalClient(OccasionalClient * oc, int nTick);
-//	int elimOccasionalClient(OccasionalClient * rc, int nTick);
 	unsigned int getId() const;
 	unsigned int getPrice() const;
 	unsigned int getDistance() const;
@@ -99,8 +86,6 @@ public:
 	string getDestination() const;
 	string getInformation() const;
 	string getSupName() const;
-	map <RegisteredClient *, int> getRegClients() const;
-	map <OccasionalClient *, int> getOcClients() const;
 	Supplier * getSupplier() const;
 	void setSupplier(Supplier *  s);
 	friend ostream &operator<< (ostream &os, Offer &o1);

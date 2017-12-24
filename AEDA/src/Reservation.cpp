@@ -104,7 +104,7 @@ unsigned int Reservation::getTickets() const
 
 ostream &operator<< (ostream &os, Reservation &r1)
 {
-	os << r1.getId() << ", " << r1.getDate().getDay() << "/" << r1.getDate().getMonth() << "/" << r1.getDate().getYear() << ", " << r1.getClientName()
+	os << r1.getId() << ", " << r1.getDate().getDay() << "/" << r1.getDate().getMonth() << "/" << r1.getDate().getYear() << ", " << r1.getClient()->getName()
 			<< ", " << r1.getOffer() << ", " << r1.getTickets() << ";" ;
 }
 

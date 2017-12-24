@@ -76,12 +76,19 @@ vector<OccasionalClient*> FileReader::readOccasionalClients(string file)
 	for (unsigned int i = 0; i < lines.size(); i++)
 	{
 		string line = lines[i];
-		string name, NIF;
+		string name, NIF, day, month, year;
 
 		line = line.substr(line.find(',') + 2);
 		name = line.substr(0, line.find(','));
 		line = line.substr(line.find(',') + 2);
-		NIF = line.substr(0, line.find(';'));
+		NIF = line.substr(0, line.find(','));
+		line = line.substr(line.find(',') + 2);
+		day = line.substr(0, line.find('/'));
+		line = line.substr(line.find('/') + 1);
+		month = line.substr(0,line.find('/'));
+		line = line.substr(line.find('/') + 1);
+		year = line.substr (0, line.find(','));
+		line = line.substr(line.find(',') + 2);
 
 		OccasionalClient *oc = new OccasionalClient(name, stoi(NIF.c_str()) );
 		oClients.push_back(oc);

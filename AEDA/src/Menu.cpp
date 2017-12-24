@@ -280,7 +280,8 @@ bool MakeReservation (Company *c)
 				cin.clear();
 				cin.ignore(10000, '\n');
 
-				if (optionMR3 != 1 || optionMR != 2)
+
+				if (optionMR3 != 1 && optionMR3 != 2)
 				{
 					try
 					{
@@ -327,17 +328,7 @@ bool MakeReservation (Company *c)
 					cout << "Your new client id is: " << id << endl << endl;
 					MakeReservation_Registered(c, id);
 				}
-				else
-				{
-					try{
-						throw InvalidOption(optionMR3);
-					}
-					catch(InvalidOption &e)
-					{
-						std::cout << e.getOption() <<  " is not a valid option"  <<  std::endl;
-						break;
-					}
-				}
+
 				break;
 			}
 			case 4:
@@ -459,7 +450,6 @@ bool MakeReservation_Registered (Company *c, unsigned int idClient)
 
 						client->setPoints(client->getPoints() + offer->getPoints()*nTick);
 						offer->setVacancies( offer->getVacancies() - nTick);
-						//offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
 						c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
 						return true;
 					}
@@ -580,7 +570,6 @@ bool MakeReservation_Occasional (Company *c, unsigned int idClient)
 
 					offer->setVacancies( offer->getVacancies() - nTick);
 
-					//offer->addOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
 					c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
 					MakeReservation(c);
 				}
@@ -694,16 +683,22 @@ bool CancelReservationRegClient(Company *c)
 		cin.ignore(10000, '\n');
 		cout << endl;
 
-//		int result = offer->elimRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
 
 		RegisteredClient * client = c->getRegisteredClients()[idClient-1];
 		Reservation r (offer, client, offer->getDate());
-		bool result = c->removeReservation(r,nTick);
+		int result = c->removeReservation(r,nTick);
 
-		if (result)
+		if (result == 2)
+			cout << "You didn't make that much reservations." << endl;
+		else if (result == 0)
+			cout << "You don't have any reservation for this offer. Try again" << endl;
+		else
 		{
 			unsigned int newPoints = c->getRegisteredClients()[idClient-1]->getPoints() - nTick*offer->getPoints();
 			c->getRegisteredClients()[idClient-1]->setPoints( newPoints) ;
+
+
+			cout << "Your cancelation was successful!" << endl;
 
 			offer->setVacancies(offer->getVacancies() + nTick);
 			break;
@@ -791,13 +786,17 @@ bool CancelReservationOccClient(Company *c)
 		cout << endl;
 
 		cout << endl;
-//		int result = offer->elimOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
 
 		OccasionalClient * client = c->getOccasionalClients()[idClient-1];
 		Reservation r (offer, client, offer->getDate());
-		bool result = c->removeReservation(r,nTick);
+		int result = c->removeReservation(r,nTick);
 
-		if (result)
+		if (result == 2)
+			cout << "You didn't make that much reservations." << endl;
+		else if (result == 0)
+			cout << "You don't have any reservation for this offer. Try again" << endl;
+
+		else
 		{
 			offer->setVacancies(offer->getVacancies() + nTick);
 			break;
@@ -823,7 +822,7 @@ bool CancelReservationOccClient(Company *c)
 	}
 	else
 	{
-		cout << "Your cancelation was done too late. You have no refound." << endl;
+		cout << "Your cancelation was done too late. You have no refund." << endl;
 	}
 	cout << endl;
 	return true;

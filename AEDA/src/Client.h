@@ -10,6 +10,7 @@
 
 #include <string>
 #include <sstream>
+#include "Date.h"
 
 using namespace std;
 
@@ -23,12 +24,14 @@ private:
 	 * Client's NIF.
 	 */
 	unsigned int NIF;
+	Date lastReservation;
 public:
 	Client(){};
 	Client(string n, unsigned int NIF);
 	virtual ~Client();
 	string getName() const;
 	unsigned int getNIF() const;
+	Date getLastReservation () const;
 //	/**
 //	 * A virtual member.
 //	 *@return client's id.
@@ -38,6 +41,7 @@ public:
 	 * @return string with the client's information.
 	 */
 	virtual string getInformation() const ;
+	bool operator== (const Client& c2) const;
 };
 
 class RegisteredClient: public Client

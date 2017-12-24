@@ -23,36 +23,42 @@ using namespace std;
 #include "Reservation.h"
 
 
-struct InactiveRegClients
+struct InactiveClients
 {
-	int operator() (const RegisteredClient &rc1) const
+	int operator() (const Client* c1) const
 	{
+		string s1 = c1->getName();
+
+		int v = 0;
+		for ( unsigned int i=0; i< s1.size(); i++ )
+		 v = 37*v + s1[i];
+		return v;
 
 	}
 
-	bool operator() (const RegisteredClient &rc1, const RegisteredClient &rc2) const
+	bool operator() (const Client *c1, const Client *c2) const
 	{
-
+		return c1 == c2;
 	}
 };
 
-typedef unordered_set<RegisteredClient,InactiveRegClients , InactiveRegClients> tabHRegInactive;
-
-
-struct InactiveOccClients
-{
-	int operator() (const OccasionalClient &rc1) const
-	{
-
-	}
-
-	bool operator() (const OccasionalClient &rc1, const OccasionalClient &rc2) const
-	{
-
-	}
-};
-
-typedef unordered_set<OccasionalClient,InactiveOccClients , InactiveOccClients> tabHOccInactive;
+typedef unordered_set<Client*,InactiveClients , InactiveClients> tabHInactive;
+////
+//
+//struct InactiveOccClients
+//{
+//	int operator() (const OccasionalClient &rc1) const
+//	{
+//
+//	}
+//
+//	bool operator() (const OccasionalClient &rc1, const OccasionalClient &rc2) const
+//	{
+//
+//	}
+//};
+//
+//typedef unordered_set<OccasionalClient,InactiveOccClients , InactiveOccClients> tabHOccInactive;
 
 class Company {
 private:
@@ -71,11 +77,11 @@ private:
 	/**
 	 * @brief Vector with all offers.
 	 */
+	Date date;
 	vector <Offer *> offers;
 	BST <Reservation> reservations;
 	//priority_queue <Offer>  UnpopularOffers;
-	tabHRegInactive inacRegClient;
-	tabHOccInactive inacOccClients;
+	tabHInactive inactiveClients;
 	/**
 	 * @brief Money gained by 'Porto Rivers' with the reservations.
 	 */
@@ -98,16 +104,18 @@ public:
 	vector <Supplier *> getSuppliers () const;
 	vector <Offer *> getOffers () const;
 	BST <Reservation> getReservations() const;
+	Date getDate() const;
 	void addReservation(const Reservation &r, unsigned int nTick);
 	vector <Reservation> setClientsonReservations (vector <Reservation> r);
-	bool removeReservation (const Reservation &r, unsigned int nTick);
+	int removeReservation (const Reservation &r, unsigned int nTick);
+	void removeInactiveClient (const Client &c);
 	double getBank() const;
 	void setBank (double b);
 	void setOfferSuppliers();
 	void printRegisteredClients() const;
 	void printRegisteredClientByPoints() const;
 	void printOccasionalClients() const;
-	void printClientsByOffer (int idOffer) const;
+	void printClientsByOffer (unsigned int idOffer) const;
 	void printSuppliers() const;
 	void printOffers() const;
 	void printOfferbyDate (Date d1, Date d2) const;
