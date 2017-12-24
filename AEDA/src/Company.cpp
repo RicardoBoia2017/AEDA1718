@@ -14,14 +14,26 @@
  * @param suppliers suppliers.
  * @param offers offers.
  */
-Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers): reservations ( Reservation() )
+Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers, vector <Reservation> reserv): reservations ( Reservation() )
 {
 	this->rClients = rClients;
 	this->oClients = oClients;
 	this->suppliers = suppliers;
 	this->offers = offers;
 
-	//reservations.makeEmpty();
+	reservations.makeEmpty();
+
+	vector <Reservation> v;
+
+	v = setClientsonReservations (reserv);
+
+	for (unsigned int i = 0; i < v.size() ; i++)
+	{
+		reservations.insert(v[i]);
+	}
+
+
+
 	bank = 0;
 }
 
@@ -93,6 +105,41 @@ void Company::exportOffers(string file)
 
 	for(unsigned int i=0; i<offers.size(); i++){
 		out << *offers.at(i) << endl;
+	}
+
+	out.close();
+}
+
+void Company::exportReservations (string file)
+{
+	ofstream out;
+	out.open(file.c_str());
+
+	BSTItrIn <Reservation> it (reservations);
+	vector <Reservation> v;
+
+	while (!it.isAtEnd())
+	{
+		v.push_back (it.retrieve());
+		it.advance();
+	}
+
+	int j;
+
+	for (int gap = v.size()/2; gap > 0; gap /= 2)
+	{
+			for (unsigned int i = gap; i < v.size(); i++)
+			{
+				Reservation tmp = v[i];
+				for (j = i; j >= gap && tmp.getId() < v[j-gap].getId(); j -= gap)
+					v[j] = v[j-gap];
+				v[j] = tmp;
+			}
+	}
+
+	for(unsigned int i=0; i<v.size(); i++){
+		out << v.at(i);
+		out << endl;
 	}
 
 	out.close();
@@ -232,36 +279,96 @@ double Company::getBank() const
 	return bank;
 }
 
-void Company::addReservation(const Reservation &r)
+void Company::addReservation(const Reservation &r, unsigned int nTick)
 {
 	BSTItrIn <Reservation> it (reservations);
 
 	while (!it.isAtEnd())
 	{
 		if (it.retrieve() == r)
-			return;
+		{
+			Reservation tmp = it.retrieve();
+			removeReservation (it.retrieve(), it.retrieve().getTickets());
+
+			cout << tmp.getTickets()<< "   " << nTick;
+			tmp.setTickets(tmp.getTickets() + nTick);
+			reservations.insert(tmp);
+		}
 		it.advance();
 
 	}
 	reservations.insert(r);
 }
 
-void Company::removeReservation(const Reservation &r)
+vector <Reservation> Company::setClientsonReservations (vector <Reservation> r)
+{
+
+	for (unsigned int i = 0; i < r.size(); i++)
+	{
+		bool Found = false;
+
+		vector <RegisteredClient *>::iterator it = rClients.begin();
+
+		for (unsigned int j = 0; j < this->rClients.size(); j++,it++)
+		{
+			if ( (*it)->getName() == r[i].getClientName())
+			{
+				r[i].setClient( (*it) );
+				Found = true;
+				break;
+			}
+		}
+
+		if (!Found)
+		{
+			vector <OccasionalClient *>::iterator it = oClients.begin();
+
+			for (unsigned int j = 0; j < this->oClients.size(); j++,it++)
+			{
+				if ( (*it)->getName() == r[i].getClientName())
+				{
+					r[i].setClient( (*it) );
+					break;
+				}
+			}
+		}
+
+	}
+
+	return r;
+}
+
+bool Company::removeReservation(const Reservation &r, unsigned int nTick)
 {
 	BSTItrIn <Reservation> it (reservations);
 	vector <Reservation> v;
+	bool Found = false;
 
 	while (!it.isAtEnd())
 	{
 		if (r == it.retrieve())
 		{
-			it.advance();
+			Reservation re = it.retrieve();
+
+			if (nTick > it.retrieve().getTickets() )
+			{
+				v.push_back(it.retrieve());
+				cout << "You didn't make that much reservations." << endl;
+			}
+			else
+			{
+				Reservation nova = it.retrieve();
+				nova.setTickets( it.retrieve().getTickets() - nTick);
+				v.push_back(nova);
+				cout << "Your cancelation was successful!" << endl;
+			}
+			Found =true;
 		}
 		else
 		{
 			v.push_back(it.retrieve());
-			it.advance();
 		}
+		it.advance();
 	}
 
 	reservations.makeEmpty();
@@ -270,6 +377,13 @@ void Company::removeReservation(const Reservation &r)
 	{
 		reservations.insert(v[i]);
 	}
+
+	if (!Found)
+	{
+		cout << "You don't have any reservation for this offer. Try again" << endl;
+	}
+
+	return Found;
 }
 
 /**
@@ -353,33 +467,33 @@ void Company::printOccasionalClients() const
  * Prints clients that made a reservation in a certain offer.
  * @param idOffer offer's id.
  */
-void Company::printClientsByOffer(int idOffer) const
+void Company::printClientsByOffer(int idOffer) const	//// TODO
 {
-	Offer * o = offers[idOffer-1];
-
-	if(o->getRegClients().size() != 0)
-	{
-		cout<< "Registered Clients:" << endl << endl;
-
-		map < RegisteredClient*, int>::const_iterator it_res = o->getRegClients().cbegin();
-
-		for( unsigned int i = 0; i < o->getRegClients().size(); i++, it_res++)
-		{
-			cout<< it_res->first->getInformation() <<  ", Tickets: " << it_res->second << endl;
-		}
-	}
-
-	if ( o->getOcClients().size() != 0)
-	{
-		cout<< endl<<  "Occasional Clients:" << endl << endl;
-
-		map < OccasionalClient*, int>::const_iterator it_oc = o->getOcClients().cbegin();
-
-		for (unsigned int i = 0; i < o->getOcClients().size() ; i++, it_oc ++)
-		{
-			cout<< it_oc->first->getInformation() <<  ", Tickets: " << it_oc->second << endl;
-		}
-	}
+//	Offer * o = offers[idOffer-1];
+//
+//	if(o->getRegClients().size() != 0)
+//	{
+//		cout<< "Registered Clients:" << endl << endl;
+//
+//		map < RegisteredClient*, int>::const_iterator it_res = o->getRegClients().cbegin();
+//
+//		for( unsigned int i = 0; i < o->getRegClients().size(); i++, it_res++)
+//		{
+//			cout<< it_res->first->getInformation() <<  ", Tickets: " << it_res->second << endl;
+//		}
+//	}
+//
+//	if ( o->getOcClients().size() != 0)
+//	{
+//		cout<< endl<<  "Occasional Clients:" << endl << endl;
+//
+//		map < OccasionalClient*, int>::const_iterator it_oc = o->getOcClients().cbegin();
+//
+//		for (unsigned int i = 0; i < o->getOcClients().size() ; i++, it_oc ++)
+//		{
+//			cout<< it_oc->first->getInformation() <<  ", Tickets: " << it_oc->second << endl;
+//		}
+//	}
 
 }
 
@@ -457,7 +571,7 @@ void Company::printReservations() const
 			c = r.getClient();
 			cout << endl << c->getName() << ":" << endl << endl;
 		}
-		cout << "Offer id: #" << r.getOffer()->getId() << ", Date: " << r.getOffer()->getDate().getDay() << "/" << r.getDate().getMonth() << "/" << r.getDate().getYear() << endl;
+		cout << "Offer id: #" << r.getOffer() << ", Date: " << r.getDate().getDay() << "/" << r.getDate().getMonth() << "/" << r.getDate().getYear() << " Tickets: " << r.getTickets() << endl;
 
 		it.advance();
 	}

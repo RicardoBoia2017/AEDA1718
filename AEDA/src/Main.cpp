@@ -18,6 +18,7 @@ using namespace std;
 #define oClientsFile "OccasionalClients.txt"
 #define suppliersFile "suppliers.txt"
 #define offersFile "offers.txt"
+#define reservationsFile "reservations.txt"
 
 int main()
 {
@@ -25,8 +26,10 @@ int main()
 	vector <OccasionalClient *> oClients = FileReader::readOccasionalClients(oClientsFile);
 	vector <Supplier *> suppliers = FileReader::readSuppliers(suppliersFile);
 	vector <Offer *> offers = FileReader::readOffers(offersFile);
+	vector <Reservation > reservations = FileReader::readReservations(reservationsFile);
 
-	Company c(rClients,oClients, suppliers, offers);
+
+	Company c(rClients,oClients, suppliers, offers, reservations);
 
 	CompanyMenu (&c);
 
@@ -34,6 +37,7 @@ int main()
 	c.exportOccasionalClients (oClientsFile);
 	c.exportSuppliers (suppliersFile);
 	c.exportOffers (offersFile);
+	c.exportReservations(reservationsFile);
 
 	return 0;
 }

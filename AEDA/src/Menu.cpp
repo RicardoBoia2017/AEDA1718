@@ -266,7 +266,7 @@ bool MakeReservation (Company *c)
 						break;
 					}
 				}
-
+				break;
 			}
 
 			case 3:
@@ -454,9 +454,12 @@ bool MakeReservation_Registered (Company *c, unsigned int idClient)
 					{
 						RegisteredClient * client = c->getRegisteredClients()[idClient-1];
 						Reservation r (offer, client, offer->getDate());
-						c->addReservation(r);
+						r.setTickets(nTick);
+						c->addReservation(r,nTick);
 
-						offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
+						client->setPoints(client->getPoints() + offer->getPoints()*nTick);
+						offer->setVacancies( offer->getVacancies() - nTick);
+						//offer->addRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
 						c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
 						return true;
 					}
@@ -572,9 +575,12 @@ bool MakeReservation_Occasional (Company *c, unsigned int idClient)
 				{
 					OccasionalClient * client = c->getOccasionalClients()[idClient-1];
 					Reservation r (offer, client, offer->getDate());
-					c->addReservation(r);
+					r.setTickets(nTick);
+					c->addReservation(r,nTick);
 
-					offer->addOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
+					offer->setVacancies( offer->getVacancies() - nTick);
+
+					//offer->addOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
 					c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
 					MakeReservation(c);
 				}
@@ -688,18 +694,18 @@ bool CancelReservationRegClient(Company *c)
 		cin.ignore(10000, '\n');
 		cout << endl;
 
-		int result = offer->elimRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
+//		int result = offer->elimRegisteredClient(c->getRegisteredClients()[idClient-1], nTick);
 
+		RegisteredClient * client = c->getRegisteredClients()[idClient-1];
+		Reservation r (offer, client, offer->getDate());
+		bool result = c->removeReservation(r,nTick);
 
-		if(result != 0)
+		if (result)
 		{
-			cout << result << endl;
-			if (result == 2)
-			{
-				RegisteredClient * client = c->getRegisteredClients()[idClient-1];
-				Reservation r (offer, client, offer->getDate());
-				c->removeReservation(r);
-			}
+			unsigned int newPoints = c->getRegisteredClients()[idClient-1]->getPoints() - nTick*offer->getPoints();
+			c->getRegisteredClients()[idClient-1]->setPoints( newPoints) ;
+
+			offer->setVacancies(offer->getVacancies() + nTick);
 			break;
 		}
 
@@ -785,16 +791,15 @@ bool CancelReservationOccClient(Company *c)
 		cout << endl;
 
 		cout << endl;
-		int result = offer->elimOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
+//		int result = offer->elimOccasionalClient(c->getOccasionalClients()[idClient-1], nTick);
 
-		if (result != 0)
+		OccasionalClient * client = c->getOccasionalClients()[idClient-1];
+		Reservation r (offer, client, offer->getDate());
+		bool result = c->removeReservation(r,nTick);
+
+		if (result)
 		{
-			if (result == 2)
-			{
-				OccasionalClient * client = c->getOccasionalClients()[idClient-1];
-				Reservation r (offer, client, offer->getDate());
-				c->removeReservation(r);
-			}
+			offer->setVacancies(offer->getVacancies() + nTick);
 			break;
 		}
 	} while (1);

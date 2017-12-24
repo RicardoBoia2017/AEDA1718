@@ -81,12 +81,13 @@ private:
 	 */
 	double bank;
 public:
-	Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers);
+	Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers, vector <Reservation> reserv);
 	virtual ~Company();
 	void exportRegisteredClients(string file);
 	void exportOccasionalClients(string file);
 	void exportSuppliers (string file);
 	void exportOffers (string file);
+	void exportReservations (string file);
 	unsigned int RegisterClient(string name, int NIF);
 	void AddSupplier(string n, int NIF, string address);
 	void addOccasionalClient (string name, int NIF);
@@ -97,8 +98,9 @@ public:
 	vector <Supplier *> getSuppliers () const;
 	vector <Offer *> getOffers () const;
 	BST <Reservation> getReservations() const;
-	void addReservation(const Reservation &r);
-	void removeReservation (const Reservation &r);
+	void addReservation(const Reservation &r, unsigned int nTick);
+	vector <Reservation> setClientsonReservations (vector <Reservation> r);
+	bool removeReservation (const Reservation &r, unsigned int nTick);
 	double getBank() const;
 	void setBank (double b);
 	void setOfferSuppliers();

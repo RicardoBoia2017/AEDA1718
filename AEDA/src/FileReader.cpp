@@ -165,3 +165,36 @@ vector<Offer *> FileReader::readOffers (string file)
 
 	return offers;
 }
+
+vector <Reservation> FileReader::readReservations(string file)
+{
+	vector <Reservation> reservations;
+
+	vector<string> lines = FileReader::readLines(file);
+
+	for (unsigned int i = 0; i < lines.size(); i++)
+	{
+		string line = lines [i];
+		string cName, offerID, day, month, year, nT;
+
+		line = line.substr(line.find(',') + 2);
+		day = line.substr(0, line.find('/'));
+		line = line.substr(line.find('/') + 1);
+		month = line.substr(0,line.find('/'));
+		line = line.substr(line.find('/') + 1);
+		year = line.substr (0, line.find(','));
+		line = line.substr(line.find(',') + 2);
+		cName = line.substr(0, line.find(','));
+		line = line.substr(line.find(',') + 2);
+		offerID = line.substr(0 ,line.find(','));
+		line = line.substr(line.find(',') + 2);
+		nT = line.substr(0 ,line.find(';'));
+
+		Date d = Date(stoi(day.c_str()), stoi(month.c_str()), stoi(year.c_str()) );
+
+		Reservation r (cName, stoi (offerID.c_str()), d, stoi ( nT.c_str() ) );
+		reservations.push_back(r);
+	}
+
+	return reservations;
+}

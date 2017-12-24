@@ -20,6 +20,8 @@ using namespace std;
 #include "Supplier.h"
 #include "Offer.h"
 #include "Date.h"
+#include "Reservation.h"
+#include "BST.h"
 
 class FileReader
 {
@@ -30,6 +32,7 @@ public:
 	static vector<OccasionalClient *> readOccasionalClients(string file);
 	static vector<Supplier *> readSuppliers(string file);
 	static vector<Offer *> readOffers(string file);
+	static vector <Reservation> readReservations (string file);
 };
 
 
