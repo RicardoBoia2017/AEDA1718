@@ -449,7 +449,10 @@ bool MakeReservation_Registered (Company *c, unsigned int idClient)
 						c->addReservation(r,nTick);
 
 						client->setPoints(client->getPoints() + offer->getPoints()*nTick);
+						client->setLastReservation(c->getDate());
 						offer->setVacancies( offer->getVacancies() - nTick);
+						c->removeInactiveClient(client->getName());
+
 						c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
 						return true;
 					}
@@ -568,7 +571,9 @@ bool MakeReservation_Occasional (Company *c, unsigned int idClient)
 					r.setTickets(nTick);
 					c->addReservation(r,nTick);
 
+					client->setLastReservation(c->getDate());
 					offer->setVacancies( offer->getVacancies() - nTick);
+					c->removeInactiveClient(client->getName());
 
 					c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
 					MakeReservation(c);
@@ -865,7 +870,8 @@ bool ViewFilesMenu (Company *c)
 
 					cout << "1 View all clients" << endl;
 					cout << "2 View clients by points" << endl;
-					cout << "3 Back" << endl;
+					cout << "3 View inactive clients" << endl;
+					cout << "4 Back" << endl;
 					cout << "Insert the desired option: " << endl;
 					cin >> optionVFM1;
 					cin.clear();
@@ -891,11 +897,15 @@ bool ViewFilesMenu (Company *c)
 							cout << endl;
 							c->printRegisteredClientByPoints();
 							cout << endl;
-							ViewFilesMenu (c);
+
 							break;
 						}
-
 						case 3:
+						{
+							c->printInactiveClients();
+							break;
+						}
+						case 4:
 						{
 							flag2 = true;
 							break;

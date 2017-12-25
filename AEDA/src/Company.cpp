@@ -41,6 +41,7 @@ Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *>
 		Date d = c->getLastReservation();
 		unsigned int days = d.daysBetween(date);
 
+		cout << days << endl;
 		if (days >= 30)
 			this->inactiveClients.insert(c);
 	}
@@ -173,7 +174,7 @@ void Company::exportReservations (string file)
  */
 unsigned int Company::RegisterClient(string name, int NIF)
 {
-	RegisteredClient * rc = new RegisteredClient(name,NIF,0);
+	RegisteredClient * rc = new RegisteredClient(name,NIF,0, Date ("1-1-1111"));
 	rClients.push_back(rc);
 
 	return rc->getId();
@@ -225,7 +226,7 @@ void Company::addOffer(unsigned int price, unsigned int dist, unsigned int cap, 
  */
 void Company::addOccasionalClient (string name, int NIF)
 {
-	OccasionalClient *oc = new OccasionalClient(name,NIF);
+	OccasionalClient *oc = new OccasionalClient(name,NIF,Date ("1-1-1111"));
 	oClients.push_back(oc);
 }
 
@@ -410,19 +411,19 @@ int Company::removeReservation(const Reservation &r, unsigned int nTick)
 	return Found;
 }
 
-void Company::removeInactiveClient(const Client &c)
+void Company::removeInactiveClient(string name)
 {
-//	tabHInactive::iterator it = this->inactiveClients.begin();
-//
-//	while (it != inactiveClients.end())
-//	{
-//		Client * c2 = (*it);
-//		if ( c.getName() == c2->getName() )
-//		{
-//			inactiveClients.erase(c2);
-//			break;
-//		}
-//	}
+	tabHInactive::iterator it = this->inactiveClients.begin();
+
+	while (it != inactiveClients.end())
+	{
+		Client * c = (*it);
+		if ( c->getName() == name )
+		{
+			inactiveClients.erase(c);
+			break;
+		}
+	}
 }
 /**
  * Add b to bank.
@@ -600,5 +601,18 @@ void Company::printReservations() const
 		cout << "Offer id: #" << r.getOffer() << ", Date: " << r.getDate().getDay() << "/" << r.getDate().getMonth() << "/" << r.getDate().getYear() << " Tickets: " << r.getTickets() << endl;
 
 		it.advance();
+	}
+}
+
+void Company::printInactiveClients() const
+{
+	tabHInactive::const_iterator it = this->inactiveClients.begin();
+	cout << endl;
+
+	while (it != inactiveClients.end() )
+	{
+		Client * c = (*it);
+		cout << c->getName() << endl;
+		it++;
 	}
 }

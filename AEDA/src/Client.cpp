@@ -12,10 +12,10 @@
  * @param n client's name.
  * @param NIF client's NIF.
  */
-Client::Client(string n, unsigned int NIF): name(n)
+Client::Client(string n, unsigned int NIF, Date lR): name(n)
 {
 	this->NIF = NIF;
-	this->lastReservation = Date ("12-1-2017");
+	this->lastReservation = lR;
 }
 
 /**
@@ -57,6 +57,10 @@ string Client::getInformation() const
 	return ss.str();
 }
 
+void Client::setLastReservation(const Date &d)
+{
+	this->lastReservation = d;
+}
 
 bool Client::operator== (const Client & c2) const
 {
@@ -74,7 +78,7 @@ static unsigned int reg_clientID = 1;
  * @param NIF NIF.
  * @param points points won by the client.
  */
-RegisteredClient::RegisteredClient(string n, unsigned int NIF, unsigned int points): Client(n,NIF)
+RegisteredClient::RegisteredClient(string n, unsigned int NIF, unsigned int points, Date lR): Client(n,NIF,lR)
 {
 	this->points=points;
 	reg_id = reg_clientID;
@@ -147,7 +151,7 @@ static unsigned int oc_clientID = 1;
  * @param n name.
  * @param NIF NIF.
  */
-OccasionalClient::OccasionalClient(string n, unsigned int NIF): Client(n,NIF)
+OccasionalClient::OccasionalClient(string n, unsigned int NIF, Date lR): Client(n,NIF, lR)
 {
 	oc_id = oc_clientID;
 	oc_clientID++;

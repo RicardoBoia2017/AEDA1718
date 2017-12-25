@@ -108,7 +108,7 @@ public:
 	void addReservation(const Reservation &r, unsigned int nTick);
 	vector <Reservation> setClientsonReservations (vector <Reservation> r);
 	int removeReservation (const Reservation &r, unsigned int nTick);
-	void removeInactiveClient (const Client &c);
+	void removeInactiveClient (string name);
 	double getBank() const;
 	void setBank (double b);
 	void setOfferSuppliers();
@@ -121,7 +121,7 @@ public:
 	void printOfferbyDate (Date d1, Date d2) const;
 	void printOfferBySuppliers(string name) const;
 	void printReservations () const;
-
+	void printInactiveClients () const;
 };
 
 #endif /* SRC_COMPANY_H_ */

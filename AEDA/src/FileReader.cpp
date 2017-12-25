@@ -47,16 +47,23 @@ vector<RegisteredClient *> FileReader::readRegisteredClients(string file)
 	for (unsigned int i = 0; i < lines.size(); i++)
 	{
 		string line = lines[i];
-		string name, NIF, points;
+		string name, NIF, points, day, month, year;
 
 		line = line.substr(line.find(',') + 2);
 		name = line.substr(0, line.find(','));
 		line = line.substr(line.find(',') + 2);
 		NIF = line.substr(0, line.find(','));
 		line = line.substr(line.find(',') + 2);
+		day = line.substr(0, line.find('/'));
+		line = line.substr(line.find('/') + 1);
+		month = line.substr(0,line.find('/'));
+		line = line.substr(line.find('/') + 1);
+		year = line.substr (0, line.find(','));
+		line = line.substr(line.find(',') + 2);
 		points = line.substr(0, line.find(';'));
 
-		RegisteredClient *rc = new RegisteredClient(name, stoi(NIF.c_str()), stoi(points.c_str()));
+		Date d = Date(stoi(day.c_str()), stoi(month.c_str()), stoi(year.c_str()) );
+		RegisteredClient *rc = new RegisteredClient(name, stoi(NIF.c_str()), stoi(points.c_str()), d);
 		rClients.push_back(rc);
 	}
 
@@ -88,9 +95,10 @@ vector<OccasionalClient*> FileReader::readOccasionalClients(string file)
 		month = line.substr(0,line.find('/'));
 		line = line.substr(line.find('/') + 1);
 		year = line.substr (0, line.find(','));
-		line = line.substr(line.find(',') + 2);
 
-		OccasionalClient *oc = new OccasionalClient(name, stoi(NIF.c_str()) );
+		Date d = Date(stoi(day.c_str()), stoi(month.c_str()), stoi(year.c_str()) );
+
+		OccasionalClient *oc = new OccasionalClient(name, stoi(NIF.c_str()), d );
 		oClients.push_back(oc);
 	}
 

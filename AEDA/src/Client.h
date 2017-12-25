@@ -27,11 +27,12 @@ private:
 	Date lastReservation;
 public:
 	Client(){};
-	Client(string n, unsigned int NIF);
+	Client(string n, unsigned int NIF, Date lR);
 	virtual ~Client();
 	string getName() const;
 	unsigned int getNIF() const;
 	Date getLastReservation () const;
+	void setLastReservation (const Date &d) ;
 //	/**
 //	 * A virtual member.
 //	 *@return client's id.
@@ -56,7 +57,7 @@ private:
 	 */
 	unsigned int reg_id;
 public:
-	RegisteredClient(string n, unsigned int NIF, unsigned int points);
+	RegisteredClient(string n, unsigned int NIF, unsigned int points, Date lR);
 	~RegisteredClient();
 	unsigned int getId() const;
 	unsigned int getPoints() const;
@@ -70,7 +71,7 @@ class OccasionalClient: public Client
 private:
 	unsigned int oc_id;
 public:
-	OccasionalClient(string n, unsigned int NIF);
+	OccasionalClient(string n, unsigned int NIF, Date lR);
 	~OccasionalClient();
 	unsigned int getId() const;
 	void setId(unsigned int id);
