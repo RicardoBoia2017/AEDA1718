@@ -43,22 +43,6 @@ struct InactiveClients
 };
 
 typedef unordered_set<Client*,InactiveClients , InactiveClients> tabHInactive;
-////
-//
-//struct InactiveOccClients
-//{
-//	int operator() (const OccasionalClient &rc1) const
-//	{
-//
-//	}
-//
-//	bool operator() (const OccasionalClient &rc1, const OccasionalClient &rc2) const
-//	{
-//
-//	}
-//};
-//
-//typedef unordered_set<OccasionalClient,InactiveOccClients , InactiveOccClients> tabHOccInactive;
 
 class Company {
 private:
@@ -80,7 +64,7 @@ private:
 	Date date;
 	vector <Offer *> offers;
 	BST <Reservation> reservations;
-	//priority_queue <Offer>  UnpopularOffers;
+	priority_queue <Offer >  UnpopularOffers;
 	tabHInactive inactiveClients;
 	/**
 	 * @brief Money gained by 'Porto Rivers' with the reservations.
@@ -94,9 +78,9 @@ public:
 	void exportSuppliers (string file);
 	void exportOffers (string file);
 	void exportReservations (string file);
-	unsigned int RegisterClient(string name, int NIF);
+	unsigned int RegisterClient(string name, int NIF, string address);
 	void AddSupplier(string n, int NIF, string address);
-	void addOccasionalClient (string name, int NIF);
+	void addOccasionalClient (string name, int NIF, string address);
 	void addOffer(unsigned int price, unsigned int dist, unsigned int cap, unsigned int points, double perc, string bT, string dest, string supName, Date d);
 	void removeOccasionalClient(int id);
 	vector <RegisteredClient *> getRegisteredClients () const;
@@ -109,6 +93,8 @@ public:
 	vector <Reservation> setClientsonReservations (vector <Reservation> r);
 	int removeReservation (const Reservation &r, unsigned int nTick);
 	void removeInactiveClient (string name);
+	bool searchInactiveClient (string name);
+	void updateAddressClient (string name, string newAddress);
 	double getBank() const;
 	void setBank (double b);
 	void setOfferSuppliers();
@@ -122,6 +108,7 @@ public:
 	void printOfferBySuppliers(string name) const;
 	void printReservations () const;
 	void printInactiveClients () const;
+	void printUnpopularOffers () const;
 };
 
 #endif /* SRC_COMPANY_H_ */

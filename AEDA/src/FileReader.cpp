@@ -47,7 +47,7 @@ vector<RegisteredClient *> FileReader::readRegisteredClients(string file)
 	for (unsigned int i = 0; i < lines.size(); i++)
 	{
 		string line = lines[i];
-		string name, NIF, points, day, month, year;
+		string name, NIF, points, day, month, year, address;
 
 		line = line.substr(line.find(',') + 2);
 		name = line.substr(0, line.find(','));
@@ -60,10 +60,13 @@ vector<RegisteredClient *> FileReader::readRegisteredClients(string file)
 		line = line.substr(line.find('/') + 1);
 		year = line.substr (0, line.find(','));
 		line = line.substr(line.find(',') + 2);
+		address = line.substr(0, line.find(','));
+		line = line.substr(line.find(',') + 2);
 		points = line.substr(0, line.find(';'));
 
+
 		Date d = Date(stoi(day.c_str()), stoi(month.c_str()), stoi(year.c_str()) );
-		RegisteredClient *rc = new RegisteredClient(name, stoi(NIF.c_str()), stoi(points.c_str()), d);
+		RegisteredClient *rc = new RegisteredClient(name, stoi(NIF.c_str()), stoi(points.c_str()), d, address);
 		rClients.push_back(rc);
 	}
 
@@ -83,7 +86,7 @@ vector<OccasionalClient*> FileReader::readOccasionalClients(string file)
 	for (unsigned int i = 0; i < lines.size(); i++)
 	{
 		string line = lines[i];
-		string name, NIF, day, month, year;
+		string name, NIF, day, address, month, year;
 
 		line = line.substr(line.find(',') + 2);
 		name = line.substr(0, line.find(','));
@@ -95,10 +98,12 @@ vector<OccasionalClient*> FileReader::readOccasionalClients(string file)
 		month = line.substr(0,line.find('/'));
 		line = line.substr(line.find('/') + 1);
 		year = line.substr (0, line.find(','));
+		line = line.substr(line.find(',') + 2);
+		address = line.substr(0, line.find(';'));
 
 		Date d = Date(stoi(day.c_str()), stoi(month.c_str()), stoi(year.c_str()) );
 
-		OccasionalClient *oc = new OccasionalClient(name, stoi(NIF.c_str()), d );
+		OccasionalClient *oc = new OccasionalClient(name, stoi(NIF.c_str()), d, address);
 		oClients.push_back(oc);
 	}
 
@@ -147,7 +152,7 @@ vector<Offer *> FileReader::readOffers (string file)
 	for (unsigned int i = 0; i < lines.size(); i++)
 	{
 		string line = lines[i];
-		string supName, price, dist, cap, bType, dest, points, percentage, day, month, year;
+		string supName, price, dist, cap, bType, dest, points, percentage, day, month, year, day2, month2, year2;
 
 		line = line.substr(line.find(',') + 2);
 		day = line.substr(0, line.find('/'));
@@ -170,10 +175,18 @@ vector<Offer *> FileReader::readOffers (string file)
 		line = line.substr(line.find(',') + 2);
 		points = line.substr(0, line.find(','));
 		line = line.substr(line.find(',') + 2);
-		percentage = line.substr(0, line.find(';'));
+		percentage = line.substr(0, line.find(','));
+		line = line.substr(line.find(',') + 2);
+		day2 = line.substr(0, line.find('/'));
+		line = line.substr(line.find('/') + 1);
+		month2 = line.substr(0,line.find('/'));
+		line = line.substr(line.find('/') + 1);
+		year2 = line.substr (0, line.find(';'));
 
 		Date d = Date(stoi(day.c_str()), stoi(month.c_str()), stoi(year.c_str()) );
-		Offer *o = new Offer (stoi(price.c_str()), stoi(dist.c_str()),stoi(cap.c_str()), bType, dest, supName, stoi(points.c_str()), stod(percentage.c_str()),d );
+		Date lr =  Date(stoi(day2.c_str()), stoi(month2.c_str()), stoi(year2.c_str()) );
+
+		Offer *o = new Offer (stoi(price.c_str()), stoi(dist.c_str()),stoi(cap.c_str()), bType, dest, supName, stoi(points.c_str()), stod(percentage.c_str()),d , lr);
 
 		offers.push_back(o);
 	}

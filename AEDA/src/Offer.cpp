@@ -21,13 +21,14 @@ static unsigned int offerID = 1;
  * @param percentage which is gonna be divided by 100, converting it to a decimal number.
  * @param d date.
  */
-Offer::Offer(int pri, int dist, int capacity, string bT, string dest, string sName, unsigned int points, double percentage, Date d):
-		price(pri), distance(dist), boatType (bT), destination(dest), supName(sName), date(d)
+Offer::Offer(int pri, int dist, int capacity, string bT, string dest, string sName, unsigned int points, double percentage, Date d, Date lR):
+		price(pri), distance(dist), boatType (bT), destination(dest), supName(sName), date(d), lastReservation (lR)
 {
 	this->points=points;
 	this->capacity = capacity;
 	this->percentage = percentage/100;
 	vacancies = capacity;
+	this->discount = 0;
 	id = offerID;
 	offerID++;
 }
@@ -80,6 +81,11 @@ unsigned int Offer::getVacancies() const
 	return vacancies;
 }
 
+Date Offer::getLastReservation() const
+{
+	return lastReservation;
+}
+
 void Offer::setVacancies(unsigned int newValue)
 {
 	vacancies = newValue;
@@ -99,6 +105,13 @@ unsigned int Offer::getPoints() const
 Date Offer::getDate() const
 {
 	return date;
+}
+
+
+void Offer::setLastReservation(const Date &newDate)
+{
+	if (newDate <= lastReservation)
+		this->lastReservation = newDate;
 }
 /**
  * @return percentage.
@@ -180,8 +193,8 @@ ostream &operator<< (ostream &os, Offer &o1)
 	return os;
 }
 
-bool Offer::operator< (Offer &o2)
+bool Offer::operator< (const Offer &o2) const
 {
-
+	return o2.getLastReservation() <= this->lastReservation;
 }
 

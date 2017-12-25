@@ -41,7 +41,6 @@ Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *>
 		Date d = c->getLastReservation();
 		unsigned int days = d.daysBetween(date);
 
-		cout << days << endl;
 		if (days >= 30)
 			this->inactiveClients.insert(c);
 	}
@@ -54,6 +53,21 @@ Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *>
 
 		if (days >= 30)
 			this->inactiveClients.insert(c);
+	}
+
+	//Fila de prioridade
+
+	for (unsigned int i = 0; i < offers.size(); i++)
+	{
+		Offer *o1 = offers[i];
+		Offer o2 = Offer (o1->getPrice(), o1->getDistance(), o1->getCapacity(), o1->getBoatType(), o1->getDestination(), o1->getSupName(), o1->getPoints(), o1->getPercentage(), o1->getDate(), o1->getLastReservation());
+		Date d = o2.getLastReservation();
+		unsigned int days = d.daysBetween(date);
+
+		if (days >= 30)
+		{
+			this->UnpopularOffers.push(o2);
+		}
 	}
 
 	bank = 0;
@@ -172,9 +186,9 @@ void Company::exportReservations (string file)
  * @param name new client's name.
  * @param NIF new client's NIF.
  */
-unsigned int Company::RegisterClient(string name, int NIF)
+unsigned int Company::RegisterClient(string name, int NIF, string address)
 {
-	RegisteredClient * rc = new RegisteredClient(name,NIF,0, Date ("1-1-1111"));
+	RegisteredClient * rc = new RegisteredClient(name,NIF,0, Date ("1-1-1111"), address);
 	rClients.push_back(rc);
 
 	return rc->getId();
@@ -207,7 +221,7 @@ void Company::AddSupplier(string n, int NIF, string address)
  */
 void Company::addOffer(unsigned int price, unsigned int dist, unsigned int cap, unsigned int points, double perc, string bT, string dest, string supName, Date d)
 {
-	Offer * o = new Offer(price, dist, cap, bT, dest, supName, points, perc, d);
+	Offer * o = new Offer(price, dist, cap, bT, dest, supName, points, perc, d, Date ("1-1-1111") );
 
 	offers.push_back(o);
 
@@ -224,9 +238,9 @@ void Company::addOffer(unsigned int price, unsigned int dist, unsigned int cap, 
  * @param name new occasional client's name.
  * @param NIF new occasional client's NIF.
  */
-void Company::addOccasionalClient (string name, int NIF)
+void Company::addOccasionalClient (string name, int NIF, string address)
 {
-	OccasionalClient *oc = new OccasionalClient(name,NIF,Date ("1-1-1111"));
+	OccasionalClient *oc = new OccasionalClient(name,NIF,Date ("1-1-1111"), address);
 	oClients.push_back(oc);
 }
 
@@ -425,6 +439,39 @@ void Company::removeInactiveClient(string name)
 		}
 	}
 }
+
+bool Company::searchInactiveClient(string name)
+{
+	tabHInactive::iterator it = this->inactiveClients.begin();
+
+	while (it != inactiveClients.end())
+	{
+		Client * c = (*it);
+		if ( c->getName() == name )
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void Company::updateAddressClient(string name, string newAddress)
+{
+	tabHInactive::iterator it = this->inactiveClients.begin();
+
+		while (it != inactiveClients.end())
+		{
+			Client * c = (*it);
+			if ( c->getName() == name )
+			{
+				inactiveClients.erase(c);
+				c->setAddress(newAddress);
+				inactiveClients.insert(c);
+				break;
+			}
+		}
+}
 /**
  * Add b to bank.
  * @param b value to be added.
@@ -612,7 +659,30 @@ void Company::printInactiveClients() const
 	while (it != inactiveClients.end() )
 	{
 		Client * c = (*it);
-		cout << c->getName() << endl;
+		cout << c->getName() << ", " << c->getAddress() << endl;
 		it++;
+	}
+}
+
+void Company::printUnpopularOffers() const
+{
+	priority_queue <Offer> pq = this->UnpopularOffers;
+
+	cout << endl;
+
+	if (pq.empty())
+	{
+		cout << "There are no unpopular offers at the moment." << endl;
+		return;
+	}
+
+	while (!pq.empty() )
+	{
+		//Offer *o = pq.top();
+		cout << pq.top().getLastReservation().getDay() << " " << pq.top().getLastReservation().getMonth() << endl;
+//		cout << pq.top().getId() << " " << pq.top().getDate().getDay() << "/" << pq.top().getDate().getMonth() << "/" << pq.top().getDate().getYear() << " " << pq.top().getSupplier()->getName() << pq.top().getDestination() << " " << pq.top().getPrice() << "€     "
+//				<< pq.top().getLastReservation().getDay() << "/" << pq.top().getLastReservation().getMonth() << "/" << pq.top().getLastReservation().getYear() << endl;
+
+		pq.pop();
 	}
 }

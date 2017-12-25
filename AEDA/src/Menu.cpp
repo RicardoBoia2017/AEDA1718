@@ -246,8 +246,9 @@ bool MakeReservation (Company *c)
 					}
 					string name = c->getOccasionalClients()[idOc-1]->getName();
 					int NIF = c->getOccasionalClients()[idOc-1]->getNIF();
+					string address = c->getOccasionalClients()[idOc-1]->getAddress();
 
-					int idReg = c->RegisterClient(name, NIF);
+					int idReg = c->RegisterClient(name, NIF, address);
 					c->removeOccasionalClient(idOc);
 
 					cout << "Your new client id is: " << idReg << endl << endl;
@@ -294,7 +295,7 @@ bool MakeReservation (Company *c)
 					}
 				}
 
-				string name;
+				string name, address;
 				int NIF;
 				cout << "Please enter your name: ";
 				cin >> name;
@@ -314,17 +315,21 @@ bool MakeReservation (Company *c)
 						cout << "Invalid NIF" << endl << endl;
 				}
 
+				cout << "Please enter your address: ";
+				cin >> address;
+				cin.clear();
+				cin.ignore(10000, '\n');
 				cout << endl;
 
 				if( optionMR3 == 2)
 				{
-					c->addOccasionalClient(name,NIF);
+					c->addOccasionalClient(name,NIF, address);
 					cout << "Your new client id is: " << c->getOccasionalClients().size() << endl;
 					MakeReservation_Occasional(c, c->getOccasionalClients().size());
 				}
 				else if (optionMR3 == 1)
 				{
-					int id = c->RegisterClient(name, NIF);
+					int id = c->RegisterClient(name, NIF, address);
 					cout << "Your new client id is: " << id << endl << endl;
 					MakeReservation_Registered(c, id);
 				}
@@ -450,7 +455,10 @@ bool MakeReservation_Registered (Company *c, unsigned int idClient)
 
 						client->setPoints(client->getPoints() + offer->getPoints()*nTick);
 						client->setLastReservation(c->getDate());
+
 						offer->setVacancies( offer->getVacancies() - nTick);
+						offer->setLastReservation(c->getDate());
+
 						c->removeInactiveClient(client->getName());
 
 						c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
@@ -572,7 +580,10 @@ bool MakeReservation_Occasional (Company *c, unsigned int idClient)
 					c->addReservation(r,nTick);
 
 					client->setLastReservation(c->getDate());
+
 					offer->setVacancies( offer->getVacancies() - nTick);
+					offer->setLastReservation(c->getDate());
+
 					c->removeInactiveClient(client->getName());
 
 					c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
@@ -903,6 +914,36 @@ bool ViewFilesMenu (Company *c)
 						case 3:
 						{
 							c->printInactiveClients();
+
+//							do
+//							{
+//								string name;
+//
+//								cout << endl << "Enter the name of the client whose address you want to change (enter 'exit' to exit): ";
+//							    cin >> name;
+//								cin.clear();
+//								cin.ignore(10000, '\n');
+//
+//								if (name == "exit")
+//									break;
+//
+//								bool result = c->searchInactiveClient(name);
+//
+//								if (!result)
+//									cout << "That name is not valid." << endl;
+//								else
+//								{
+//									string address;
+//									cout << "Enter the new address: ";
+//									getline (cin, address);
+//									cin.clear();
+//									cin.ignore(10000, '\n');
+//
+//									c->updateAddressClient(name, address);
+//									break;
+//								}
+//							} while (1);
+
 							break;
 						}
 						case 4:
@@ -947,7 +988,8 @@ bool ViewFilesMenu (Company *c)
 
 					cout << "1 View all offers" << endl;
 					cout << "2 View offers by suppliers" << endl;
-					cout << "3 Back" << endl;
+					cout << "3 View unpopular offers" << endl;
+					cout << "4 Back" << endl;
 					cout << "Insert the desired option: " ;
 					cin >> optionVFM3;
 					cin.clear();
@@ -996,6 +1038,12 @@ bool ViewFilesMenu (Company *c)
 							break;
 						}
 						case 3:
+						{
+							c->printUnpopularOffers();
+							break;
+						}
+
+						case 4:
 						{
 							flag2 = true;
 							cout << endl;
