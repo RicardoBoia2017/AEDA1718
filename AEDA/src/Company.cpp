@@ -57,6 +57,8 @@ Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *>
 
 	//Fila de prioridade
 
+	offers[0]->resetId();
+
 	for (unsigned int i = 0; i < offers.size(); i++)
 	{
 		Offer *o1 = offers[i];
@@ -69,6 +71,9 @@ Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *>
 			this->UnpopularOffers.push(o2);
 		}
 	}
+
+
+	updateDiscounts();
 
 	bank = 0;
 }
@@ -437,6 +442,7 @@ void Company::removeInactiveClient(string name)
 			inactiveClients.erase(c);
 			break;
 		}
+		it++;
 	}
 }
 
@@ -444,13 +450,17 @@ bool Company::searchInactiveClient(string name)
 {
 	tabHInactive::iterator it = this->inactiveClients.begin();
 
+	cout << name;
+
 	while (it != inactiveClients.end())
 	{
 		Client * c = (*it);
+		cout << c->getName() << endl;
 		if ( c->getName() == name )
 		{
 			return true;
 		}
+		it++;
 	}
 
 	return false;
@@ -470,8 +480,113 @@ void Company::updateAddressClient(string name, string newAddress)
 				inactiveClients.insert(c);
 				break;
 			}
+			it++;
 		}
 }
+
+void Company::removeUnpopularOffer(unsigned int offerId)
+{
+	if (this->UnpopularOffers.empty())
+		return;
+
+	priority_queue <Offer> pq ;
+
+	while (!UnpopularOffers.empty())
+	{
+		if ( !(offerId == UnpopularOffers.top().getId() ) )
+		{
+			pq.push( UnpopularOffers.top());
+		}
+		UnpopularOffers.pop();
+	}
+
+	while ( !pq.empty() )
+	{
+		Offer o = pq.top();
+		UnpopularOffers.push(o);
+		pq.pop();
+	}
+
+	updateDiscounts();
+}
+
+void Company::updateDiscounts()
+{
+	int counter = 1;
+	double discount = 0;
+
+	if (this->UnpopularOffers.empty())
+		return;
+
+	priority_queue <Offer> pq ;
+
+	while (!UnpopularOffers.empty())
+	{
+		Date d = UnpopularOffers.top().getLastReservation();
+		unsigned int days = d.daysBetween(date);
+
+		if (days >= 30)
+		{
+			switch (counter)
+			{
+				case 1:
+				{
+					discount = 0.3;
+					Offer o = UnpopularOffers.top();
+					o.setDiscount (discount);
+					pq.push(o);
+
+					offers[o.getId()-1]->setDiscount(discount);
+					counter = 2;
+					break;
+				}
+
+				case 2:
+				{
+					discount = 0.2;
+					Offer o = UnpopularOffers.top();
+					o.setDiscount (discount);
+					pq.push(o);
+
+					offers[o.getId()-1]->setDiscount(discount);
+					counter = 3;
+					break;
+				}
+				case 3:
+				{
+					discount = 0.15;
+					Offer o = UnpopularOffers.top();
+					o.setDiscount(discount);
+					pq.push(o);
+
+					offers[o.getId()-1]->setDiscount(discount);
+					counter = 4;
+					break;
+				}
+				case 4:
+				{
+					discount = 0.10;
+					Offer o = UnpopularOffers.top();
+					o.setDiscount(discount);
+					pq.push(o);
+
+					offers[o.getId()-1]->setDiscount(discount);
+					break;
+				}
+			}
+		}
+
+		UnpopularOffers.pop();
+	}
+
+	while ( !pq.empty() )
+	{
+		Offer o = pq.top();
+		UnpopularOffers.push(o);
+		pq.pop();
+	}
+}
+
 /**
  * Add b to bank.
  * @param b value to be added.
@@ -678,11 +793,10 @@ void Company::printUnpopularOffers() const
 
 	while (!pq.empty() )
 	{
-		//Offer *o = pq.top();
-		cout << pq.top().getLastReservation().getDay() << " " << pq.top().getLastReservation().getMonth() << endl;
-//		cout << pq.top().getId() << " " << pq.top().getDate().getDay() << "/" << pq.top().getDate().getMonth() << "/" << pq.top().getDate().getYear() << " " << pq.top().getSupplier()->getName() << pq.top().getDestination() << " " << pq.top().getPrice() << "€     "
-//				<< pq.top().getLastReservation().getDay() << "/" << pq.top().getLastReservation().getMonth() << "/" << pq.top().getLastReservation().getYear() << endl;
 
+		cout << pq.top().getId() << " " << pq.top().getDate().getDay() << "/" << pq.top().getDate().getMonth() << "/" << pq.top().getDate().getYear() << " " << pq.top().getSupName() << " " << pq.top().getDestination() << " " << pq.top().getPrice() << "€";
+		cout << endl << "Last time this offer was reservated: " << pq.top().getLastReservation().getDay() << "/" << pq.top().getLastReservation().getMonth() << "/" << pq.top().getLastReservation().getYear() << endl ;
+		cout << "Discount : " << pq.top().getDiscount() * 100 << "%" << endl << endl;;
 		pq.pop();
 	}
 }

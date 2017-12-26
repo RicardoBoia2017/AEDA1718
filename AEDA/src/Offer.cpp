@@ -57,6 +57,11 @@ unsigned int Offer::getId() const
 	return id;
 }
 
+void Offer::resetId()
+{
+	offerID = 1;
+}
+
 /**
  * @return distance.
  */
@@ -112,6 +117,8 @@ void Offer::setLastReservation(const Date &newDate)
 {
 	if (newDate <= lastReservation)
 		this->lastReservation = newDate;
+
+	discount = 0;
 }
 /**
  * @return percentage.
@@ -122,6 +129,15 @@ double Offer::getPercentage() const
 	return percentage;
 }
 
+double Offer::getDiscount() const
+{
+	return discount;
+}
+
+void Offer::setDiscount(double newValue)
+{
+	discount = newValue;
+}
 /**
  * @return boat type.
  */
@@ -188,7 +204,8 @@ ostream &operator<< (ostream &os, Offer &o1)
 	Date d1 = o1.getDate();
 
 	os << o1.getId()  << ", " << d1.getDay() << "/" << d1.getMonth() << "/" << d1.getYear() <<  ", " <<  o1.getSupName() << ", " << o1.getPrice() << ", " << o1.getDistance() << ", " << o1.getVacancies() << ", " <<
-			o1.getBoatType() << ", " << o1.getDestination() << ", " << o1.getPoints() << ", " << perc << ";";
+			o1.getBoatType() << ", " << o1.getDestination() << ", " << o1.getPoints() << ", " << perc << ", "
+			<< o1.getLastReservation().getDay() << "/" << o1.getLastReservation().getMonth() << "/" << o1.getLastReservation().getYear() << ";";
 
 	return os;
 }
@@ -196,5 +213,10 @@ ostream &operator<< (ostream &os, Offer &o1)
 bool Offer::operator< (const Offer &o2) const
 {
 	return o2.getLastReservation() <= this->lastReservation;
+}
+
+bool Offer::operator== (const Offer &o2) const
+{
+	return id == o2.getId();
 }
 

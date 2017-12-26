@@ -95,6 +95,8 @@ public:
 	void removeInactiveClient (string name);
 	bool searchInactiveClient (string name);
 	void updateAddressClient (string name, string newAddress);
+	void removeUnpopularOffer (unsigned int offerId);
+	void updateDiscounts();
 	double getBank() const;
 	void setBank (double b);
 	void setOfferSuppliers();

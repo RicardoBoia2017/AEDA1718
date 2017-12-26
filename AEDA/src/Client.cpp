@@ -148,7 +148,9 @@ string RegisteredClient::getInformation() const
  */
 ostream &operator<< (ostream &os, RegisteredClient &rc1)
 {
-	os << rc1.getId() << ", " << rc1.getName() << ", " << rc1.getNIF() << ", " << rc1.getPoints() << ";" ;
+	os << rc1.getId() << ", " << rc1.getName() << ", " << rc1.getNIF() << ", "
+			<< rc1.getLastReservation().getDay() << "/" << rc1.getLastReservation().getMonth() << "/" << rc1.getLastReservation().getYear() << ", "
+			<< rc1.getAddress() << ", " << rc1.getPoints() << ";" ;
 	return os;
 }
 
@@ -214,7 +216,9 @@ string OccasionalClient::getInformation() const
  */
 ostream &operator<< (ostream &os, OccasionalClient &oc1)
 {
-	os << oc1.getId() << ", " << oc1.getName() << ", " << oc1.getNIF() << ";" ;
+	os << oc1.getId() << ", " << oc1.getName() << ", " << oc1.getNIF() << ", "
+			<< oc1.getLastReservation().getDay() << "/" << oc1.getLastReservation().getMonth() << "/" << oc1.getLastReservation().getYear() << ", "
+			<< oc1.getAddress() << ";";
 	return os;
 }
 

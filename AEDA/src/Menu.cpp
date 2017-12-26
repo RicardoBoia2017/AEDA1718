@@ -433,7 +433,9 @@ bool MakeReservation_Registered (Company *c, unsigned int idClient)
 
 		unsigned int optionMR_R;
 
-		cout << endl << "Total: " << offer->getPrice() * nTick << "€,  Points Won: " << offer->getPoints()*nTick << endl <<endl;
+		unsigned int price = ( offer->getPrice() - offer->getPrice() * offer->getDiscount() ) * nTick;
+
+		cout << endl << "Total: " << price << "€,  Points Won: " << offer->getPoints() * nTick << endl <<endl;
 
 		if (idOffer != 0)
 			while (1)
@@ -458,10 +460,12 @@ bool MakeReservation_Registered (Company *c, unsigned int idClient)
 
 						offer->setVacancies( offer->getVacancies() - nTick);
 						offer->setLastReservation(c->getDate());
+						offer->setDiscount(0);
 
 						c->removeInactiveClient(client->getName());
+						c->removeUnpopularOffer(offer->getId());
 
-						c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
+						c->setBank (offer->getPercentage() * price );
 						return true;
 					}
 					else if (optionMR_R == 2)
@@ -558,8 +562,9 @@ bool MakeReservation_Occasional (Company *c, unsigned int idClient)
 				}
 
 			unsigned int optionMR_O;
+			unsigned int price = ( offer->getPrice() - offer->getPrice() * offer->getDiscount() ) * nTick;
 
-			cout << endl << "Total: " << offer->getPrice() * nTick << "€" << endl << endl;
+			cout << endl << "Total: " << price << "€" << endl << endl;
 
 			if (idOffer != 0)
 			while (1)
@@ -583,8 +588,10 @@ bool MakeReservation_Occasional (Company *c, unsigned int idClient)
 
 					offer->setVacancies( offer->getVacancies() - nTick);
 					offer->setLastReservation(c->getDate());
+					offer->setDiscount(0);
 
 					c->removeInactiveClient(client->getName());
+					c->removeUnpopularOffer(offer->getId());
 
 					c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
 					MakeReservation(c);
@@ -915,34 +922,34 @@ bool ViewFilesMenu (Company *c)
 						{
 							c->printInactiveClients();
 
-//							do
-//							{
-//								string name;
-//
-//								cout << endl << "Enter the name of the client whose address you want to change (enter 'exit' to exit): ";
-//							    cin >> name;
-//								cin.clear();
-//								cin.ignore(10000, '\n');
-//
-//								if (name == "exit")
-//									break;
-//
-//								bool result = c->searchInactiveClient(name);
-//
-//								if (!result)
-//									cout << "That name is not valid." << endl;
-//								else
-//								{
-//									string address;
-//									cout << "Enter the new address: ";
-//									getline (cin, address);
-//									cin.clear();
-//									cin.ignore(10000, '\n');
-//
-//									c->updateAddressClient(name, address);
-//									break;
-//								}
-//							} while (1);
+							do
+							{
+								string name;
+
+								cout << endl << "Enter the name of the client whose address you want to change (enter 'exit' to exit): ";
+							    getline (cin, name);
+								cin.clear();
+								cin.ignore(10000, '\n');
+
+								if (name == "exit")
+									break;
+
+								bool result = c->searchInactiveClient(name);
+
+								if (!result)
+									cout << "That name is not valid." << endl;
+								else
+								{
+									string address;
+									cout << "Enter the new address: ";
+									getline (cin, address);
+									cin.clear();
+									cin.ignore(10000, '\n');
+
+									c->updateAddressClient(name, address);
+									break;
+								}
+							} while (1);
 
 							break;
 						}

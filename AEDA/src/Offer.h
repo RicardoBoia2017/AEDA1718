@@ -68,7 +68,7 @@ private:
 	/**
 	 * @brief offer's date.
 	 */
-	int discount;
+	double discount;
 	Date date;
 	Date lastReservation;
 public:
@@ -76,6 +76,7 @@ public:
 	Offer (int pri, int dist,int capacity, string bT, string dest, string sName, unsigned int points, double percentage, Date d, Date lR);
 	virtual ~Offer();
 	unsigned int getId() const;
+	void resetId ();
 	unsigned int getPrice() const;
 	unsigned int getDistance() const;
 	unsigned int getCapacity() const;
@@ -86,6 +87,8 @@ public:
 	Date getDate() const;
 	void setLastReservation (const Date &newDate);
 	double getPercentage() const;
+	double getDiscount() const;
+	void setDiscount (double newValue);
 	string getBoatType () const;
 	string getDestination() const;
 	string getInformation() const;
@@ -94,6 +97,7 @@ public:
 	void setSupplier(Supplier *  s);
 	friend ostream &operator<< (ostream &os, Offer &o1);
 	bool operator< (const Offer &o2) const;
+	bool operator == (const Offer &o1) const;
 
 };
 
