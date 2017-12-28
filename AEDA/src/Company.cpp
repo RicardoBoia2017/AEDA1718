@@ -330,6 +330,8 @@ void Company::addReservation(const Reservation &r, unsigned int nTick)
 
 	while (!it.isAtEnd())
 	{
+		cout << it.retrieve().getOffer() << "    " << it.retrieve().getClient()->getName() << "    " << it.retrieve().getDate().getDay() << "  " << it.retrieve().getDate().getMonth() << "  " << it.retrieve().getDate().getYear()<<endl;
+
 		if (it.retrieve() == r)
 		{
 			Reservation tmp = it.retrieve();
@@ -450,12 +452,9 @@ bool Company::searchInactiveClient(string name)
 {
 	tabHInactive::iterator it = this->inactiveClients.begin();
 
-	cout << name;
-
 	while (it != inactiveClients.end())
 	{
 		Client * c = (*it);
-		cout << c->getName() << endl;
 		if ( c->getName() == name )
 		{
 			return true;
@@ -679,7 +678,7 @@ void Company::printClientsByOffer(unsigned int idOffer) const	//// TODO
 	{
 		if (it.retrieve().getOffer() == idOffer)
 		{
-			cout << it.retrieve().getClientName() << ", Tickets: " << it.retrieve().getTickets() << endl;
+			cout << it.retrieve().getClient()->getName() << ", Tickets: " << it.retrieve().getTickets() << endl;
 		}
 		it.advance();
 	}
@@ -760,7 +759,7 @@ void Company::printReservations() const
 			c = r.getClient();
 			cout << endl << c->getName() << ":" << endl << endl;
 		}
-		cout << "Offer id: #" << r.getOffer() << ", Date: " << r.getDate().getDay() << "/" << r.getDate().getMonth() << "/" << r.getDate().getYear() << " Tickets: " << r.getTickets() << endl;
+		cout << "Offer id: #" << r.getOffer() << ", Date: " << r.getDate().getDay() << "/" << r.getDate().getMonth() << "/" << r.getDate().getYear() << ", Tickets: " << r.getTickets() << endl;
 
 		it.advance();
 	}

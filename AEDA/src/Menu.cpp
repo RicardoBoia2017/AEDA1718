@@ -594,7 +594,7 @@ bool MakeReservation_Occasional (Company *c, unsigned int idClient)
 					c->removeUnpopularOffer(offer->getId());
 
 					c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
-					MakeReservation(c);
+					return true;
 				}
 
 				else if (optionMR_O == 2)
@@ -927,9 +927,7 @@ bool ViewFilesMenu (Company *c)
 								string name;
 
 								cout << endl << "Enter the name of the client whose address you want to change (enter 'exit' to exit): ";
-							    getline (cin, name);
-								cin.clear();
-								cin.ignore(10000, '\n');
+								getline (cin,name);
 
 								if (name == "exit")
 									break;
@@ -943,8 +941,6 @@ bool ViewFilesMenu (Company *c)
 									string address;
 									cout << "Enter the new address: ";
 									getline (cin, address);
-									cin.clear();
-									cin.ignore(10000, '\n');
 
 									c->updateAddressClient(name, address);
 									break;

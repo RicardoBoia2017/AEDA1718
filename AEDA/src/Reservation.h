@@ -16,7 +16,6 @@ using namespace std;
 class Reservation {
 private:
 	Client *client;
-//	Offer *offer;
 	Date date;
 	unsigned int id;
 	string clientName;
