@@ -9,12 +9,13 @@
 
 using namespace std;
 
-Date d ("6-12-2017");
+
 
 bool CompanyMenu(Company *c)
 {
 	unsigned int optionCM = 0;
 	bool flag = false;
+	Date d = c->getDate();
 
 	while (!flag)
 	{
@@ -731,7 +732,7 @@ bool CancelReservationRegClient(Company *c)
 
 	Date d2 = offer->getDate();
 
-	unsigned int diffDates = d.daysBetween(d2);
+	unsigned int diffDates = c->getDate().daysBetween(d2);
 
 	if (diffDates >=7 )
 		{
@@ -828,7 +829,7 @@ bool CancelReservationOccClient(Company *c)
 
 	Date d2 = offer->getDate();
 
-	unsigned int diffDates = d.daysBetween(d2);
+	unsigned int diffDates = c->getDate().daysBetween(d2);
 
 	if (diffDates >=7 )
 	{

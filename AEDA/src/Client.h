@@ -21,12 +21,21 @@ private:
 	 */
 	string name;
 	/**
-	 * Client's NIF.
+	 * @brief Client's NIF.
 	 */
 	unsigned int NIF;
+	/**
+	 * @brief Client's address.
+	 */
 	string address;
+	/**
+	 * @brief Date in which the client made his last reservation.
+	 */
 	Date lastReservation;
 public:
+	/**
+	 * The constructor used to initialize the binary search tree.
+	 */
 	Client(){};
 	Client(string n, unsigned int NIF, Date lR, string a);
 	virtual ~Client();
@@ -36,14 +45,6 @@ public:
 	void setAddress (string newAddress);
 	Date getLastReservation () const;
 	void setLastReservation (const Date &d) ;
-//	/**
-//	 * A virtual member.
-//	 *@return client's id.
-//	 */
-//	virtual unsigned int getId() const = 0;
-	/**
-	 * @return string with the client's information.
-	 */
 	virtual string getInformation() const ;
 	bool operator== (const Client& c2) const;
 };

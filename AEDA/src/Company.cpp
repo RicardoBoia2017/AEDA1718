@@ -9,10 +9,11 @@
 
 /**
  * The constructor.
- * @param rClients rClients.
- * @param oClients oClients.
+ * @param rClients registered clients.
+ * @param oClients occasional clients.
  * @param suppliers suppliers.
  * @param offers offers.
+ * @param reserv reservations.
  */
 Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *> oClients, vector<Supplier *> suppliers, vector<Offer *> offers, vector <Reservation> reserv): reservations ( Reservation() )
 {
@@ -136,7 +137,7 @@ void Company::exportSuppliers(string file)
 }
 
 /**
- * Exports offers' to text file.
+ * Exports offers to text file.
  * @param file that stores offers' information.
  */
 void Company::exportOffers(string file)
@@ -151,6 +152,10 @@ void Company::exportOffers(string file)
 	out.close();
 }
 
+/**
+ * Exports reservations to text file.
+ * @param file that stores reservations' information.
+ */
 void Company::exportReservations (string file)
 {
 	ofstream out;
@@ -190,6 +195,7 @@ void Company::exportReservations (string file)
  * Adds client to registered client's vector.
  * @param name new client's name.
  * @param NIF new client's NIF.
+ * @param address new client's address.
  */
 unsigned int Company::RegisterClient(string name, int NIF, string address)
 {
@@ -242,6 +248,7 @@ void Company::addOffer(unsigned int price, unsigned int dist, unsigned int cap, 
  * Adds occasional client to occasional clients' vector.
  * @param name new occasional client's name.
  * @param NIF new occasional client's NIF.
+ * @param address new occasional client's address.
  */
 void Company::addOccasionalClient (string name, int NIF, string address)
 {
@@ -283,10 +290,14 @@ vector <RegisteredClient *> Company::getRegisteredClients () const
 	return rClients;
 }
 
+/**
+ * @return date.
+ */
 Date Company::getDate() const
 {
 	return date;
 }
+
 /**
  * @return occasional clients' vector.
  */
@@ -311,6 +322,9 @@ vector <Offer *> Company::getOffers () const
 	return offers;
 }
 
+/**
+ * @return binary search tree "reservations".
+ */
 BST <Reservation> Company::getReservations() const
 {
 	return this->reservations;
@@ -324,6 +338,11 @@ double Company::getBank() const
 	return bank;
 }
 
+/**
+ * Adds reservation r to the binary tree, or if already present, add nTick to the number of tickets.
+ * @param r reservation to be added.
+ * @param nTick number of tickets to be added.
+ */
 void Company::addReservation(const Reservation &r, unsigned int nTick)
 {
 	BSTItrIn <Reservation> it (reservations);
@@ -347,6 +366,11 @@ void Company::addReservation(const Reservation &r, unsigned int nTick)
 	reservations.insert(r);
 }
 
+/**
+ * Fills reservations's client parameter according to the parameter clientName.
+ * @param r vector with all the reservations read from text file.
+ * @return paramater r.
+ */
 vector <Reservation> Company::setClientsonReservations (vector <Reservation> r)
 {
 
@@ -385,6 +409,12 @@ vector <Reservation> Company::setClientsonReservations (vector <Reservation> r)
 	return r;
 }
 
+/**
+ *	Removes tickets from reservation or removes the entire reservation from binary tree "reservations".
+ *	@param r reservation to be removed/to remove tickets.
+ *	@param nTick number of tickets to be removed.
+ *  @return 0 if reservations isn't on the binary tree, 1 if reservation is removed entirely or 2 if just some tickets are removed.
+ */
 int Company::removeReservation(const Reservation &r, unsigned int nTick)
 {
 	BSTItrIn <Reservation> it (reservations);
@@ -400,7 +430,6 @@ int Company::removeReservation(const Reservation &r, unsigned int nTick)
 			if (nTick == it.retrieve().getTickets())
 			{
 				Found = 1;
-				cout << "hu";
 			}
 			else if (nTick > it.retrieve().getTickets() )
 			{
@@ -432,6 +461,11 @@ int Company::removeReservation(const Reservation &r, unsigned int nTick)
 	return Found;
 }
 
+
+/**
+ * Removes client from hash table inactiveClients.
+ * @param name of the client to be removed.
+ */
 void Company::removeInactiveClient(string name)
 {
 	tabHInactive::iterator it = this->inactiveClients.begin();
@@ -447,6 +481,12 @@ void Company::removeInactiveClient(string name)
 		it++;
 	}
 }
+
+/**
+ * Checks if the client is on the hash table inactiveClients.
+ * @param name of the client to be searched.
+ * @return true if the client is on the hash table and false otherwise.
+ */
 
 bool Company::searchInactiveClient(string name)
 {
@@ -465,6 +505,12 @@ bool Company::searchInactiveClient(string name)
 	return false;
 }
 
+
+/**
+ * Updates address from a client in the has table inactiveClients.
+ * @param name of the client to be updated.
+ * @param newAddress of the client.
+ */
 void Company::updateAddressClient(string name, string newAddress)
 {
 	tabHInactive::iterator it = this->inactiveClients.begin();
@@ -483,6 +529,11 @@ void Company::updateAddressClient(string name, string newAddress)
 		}
 }
 
+
+/**
+ * Removes offer from priority queue UnpopularOffers.
+ * @ offerId id of the offer to be removed.
+ */
 void Company::removeUnpopularOffer(unsigned int offerId)
 {
 	if (this->UnpopularOffers.empty())
@@ -509,6 +560,10 @@ void Company::removeUnpopularOffer(unsigned int offerId)
 	updateDiscounts();
 }
 
+
+/**
+ * Updates the discounts of the offers on the priority queue UnpopularOffers.
+ */
 void Company::updateDiscounts()
 {
 	int counter = 1;
@@ -742,6 +797,10 @@ void Company::printOfferBySuppliers(string name) const
 	}
 }
 
+
+/**
+ * Prints all reservations on the binary search tree.
+ */
 void Company::printReservations() const
 {
 	if (reservations.isEmpty())
@@ -765,6 +824,10 @@ void Company::printReservations() const
 	}
 }
 
+
+/**
+ * Prints all clients on the hash table.
+ */
 void Company::printInactiveClients() const
 {
 	tabHInactive::const_iterator it = this->inactiveClients.begin();
@@ -778,6 +841,10 @@ void Company::printInactiveClients() const
 	}
 }
 
+
+/**
+ * Prints all offers on the priority queue.
+ */
 void Company::printUnpopularOffers() const
 {
 	priority_queue <Offer> pq = this->UnpopularOffers;

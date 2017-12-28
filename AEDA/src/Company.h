@@ -61,10 +61,22 @@ private:
 	/**
 	 * @brief Vector with all offers.
 	 */
-	Date date;
 	vector <Offer *> offers;
+	/**
+	 * @brief Current date.
+	 */
+	Date date;
+	/**
+	 * @brief binary search tree with all reservations
+	 */
 	BST <Reservation> reservations;
+	/**
+	 * @brief unpopular offers which haven't been booked in more than a month
+	 */
 	priority_queue <Offer >  UnpopularOffers;
+	/**
+	 * @brief inactive clients who haven't booked any reservation in more than a month.
+	 */
 	tabHInactive inactiveClients;
 	/**
 	 * @brief Money gained by 'Porto Rivers' with the reservations.

@@ -53,7 +53,7 @@ unsigned int Supplier::getNIF() const
 }
 
 /**
- * @return string with the supplier's information.
+ * @return supplier's id.
  */
 unsigned int Supplier::getId() const
 {
@@ -72,7 +72,8 @@ string Supplier::getInformation () const
 	return ss.str();
 }
 
-/** Writes to ofstream the supplier's information in the format used in text files.
+/**
+ * Writes to ofstream the supplier's information in the format used in text files.
  * @param os ofstream where is stored the information.
  * @param s1 supplier whose information is going to be read.
  */

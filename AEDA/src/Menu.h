@@ -26,15 +26,16 @@ bool MakeReservation (Company *c);
 /**
  * Menu to make a reservation for registered clients.
  * @param c company
- * @param client's id.
+ * @param idClient client's id.
  */
-bool MakeReservation_Registered (Company *c, unsigned int id);
+bool MakeReservation_Registered (Company *c, unsigned int idClient);
+
 /**
  * Menu to make a reservation for occasional clients.
  * @param c company
- * @param client's id.
+ * @param idClient client's id.
  */
-bool MakeReservation_Occasional (Company *c, unsigned int id);
+bool MakeReservation_Occasional (Company *c, unsigned int idClient);
 
 /**
  * Menu to cancel reservations.
@@ -79,35 +80,20 @@ private:
 public:
 	/**
 	 * The constructor
-	 * @param c company.
-	 * @param menu that will be called.
+	 * @param o invalid option inserted.
 	 */
 	InvalidOption(int o)
 	{
 		this->option = o;
 	}
+	/**
+	 * @return option.
+	 */
 	int getOption() const
 	{
 		return option;
 	}
-//		std::cout << std::endl << "Invalid option"  << std::endl;
-//
-//		switch (menu)
-//		{
-//			case 1:
-//				CompanyMenu (c);
-//
-//			case 2:
-//				MakeReservation (c);
-//
-//			case 3:
-//				CancelReservation (c);
-//
-//			case 4:
-//				ViewFilesMenu (c);
-//
-//		}
-	//InvalidOption (Company c, int menu){};
+
 
 };
 
@@ -120,10 +106,17 @@ class NoSeatsAvailable
 private:
 	int OfferId;
 public:
+	/**
+	 * The constructor
+	 * @param offerid id of offer to which the client wants to buy tickets
+	 */
 	NoSeatsAvailable (int offerid): OfferId (offerid)
 	{
 		std::cout << std::endl << "Sorry! There aren't enough seats available." << std::endl;
 	}
+	/**
+	 * @return id of the offer.
+	 */
 	int getId() const
 	{
 		return this->OfferId;

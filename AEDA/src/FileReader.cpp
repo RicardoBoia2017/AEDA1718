@@ -36,7 +36,7 @@ vector<string> FileReader::readLines(string file) {
 }
 
 /**
- * Read information from registered clients.
+ * Reads information from registered clients.
  * @param file registered clients' file.
  */
 vector<RegisteredClient *> FileReader::readRegisteredClients(string file)
@@ -75,7 +75,7 @@ vector<RegisteredClient *> FileReader::readRegisteredClients(string file)
 }
 
 /**
- * Read information from occasional clients.
+ * Reads information from occasional clients.
  * @param file occasional clients' file.
  */
 vector<OccasionalClient*> FileReader::readOccasionalClients(string file)
@@ -112,7 +112,7 @@ vector<OccasionalClient*> FileReader::readOccasionalClients(string file)
 }
 
 /**
- * Read information from suppliers.
+ * Reads information from suppliers.
  * @param file suppliers' file.
  */
 vector<Supplier *> FileReader::readSuppliers(string file)
@@ -141,8 +141,8 @@ vector<Supplier *> FileReader::readSuppliers(string file)
 }
 
 /**
- * Read information from offers.
- * @param file registered offers' file.
+ * Reads information from offers.
+ * @param file offers' file.
  */
 vector<Offer *> FileReader::readOffers (string file)
 {
@@ -194,6 +194,10 @@ vector<Offer *> FileReader::readOffers (string file)
 	return offers;
 }
 
+/**
+ * Reads information from the reservation.
+ * @param file reservations' file.
+ */
 vector <Reservation> FileReader::readReservations(string file)
 {
 	vector <Reservation> reservations;

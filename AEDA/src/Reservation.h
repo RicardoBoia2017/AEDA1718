@@ -15,13 +15,34 @@ using namespace std;
 
 class Reservation {
 private:
+	/**
+	 * @brief client who made the resevation.
+	 */
 	Client *client;
+	/**
+	 * @brief date of the offer.
+	 */
 	Date date;
+	/**
+	 * @brief id of the reservation.
+	 */
 	unsigned int id;
+	/**
+	 * @brief name of the client.
+	 */
 	string clientName;
+	/**
+	 * @brief id of the offer that was booked.
+	 */
 	unsigned int offer;
+	/**
+	 * @brief number of tickets purchased.
+	 */
 	unsigned int nTick;
 public:
+	/**
+	 * The constructor used to initialize the binary search tree.
+	 */
 	Reservation(){};
 	Reservation(Offer *o1, RegisteredClient* c1, Date d1);
 	Reservation(Offer *o1, OccasionalClient* c1, Date d1);
@@ -36,7 +57,7 @@ public:
 	unsigned int getId() const;
 	unsigned int getTickets() const;
 
-	friend ostream &operator<< (ostream &os, Reservation &o1);
+	friend ostream &operator<< (ostream &os, Reservation &r1);
 	bool operator< (const Reservation & r2) const;
 	bool operator== (const Reservation & r2) const;
 };

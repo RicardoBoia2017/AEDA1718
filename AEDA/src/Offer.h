@@ -68,10 +68,19 @@ private:
 	/**
 	 * @brief offer's date.
 	 */
-	double discount;
 	Date date;
+	/**
+	 * @brief Current discount for this offer.
+	 */
+	double discount;
+	/**
+	 * @brief Date in which the offer was booked for the last time.
+	 */
 	Date lastReservation;
 public:
+	/**
+	 * The constructor used to initialize the binary search tree.
+	 */
 	Offer(){};
 	Offer (int pri, int dist,int capacity, string bT, string dest, string sName, unsigned int points, double percentage, Date d, Date lR);
 	virtual ~Offer();

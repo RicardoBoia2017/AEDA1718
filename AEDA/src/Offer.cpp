@@ -10,7 +10,7 @@
 static unsigned int offerID = 1;
 
 /**
- * The constructor.
+ * The normal constructor.
  * @param pri price.
  * @param dist distance.
  * @param capacity capacity.
@@ -20,6 +20,7 @@ static unsigned int offerID = 1;
  * @param points points.
  * @param percentage which is gonna be divided by 100, converting it to a decimal number.
  * @param d date.
+ * @param lR date in which the client made his last reservation.
  */
 Offer::Offer(int pri, int dist, int capacity, string bT, string dest, string sName, unsigned int points, double percentage, Date d, Date lR):
 		price(pri), distance(dist), boatType (bT), destination(dest), supName(sName), date(d), lastReservation (lR)
@@ -57,6 +58,9 @@ unsigned int Offer::getId() const
 	return id;
 }
 
+/**
+ * Resets global variable offerID to 1.
+ */
 void Offer::resetId()
 {
 	offerID = 1;
@@ -86,11 +90,18 @@ unsigned int Offer::getVacancies() const
 	return vacancies;
 }
 
+/**
+ * @return lastReservation.
+ */
 Date Offer::getLastReservation() const
 {
 	return lastReservation;
 }
 
+/**
+ * Updates vacancies.
+ * @param newValue updated value of vacancies.
+ */
 void Offer::setVacancies(unsigned int newValue)
 {
 	vacancies = newValue;
@@ -112,32 +123,41 @@ Date Offer::getDate() const
 	return date;
 }
 
-
+/**
+ * Changes lastReservation to the current date and discount to 0.
+ */
 void Offer::setLastReservation(const Date &newDate)
 {
-	if (newDate <= lastReservation)
-		this->lastReservation = newDate;
+	this->lastReservation = newDate;
 
 	discount = 0;
 }
+
 /**
  * @return percentage.
  */
-
 double Offer::getPercentage() const
 {
 	return percentage;
 }
 
+/**
+ * @return offer's discount.
+ */
 double Offer::getDiscount() const
 {
 	return discount;
 }
 
+/**
+ * Updates the discount value.
+ * @param newValue discount new value.
+ */
 void Offer::setDiscount(double newValue)
 {
 	discount = newValue;
 }
+
 /**
  * @return boat type.
  */
@@ -210,11 +230,21 @@ ostream &operator<< (ostream &os, Offer &o1)
 	return os;
 }
 
+/**
+ * Overload of operator<.
+ * @param o2 offer to compare.
+ * @return true if o2's last reservation is closer to current date or otherwise returns false.
+ */
 bool Offer::operator< (const Offer &o2) const
 {
 	return o2.getLastReservation() <= this->lastReservation;
 }
 
+/**
+ * Overload of operator ==
+ * @param o2 offer to compare.
+ * @return true if the offers have the same id or false if they dont.
+ */
 bool Offer::operator== (const Offer &o2) const
 {
 	return id == o2.getId();
