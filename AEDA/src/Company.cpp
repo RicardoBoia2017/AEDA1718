@@ -765,9 +765,10 @@ void Company::printOffers() const
  * @param d1 inital date.
  * @param d2 final date.
  */
-void Company::printOfferbyDate(Date d1, Date d2) const
+vector<int> Company::printOfferbyDate(Date d1, Date d2) const
 {
 	unsigned int counter = 0;
+	vector <int> v;
 
 	for (unsigned int i = 0; i < offers.size(); i++)
 	{
@@ -776,10 +777,12 @@ void Company::printOfferbyDate(Date d1, Date d2) const
 				{
 					cout<< offers[i]->getInformation() << endl;
 					counter++;
+					v.push_back (i+1);
 				}
 	}
 
 	cout << "We found " << counter << " offers" << endl;
+	return v;
 }
 
 /**

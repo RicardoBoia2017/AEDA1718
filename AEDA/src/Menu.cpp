@@ -394,7 +394,7 @@ bool MakeReservation_Registered (Company *c, unsigned int idClient)
 	}
 	cout << endl;
 
-	c->printOfferbyDate(d1,d2);
+	vector <int> v = c->printOfferbyDate(d1,d2);
 
 	while(1)
 	{
@@ -404,9 +404,23 @@ bool MakeReservation_Registered (Company *c, unsigned int idClient)
 		cin.ignore(10000, '\n');
 
 		if (idOffer > c->getOffers().size() || idOffer < 0)
-			cout << "Invalid offer id" << endl;
+				cout << "Invalid offer id" << endl << endl;
 		else
-			break;
+		{
+			bool v_flag = false;
+			for (unsigned int i = 0; i < v.size(); i++)
+			{
+				if (idOffer == v[i])
+				{
+					v_flag = true;
+					break;
+				}
+			}
+			if (v_flag)
+				break;
+			else
+				cout << "That offer is not on the range you inserted. Return to make reservation menu to enter a different range." << endl << endl;
+		}
 	}
 
 	if(idOffer == 0)
@@ -521,19 +535,33 @@ bool MakeReservation_Occasional (Company *c, unsigned int idClient)
 	}
 	cout << endl;
 
-	c->printOfferbyDate(d1,d2);
+	vector <int> v = c->printOfferbyDate(d1,d2);
 
 	while(1)
 	{
-		cout << endl << "Insert the id of the corresponding offer(enter 0 to exit): ";
+		cout << "Insert the id of the corresponding offer (enter 0 to exit): ";
 		cin >> idOffer;
 		cin.clear();
 		cin.ignore(10000, '\n');
 
 		if (idOffer > c->getOffers().size() || idOffer < 0)
-			cout << "Invalid offer id" << endl;
+				cout << "Invalid offer id" << endl << endl;
 		else
-			break;
+		{
+			bool v_flag = false;
+			for (unsigned int i = 0; i < v.size(); i++)
+			{
+				if (idOffer == v[i])
+				{
+					v_flag = true;
+					break;
+				}
+			}
+			if (v_flag)
+				break;
+			else
+				cout << "That offer is not on the range you inserted. Return to make reservation menu to enter a different range." << endl << endl;
+		}
 	}
 
 
