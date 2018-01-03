@@ -649,8 +649,14 @@ bool CancelReservation (Company *c)
 				case 3:
 					return true;
 				default:
-//					throw InvalidOption(c,3);
-					break;
+					try{
+						throw InvalidOption(optionC);
+					}
+					catch(InvalidOption &e)
+					{
+						std::cout << e.getOption() <<  " is not a valid option"  <<  std::endl << endl;
+						break;
+					}
 			}
 	}
 }

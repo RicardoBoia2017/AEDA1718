@@ -182,7 +182,7 @@ string Offer::getInformation() const
 	stringstream ss;
 	Date d1 = getDate();
 
-	ss << getId() << " " << d1.getDay() << "/" << d1.getMonth() << "/" << d1.getYear() << ", " <<  getSupName() << ", " << getDestination() << ", " << getDistance() << "km, " <<  getBoatType() << ", " << getPrice() << "€ "
+	ss << getId() << " " << d1.getDay() << "/" << d1.getMonth() << "/" << d1.getYear() << ", " <<  getSupName() << ", " << getDestination() << ", " << getDistance() << "km, " <<  getBoatType() << ", " << ( getPrice() - getPrice() * getDiscount() ) << "€ "
 			<< "//  seats available: " << getVacancies() << endl << "Points / ticket : " << getPoints() << " (only available for registered clients)" << endl;
 
 	return ss.str();

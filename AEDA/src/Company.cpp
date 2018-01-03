@@ -21,7 +21,7 @@ Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *>
 	this->oClients = oClients;
 	this->suppliers = suppliers;
 	this->offers = offers;
-	date = Date("4-1-2018");
+	date = Date("8-1-2018");
 
 	reservations.makeEmpty();
 
@@ -82,7 +82,6 @@ Company::Company(vector<RegisteredClient *> rClients, vector<OccasionalClient *>
 /**
  * The destructor.
  */
-
 Company::~Company()
 {
 
@@ -349,8 +348,6 @@ void Company::addReservation(const Reservation &r, unsigned int nTick)
 
 	while (!it.isAtEnd())
 	{
-		cout << it.retrieve().getOffer() << "    " << it.retrieve().getClient()->getName() << "    " << it.retrieve().getDate().getDay() << "  " << it.retrieve().getDate().getMonth() << "  " << it.retrieve().getDate().getYear()<<endl;
-
 		if (it.retrieve() == r)
 		{
 			Reservation tmp = it.retrieve();
@@ -756,6 +753,7 @@ void Company::printSuppliers() const
  */
 void Company::printOffers() const
 {
+	cout << endl;
 	for (unsigned int i = 0; i < offers.size(); i++)
 	{
 		cout<< offers[i]->getInformation() << endl;
@@ -836,7 +834,7 @@ void Company::printInactiveClients() const
 	while (it != inactiveClients.end() )
 	{
 		Client * c = (*it);
-		cout << c->getName() << ", " << c->getAddress() << endl;
+		cout << c->getName() << ", " << c->getNIF() << ", Address: "<< c->getAddress() << endl;
 		it++;
 	}
 }
@@ -860,7 +858,7 @@ void Company::printUnpopularOffers() const
 	while (!pq.empty() )
 	{
 
-		cout << pq.top().getId() << " " << pq.top().getDate().getDay() << "/" << pq.top().getDate().getMonth() << "/" << pq.top().getDate().getYear() << " " << pq.top().getSupName() << " " << pq.top().getDestination() << " " << pq.top().getPrice() << "€";
+		cout << pq.top().getId() << " " << pq.top().getDate().getDay() << "/" << pq.top().getDate().getMonth() << "/" << pq.top().getDate().getYear() << " " << pq.top().getSupName() << " " << pq.top().getDestination() << ", Original price: " << pq.top().getPrice() << "€";
 		cout << endl << "Last time this offer was reservated: " << pq.top().getLastReservation().getDay() << "/" << pq.top().getLastReservation().getMonth() << "/" << pq.top().getLastReservation().getYear() << endl ;
 		cout << "Discount : " << pq.top().getDiscount() * 100 << "%" << endl << endl;;
 		pq.pop();

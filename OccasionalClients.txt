@@ -7,4 +7,4 @@
 7, Diogo Dias, 123456789, 1/1/2018, Rua Doutor Teixeira Guedes 2004-001 Santarém;
 8, Felicio Moutinho, 523146789, 25/11/2017, Rua 9 de Julho 2 7801-852 Beja;
 9, Dinis Carvalho, 123456789, 20/11/2017, Rua Dom Nuno Álvares Pereira 7801-853 Beja;
-10, Manuel Meireles, 123456789, 4/12/2017, Rua Guilherme Braga 38 4404-508 Vila Nova de Gaia;
+10, Manuel Meireles, 123456789, 10/12/2017, Rua Guilherme Braga 38 4404-508 Vila Nova de Gaia;
