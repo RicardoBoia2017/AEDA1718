@@ -696,19 +696,24 @@ bool CancelReservationRegClient(Company *c)
 	cout << endl;
 	c->printRegisteredClients();
 	cout << endl;
+
 	cout << "Insert your client id? ";
 	cin >> idClient;
 	cin.clear();
 	cin.ignore(10000, '\n');
 	cout << endl;
+
 	if (idClient > c->getRegisteredClients().size() || idClient <= 0)
 	{
-			cout << "Invalid client id" << endl <<endl;
-			return true;
+		cout << "Invalid client id" << endl <<endl;
+		return true;
 	}
 	cout << c->getRegisteredClients()[idClient-1]->getInformation() << endl << endl;
 
-	c->printOffers();
+	bool result = c->printOffersByClient(c->getRegisteredClients()[idClient-1]->getName() );
+
+	if (!result)
+		return true;
 
 	Offer * offer;
 
@@ -747,9 +752,9 @@ bool CancelReservationRegClient(Company *c)
 		int result = c->removeReservation(r,nTick);
 
 		if (result == 2)
-			cout << "You didn't make that much reservations." << endl;
+			cout << "You didn't make that much reservations." << endl << endl;
 		else if (result == 0)
-			cout << "You don't have any reservation for this offer. Try again" << endl;
+			cout << "You don't have any reservation for this offer. Try again" << endl << endl;
 		else
 		{
 			unsigned int newPoints = c->getRegisteredClients()[idClient-1]->getPoints() - nTick*offer->getPoints();
@@ -810,7 +815,10 @@ bool CancelReservationOccClient(Company *c)
 	}
 	cout << c->getOccasionalClients()[idClient-1]->getInformation() << endl << endl;
 
-	c->printOffers();
+	bool result = c->printOffersByClient(c->getOccasionalClients()[idClient-1]->getName() );
+
+	if (!result)
+		return true;
 
 	Offer * offer;
 
@@ -818,7 +826,7 @@ bool CancelReservationOccClient(Company *c)
 	{
 		while (1)
 		{
-			cout << endl << "Insert the id of the corresponding offer: ";
+			cout << endl << "Insert the id of the corresponding offer (enter 0 to exit): ";
 			cin >> idOffer;
 			cin.clear();
 			cin.ignore(10000, '\n');
@@ -841,8 +849,6 @@ bool CancelReservationOccClient(Company *c)
 		cin >> nTick;
 		cin.clear();
 		cin.ignore(10000, '\n');
-		cout << endl;
-
 		cout << endl;
 
 		OccasionalClient * client = c->getOccasionalClients()[idClient-1];
@@ -1072,7 +1078,7 @@ bool ViewFilesMenu (Company *c)
 							cin.ignore(10000, '\n');
 
 							cout << endl;
-							c->printOfferBySuppliers( c->getSuppliers()[idSupplier-1]->getName());
+							c->printOffersBySuppliers( c->getSuppliers()[idSupplier-1]->getName());
 							break;
 						}
 						case 3:

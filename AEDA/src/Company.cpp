@@ -789,7 +789,7 @@ vector<int> Company::printOfferbyDate(Date d1, Date d2) const
  * Prints a certain supplier's offers.
  * @param name supplier's name.
  */
-void Company::printOfferBySuppliers(string name) const
+void Company::printOffersBySuppliers(string name) const
 {
 	for (unsigned int i = 0; i < offers.size(); i++)
 	{
@@ -798,6 +798,39 @@ void Company::printOfferBySuppliers(string name) const
 	}
 }
 
+bool Company::printOffersByClient(string cName) const
+{
+	BSTItrIn <Reservation> it (reservations);
+	bool Found = false;
+
+	while (!it.isAtEnd())
+	{
+		Client *c = it.retrieve().getClient();
+
+		if (c->getName() == cName)
+		{
+			if (!Found)
+				cout << endl << "You have reservations for the following offer: " << endl << endl;
+
+			cout << offers[it.retrieve().getOffer() - 1]->getInformation()
+					<< "Tickets bought: " << it.retrieve().getTickets() << endl << endl;
+			Found = true;
+		}
+		else
+		{
+			if (Found)
+				break;
+		}
+		it.advance();
+	}
+
+	if (!Found)
+	{
+		cout << "You dont have any reservation" << endl;
+	}
+
+	return Found;
+}
 
 /**
  * Prints all reservations on the binary search tree.

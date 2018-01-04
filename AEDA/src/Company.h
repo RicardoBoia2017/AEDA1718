@@ -119,7 +119,8 @@ public:
 	void printSuppliers() const;
 	void printOffers() const;
 	vector<int> printOfferbyDate (Date d1, Date d2) const;
-	void printOfferBySuppliers(string name) const;
+	void printOffersBySuppliers(string name) const;
+	bool printOffersByClient (string cName) const;
 	void printReservations () const;
 	void printInactiveClients () const;
 	void printUnpopularOffers () const;
