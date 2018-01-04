@@ -1058,7 +1058,7 @@ bool ViewFilesMenu (Company *c)
 						{
 							int idSupplier;
 							c->printSuppliers();
-							cout << endl << endl << "Enter the id of the desired supplier: ";
+							cout << endl  << "Enter the id of the desired supplier: ";
 							cin >> idSupplier;
 							cin.clear();
 							cin.ignore(10000, '\n');
@@ -1279,7 +1279,7 @@ bool AddOffer(Company *c)
 		cin.ignore(10000, '\n');
 		if (idSupplier > 0 && idSupplier <= c->getSuppliers().size())
 		{
-			return true;
+			break;
 		}
 		else
 			cout << "Invalid id." << endl << endl;
@@ -1291,32 +1291,33 @@ bool AddOffer(Company *c)
 
 	while (1)
 	{
-			unsigned int cap, dist, pri, points;
-			double perc;
-			string dest, bT, date;
-			int b_option, d_option;
+		unsigned int cap, dist, pri, points;
+		double perc;
+		string dest, bT, date;
+		int b_option, d_option;
 
-			do
-			{
-				cout << endl << "Enter the destination: " << endl;
-				cout << "1 Régua" << endl;
-				cout << "2 Barca d'Alva " << endl;
-				cout << "3 Pinhão" << endl;
-				cout << "Enter the desired option: ";
-				cin >> d_option;
+		do
+		{
+			cout << endl << "Enter the destination: " << endl;
+			cout << "1 Régua" << endl;
+			cout << "2 Barca d'Alva " << endl;
+			cout << "3 Pinhão" << endl;
+			cout << "Enter the desired option: ";
+			cin >> d_option;
 
-				if (d_option < 1 || d_option > 3)
-					cout << "Invalid option. Try again" << endl;
-				else
-					switch (d_option)
-					{
-						case 1:
-							dest = "Régua";
-						case 2:
-							dest = "Barca d'Alva";
-						case 3:
-							dest = "Pinhão";
-					}
+			if (d_option < 1 || d_option > 3)
+				cout << "Invalid option. Try again" << endl;
+
+			else
+				switch (d_option)
+				{
+					case 1:
+						dest = "Régua";
+					case 2:
+						dest = "Barca d'Alva";
+					case 3:
+						dest = "Pinhão";
+				}
 			} while (d_option < 1 || d_option > 3);
 
 			do
@@ -1370,14 +1371,32 @@ bool AddOffer(Company *c)
 				d = Date (date);
 			}
 
+			do
+			{
+				unsigned int option2;
 
-			c->addOffer(pri, dist, cap, points, perc, bT, dest, name,d);
+				cout << endl << "Want to confirm your reservation?: " << endl;
+				cout << "1 Yes" << endl;
+				cout << "2 No (return to Work with us menu)" << endl;
+				cout << "Insert the desired option: ";
+				cin >> option2;
+				cin.clear();
+				cin.ignore(10000, '\n');
 
+				if(option2 != 1 && option2 != 2)
+					cout << "Invalid option. Try again" << endl;
+				else if (option2 == 1)
+				{
+					c->addOffer(pri, dist, cap, points, perc, bT, dest, name,d);
+					break;
+				}
+				else
+					break;
+			}while(1);
+
+			cout << endl;
+			return true;
 		}
-
-
-	cout << endl;
-	return true;
 }
 
 
