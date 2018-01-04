@@ -404,7 +404,11 @@ bool MakeReservation_Registered (Company *c, unsigned int idClient)
 		cin.ignore(10000, '\n');
 
 		if (idOffer > c->getOffers().size() || idOffer < 0)
-				cout << "Invalid offer id" << endl << endl;
+				cout << endl << "Invalid offer id" << endl << endl;
+
+		else if(idOffer == 0)
+			return true;
+
 		else
 		{
 			bool v_flag = false;
@@ -419,83 +423,74 @@ bool MakeReservation_Registered (Company *c, unsigned int idClient)
 			if (v_flag)
 				break;
 			else
-				cout << "That offer is not on the range you inserted. Return to make reservation menu to enter a different range." << endl << endl;
+				cout << endl << "That offer is not on the range you inserted. Return to make reservation menu to enter a different range." << endl << endl;
 		}
 	}
 
-	if(idOffer == 0)
-	{
-		return true;
-	}
-	else
-	{
-		Offer * offer = c->getOffers()[idOffer-1];
 
-		cout << "How many tickets do you desire: ";
-		cin >> nTick;
+	Offer * offer = c->getOffers()[idOffer-1];
+
+	cout << "How many tickets do you desire: ";
+	cin >> nTick;
+	cin.clear();
+	cin.ignore(10000, '\n');
+
+	if(nTick > offer->getVacancies())
+		try{
+			throw NoSeatsAvailable (idOffer);
+		}
+		catch (NoSeatsAvailable &e)
+		{
+			std::cout << std::endl << "Sorry, the offer #" << e.getId() << " doesn't have enough seats available." << std::endl;
+			return false;
+		}
+
+	unsigned int optionMR_R;
+
+	unsigned int price = ( offer->getPrice() - offer->getPrice() * offer->getDiscount() ) * nTick;
+
+	cout << endl << "Total: " << price << "€,  Points Won: " << offer->getPoints() * nTick << endl <<endl;
+
+
+	while (1)
+	{
+		cout << "Want to confirm your reservation?: " << endl;
+		cout << "1 Yes" << endl;
+		cout << "2 No (return to make reservation menu)" << endl;
+		cout << "Insert the desired option: ";
+		cin >> optionMR_R;
 		cin.clear();
 		cin.ignore(10000, '\n');
 
-		if(nTick > offer->getVacancies())
-			try{
-				throw NoSeatsAvailable (idOffer);
-			}
-			catch (NoSeatsAvailable &e)
-			{
-				std::cout << std::endl << "Sorry, the offer #" << e.getId() << " doesn't have enough seats available." << std::endl;
-				return false;
-			}
-
-		unsigned int optionMR_R;
-
-		unsigned int price = ( offer->getPrice() - offer->getPrice() * offer->getDiscount() ) * nTick;
-
-		cout << endl << "Total: " << price << "€,  Points Won: " << offer->getPoints() * nTick << endl <<endl;
-
-		if (idOffer != 0)
-			while (1)
-			{
-				cout << "Want to confirm your reservation?: " << endl;
-				cout << "1 Yes" << endl;
-				cout << "2 No (return to make reservation menu)" << endl;
-				cout << "Insert the desired option: ";
-				cin >> optionMR_R;
-				cin.clear();
-				cin.ignore(10000, '\n');
-
-					if(optionMR_R == 1)
-					{
-						RegisteredClient * client = c->getRegisteredClients()[idClient-1];
-						Reservation r (offer, client, offer->getDate());
-						r.setTickets(nTick);
-						c->addReservation(r,nTick);
-
-						client->setPoints(client->getPoints() + offer->getPoints()*nTick);
-						client->setLastReservation(c->getDate());
-
-						offer->setVacancies( offer->getVacancies() - nTick);
-						offer->setLastReservation(c->getDate());
-						offer->setDiscount(0);
-
-						c->removeInactiveClient(client->getName());
-						c->removeUnpopularOffer(offer->getId());
-
-						c->setBank (offer->getPercentage() * price );
-						return true;
-					}
-					else if (optionMR_R == 2)
-					{
-						cout << endl;
-						return true;
-					}
-
-					else
-						cout << endl << "Invalid Option." << endl;
-			}
-		else
+		if(optionMR_R == 1)
 		{
+			RegisteredClient * client = c->getRegisteredClients()[idClient-1];
+			Reservation r (offer, client, offer->getDate());
+			r.setTickets(nTick);
+			c->addReservation(r,nTick);
+
+			client->setPoints(client->getPoints() + offer->getPoints()*nTick);
+			client->setLastReservation(c->getDate());
+
+			offer->setVacancies( offer->getVacancies() - nTick);
+			offer->setLastReservation(c->getDate());
+			offer->setDiscount(0);
+
+			c->removeInactiveClient(client->getName());
+			c->removeUnpopularOffer(offer->getId());
+			c->setBank (offer->getPercentage() * price );
+
 			return true;
 		}
+
+		else if (optionMR_R == 2)
+		{
+			cout << endl;
+			return true;
+		}
+
+		else
+			cout << endl << "Invalid Option." << endl;
 	}
 
 }
@@ -546,6 +541,10 @@ bool MakeReservation_Occasional (Company *c, unsigned int idClient)
 
 		if (idOffer > c->getOffers().size() || idOffer < 0)
 				cout << "Invalid offer id" << endl << endl;
+
+		else if (idOffer == 0)
+			return true;
+
 		else
 		{
 			bool v_flag = false;
@@ -564,82 +563,69 @@ bool MakeReservation_Occasional (Company *c, unsigned int idClient)
 		}
 	}
 
+	Offer * offer = c->getOffers()[idOffer-1];
 
-	if (idOffer == 0)
+	cout << "How many tickets do you desire: ";
+	cin >> nTick;
+	cin.clear();
+	cin.ignore(10000, '\n');
+
+	if(nTick > offer->getVacancies())
+		try
+		{
+			throw NoSeatsAvailable (idOffer);
+		}
+		catch (NoSeatsAvailable &e)
+		{
+			std::cout << std::endl << "Sorry, the offer #" << e.getId() << " doesn't have enough seats available." << std::endl;
+			return false;
+		}
+
+	unsigned int optionMR_O;
+	unsigned int price = ( offer->getPrice() - offer->getPrice() * offer->getDiscount() ) * nTick;
+
+	cout << endl << "Total: " << price << "€" << endl << endl;
+
+	while (1)
 	{
-		return true;
+		cout << "Want to confirm your reservation?: " << endl;
+		cout << "1 Yes" << endl;
+		cout << "2 No (return to make reservation menu)" << endl;
+		cout << "Insert the desired option: ";
+		cin >> optionMR_O;
+		cin.clear();
+		cin.ignore(10000, '\n');
+
+		if(optionMR_O == 1)
+		{
+			OccasionalClient * client = c->getOccasionalClients()[idClient-1];
+			Reservation r (offer, client, offer->getDate());
+			r.setTickets(nTick);
+			c->addReservation(r,nTick);
+
+			client->setLastReservation(c->getDate());
+
+			offer->setVacancies( offer->getVacancies() - nTick);
+			offer->setLastReservation(c->getDate());
+			offer->setDiscount(0);
+
+			c->removeInactiveClient(client->getName());
+			c->removeUnpopularOffer(offer->getId());
+
+			c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
+			return true;
+		}
+
+		else if (optionMR_O == 2)
+		{
+			cout << endl;
+			return true;
+		}
+		else
+		{
+			cout << endl << "Invalid Option." << endl;
+		}
 	}
-
-	else
-	{
-
-			Offer * offer = c->getOffers()[idOffer-1];
-
-			cout << "How many tickets do you desire: ";
-			cin >> nTick;
-			cin.clear();
-			cin.ignore(10000, '\n');
-
-			if(nTick > offer->getVacancies())
-				try{
-					throw NoSeatsAvailable (idOffer);
-				}
-				catch (NoSeatsAvailable &e)
-				{
-					std::cout << std::endl << "Sorry, the offer #" << e.getId() << " doesn't have enough seats available." << std::endl;
-					return false;
-				}
-
-			unsigned int optionMR_O;
-			unsigned int price = ( offer->getPrice() - offer->getPrice() * offer->getDiscount() ) * nTick;
-
-			cout << endl << "Total: " << price << "€" << endl << endl;
-
-			if (idOffer != 0)
-			while (1)
-			{
-				cout << "Want to confirm your reservation?: " << endl;
-				cout << "1 Yes" << endl;
-				cout << "2 No (return to make reservation menu)" << endl;
-				cout << "Insert the desired option: ";
-				cin >> optionMR_O;
-				cin.clear();
-				cin.ignore(10000, '\n');
-
-				if(optionMR_O == 1)
-				{
-					OccasionalClient * client = c->getOccasionalClients()[idClient-1];
-					Reservation r (offer, client, offer->getDate());
-					r.setTickets(nTick);
-					c->addReservation(r,nTick);
-
-					client->setLastReservation(c->getDate());
-
-					offer->setVacancies( offer->getVacancies() - nTick);
-					offer->setLastReservation(c->getDate());
-					offer->setDiscount(0);
-
-					c->removeInactiveClient(client->getName());
-					c->removeUnpopularOffer(offer->getId());
-
-					c->setBank (offer->getPercentage() * offer->getPrice() * nTick );
-					return true;
-				}
-
-				else if (optionMR_O == 2)
-				{
-					cout << endl;
-					return true;
-				}
-				else
-				{
-					cout << endl << "Invalid Option." << endl;
-				}
-			}
-			else
-				return true;
-	}
-
 }
 
 bool CancelReservation (Company *c)

@@ -764,6 +764,7 @@ void Company::printOffers() const
  * Prints offers which date is inserted in the range provided.
  * @param d1 inital date.
  * @param d2 final date.
+ * @return vector with indexes of offers inside the range provided.
  */
 vector<int> Company::printOfferbyDate(Date d1, Date d2) const
 {
@@ -798,6 +799,11 @@ void Company::printOffersBySuppliers(string name) const
 	}
 }
 
+/**
+ * Prints the offers to which a certain client made a reservation.
+ * @param cName name of the client.
+ * @return true if the client made at least one reservation, otherwise it return false.
+ */
 bool Company::printOffersByClient(string cName) const
 {
 	BSTItrIn <Reservation> it (reservations);
