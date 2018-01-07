@@ -1,4 +1,4 @@
-1, João Santos, 233448432, 20/12/2017, Travessa da Eira 4410-104 São Félix da Marinha, 290;
+1, João Santos, 233448432, 20/12/2017, Travessa da Eira 4410-104 São Félix da Marinha, 258;
 2, Manuel Ferreira, 124785231, 10/12/2017, Rua da Esperança 4410-490 Serzedo, 18;
 3, Carlos Sousa, 158392013, 1/12/2017, Travessa do Mocho Anta 4500-108 Espinho, 145;
 4, Luis Novais, 234875109, 1/1/2018, Praceta de Timor Bairro da Mata 7100-101 Estremoz, 150;
