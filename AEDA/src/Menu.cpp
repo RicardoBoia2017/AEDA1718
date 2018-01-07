@@ -299,9 +299,7 @@ bool MakeReservation (Company *c)
 				string name, address;
 				int NIF;
 				cout << "Please enter your name: ";
-				cin >> name;
-				cin.clear();
-				cin.ignore(10000, '\n');
+				getline (cin, name);
 
 				while (1)
 				{
@@ -750,6 +748,7 @@ bool CancelReservationRegClient(Company *c)
 			cout << "Your cancelation was successful!" << endl;
 
 			offer->setVacancies(offer->getVacancies() + nTick);
+
 			break;
 		}
 
